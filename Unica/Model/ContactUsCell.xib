@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Medium.ttf">
+            <string>SFUIText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="67" id="KGk-i7-Jjw" customClass="ContactUsCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24d-Wu-7lD">
+                        <rect key="frame" x="10" y="6" width="240" height="19"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="gcU-I1-FvG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPv-Ui-Uo2">
+                        <rect key="frame" x="255" y="12" width="26" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="26" id="VTf-Ze-gqy"/>
+                            <constraint firstAttribute="height" constant="26" id="oNt-u0-IRl"/>
+                        </constraints>
+                        <state key="normal" image="MSG"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZZ-8H-OpZ">
+                        <rect key="frame" x="10" y="27" width="240" height="19"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="eB1-tW-HmA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T0t-xJ-xsi">
+                        <rect key="frame" x="288" y="12" width="26" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="26" id="3ea-bg-eJ2"/>
+                            <constraint firstAttribute="height" constant="26" id="QXj-ms-Ght"/>
+                        </constraints>
+                        <state key="normal" image="Call"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="24d-Wu-7lD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="2Xt-vS-PZ2"/>
+                    <constraint firstItem="24d-Wu-7lD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="DPC-Er-cvg"/>
+                    <constraint firstItem="2ZZ-8H-OpZ" firstAttribute="top" secondItem="24d-Wu-7lD" secondAttribute="bottom" constant="2" id="Rq9-Nv-3iD"/>
+                    <constraint firstAttribute="trailing" secondItem="T0t-xJ-xsi" secondAttribute="trailing" constant="6" id="Uql-xK-r5u"/>
+                    <constraint firstItem="kPv-Ui-Uo2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="ZfT-aM-tw8"/>
+                    <constraint firstItem="T0t-xJ-xsi" firstAttribute="leading" secondItem="kPv-Ui-Uo2" secondAttribute="trailing" constant="7" id="bLx-Zv-iR8"/>
+                    <constraint firstItem="kPv-Ui-Uo2" firstAttribute="leading" secondItem="2ZZ-8H-OpZ" secondAttribute="trailing" constant="5" id="erB-OR-srA"/>
+                    <constraint firstItem="T0t-xJ-xsi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="h1d-1Z-8vO"/>
+                    <constraint firstItem="kPv-Ui-Uo2" firstAttribute="leading" secondItem="24d-Wu-7lD" secondAttribute="trailing" constant="5" id="i29-IX-itS"/>
+                    <constraint firstItem="2ZZ-8H-OpZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="sXy-wl-BOE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_messageButton" destination="kPv-Ui-Uo2" id="mak-Bq-XXN"/>
+                <outlet property="callButton" destination="T0t-xJ-xsi" id="9AX-Vk-CQk"/>
+                <outlet property="headerLabel" destination="24d-Wu-7lD" id="p9w-ZR-iMP"/>
+                <outlet property="messageButtonWidth" destination="VTf-Ze-gqy" id="cGS-Ty-TGH"/>
+                <outlet property="numberLabel" destination="2ZZ-8H-OpZ" id="yJM-zj-0yq"/>
+                <outlet property="numberLabelHeight" destination="eB1-tW-HmA" id="Q7h-P5-e2M"/>
+                <outlet property="phoneNumberButtonWidth" destination="3ea-bg-eJ2" id="XwM-o2-BlU"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="102.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Call" width="22" height="22"/>
+        <image name="MSG" width="22" height="22"/>
+    </resources>
+</document>

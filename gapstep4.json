@@ -1,0 +1,239 @@
+{
+    "gapstep4":[
+    {
+        "title": "Financial Support",
+        "sub_title":"Who will be financially supporting",
+        "finance":["My self", "My Family and Friends","Education Loan", "Sponsorship", "Other"],
+        "financetype":"",
+        "accessMoney":"How much money do you have access to?(amount is in US  dollar)"
+    },
+    {
+        "title": "Education",
+        "sub_title":"",
+        "education":[ {
+            "id": "1",
+            "title": "Highest Qualification(either completed or on-going)",
+            "value": ""
+        }, {
+            "id": "2",
+            "title": "Course Start Year",
+            "value": ""
+        }, {
+            "id": "3",
+            "title": "Course Completion Year",
+            "value": ""
+        }, {
+            "id": "4",
+            "title": "Country of Education",
+            "value": ""
+        }, {
+            "id": "5",
+            "title": "Name of Institution",
+            "value": ""
+        }, {
+            "id": "6",
+            "title": "Address of Institution",
+            "value": ""
+        }, {
+            "id": "7",
+            "title": "Name of Programme/ Qualification awarded",
+            "value": ""
+        }, {
+            "id": "8",
+            "title": "Primary language of instruction",
+            "value": ""
+        },{
+            "id": "9",
+            "title": "Grades",
+            "value": ""
+        }]
+    },
+    {
+        "title": "Work Experince",
+        "sub_title":"",
+        "workExperince":[ {
+            
+            "title": "Name of Employer",
+            "value": ""
+        }, {
+            
+            "title": "Position/ Designation of Employement",
+            "value": ""
+        }, {
+            
+            "title": "Period",
+            "value": ""
+        }, {
+            
+            "title": "Main Resposibilites",
+            "value": ""
+        }]
+    },
+    {
+        "title": "Test Results",
+        "selectedResult":"",
+        "testResult":[{
+            "title": "I don't have valid scores",
+            "value": ""
+        },{
+            "title": "I have valid scores",
+            "value": ""
+        }]
+    },
+    {
+        "title": "Please fill your IELTS Scores",
+        "sub_title" : "IELTS",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Listening",
+            "value": "" },
+        {
+            "name": "Reading",
+            "value": "" },
+        {
+            "name": "Writing",
+            "value": "" },
+        {
+            "name": "Speaking",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your TOEFL IBT Scores",
+        "sub_title" : "TOEFL IBT",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Listening",
+            "value": "" },
+        {
+            "name": "Reading",
+            "value": "" },
+        {
+            "name": "Writing",
+            "value": "" },
+        {
+            "name": "Speaking",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your TOEFL CBT Scores",
+        "sub_title" : "TOEFL CBT",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Listening",
+            "value": "" },
+        {
+            "name": "Reading",
+            "value": "" },
+        {
+            "name": "Writing",
+            "value": "" },
+        {
+            "name": "Speaking",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your PTE Scores",
+        "sub_title" : "PTE",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Listening",
+            "value": "" },
+        {
+            "name": "Reading",
+            "value": "" },
+        {
+            "name": "Writing",
+            "value": "" },
+        {
+            "name": "Speaking",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your GRE Scores",
+        "sub_title" : "GRE",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Verbal(130-170)",
+            "value": "" },
+        {
+            "name": "Verbal%",
+            "value": "" },
+        {
+            "name": "Quantitative(130-170)",
+            "value": "" },
+        {
+            "name": "Quantitative%",
+            "value": "" },
+        {
+            "name": "Analytical Writing(0-6)",
+            "value": "" }
+        ,{
+            "name": "Analytical Writing%",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your GMAT Scores",
+        "sub_title" : "GMAT",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Verbal(130-170)",
+            "value": "" },
+        {
+            "name": "Verbal%",
+            "value": "" },
+        {
+            "name": "Quantitative(130-170)",
+            "value": "" },
+        {
+            "name": "Quantitative%",
+            "value": "" },
+        {
+            "name": "Analytical Writing(0-6)",
+            "value": "" }
+        ,{
+            "name": "Analytical Writing%",
+            "value": "" },
+        {
+            "name": "Total Score",
+            "value": "" },
+        {
+            "name": "Total Score%",
+            "value": "" }]
+    },
+    {
+        "title": "Please fill your SAT Scores",
+        "sub_title" : "SAT",
+        "data":[{
+            "name": "Date",
+            "value": "" },
+        {
+            "name": "Raw Score",
+            "value": "" },
+        {
+            "name": "Math Score",
+            "value": "" },
+        {
+            "name": "Reading Score",
+            "value": "" },
+        {
+            "name": "Writing Score",
+            "value": "" },
+        {
+            "name": "Language Score",
+            "value": "" }
+        ]
+    }
+    ]
+}

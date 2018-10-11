@@ -1,0 +1,37 @@
+//
+//  Unica.pch
+//  Unica
+//
+//  Created by vineet patidar on 01/03/17.
+//  Copyright © 2017 Ramniwas Patidar. All rights reserved.
+//
+
+#ifndef Unica_pch
+#define Unica_pch
+#import "Control.h"
+#import "Utility.h"
+#import "HCSStarRatingView.h"
+#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+#import "ConnectionManager.h"
+#import "UNKConstant.h"
+#import "MBProgressHUD.h"
+#import "SWRevealViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "YSLContainerViewController.h"
+#import "UtilityPlist.h"
+
+#endif /* TRLUser_pch */
+
+#define kErrorMsg @"It seems like we have encountered a temporary glitch. Please try again later."
+#define kErrorMsgJsonParse @"It seems like we have encountered a temporary glitch. Please try again later."
+#define kErrorMsgServerNotResponding @"It seems like we have encountered a temporary glitch. Please try again later."
+#define kErrorTitle @""
+#define kErrorMsgNoInternet @"It appears you are on slow connection or your internet is unavailable. Please check and try again !!"
+#define kErrorMsgSlowInternet @"It appears you are on slow connection or your internet is unavailable. Please check and try again !!"
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="courseFeeCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="jkS-r3-nxR">
+                        <rect key="frame" x="14" y="10" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="CpD-nf-NXl"/>
+                            <constraint firstAttribute="width" constant="20" id="yig-Aj-oKP"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-W1-RWB">
+                        <rect key="frame" x="185" y="0.0" width="125" height="40"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="Pw0-kW-dU2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="dxB-Z9-WdC">
+                        <rect key="frame" x="42" y="0.0" width="140" height="40"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="ahB-xO-SZY"/>
+                            <constraint firstAttribute="height" constant="40" id="e39-Is-h14"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="dYY-W1-RWB" firstAttribute="leading" secondItem="dxB-Z9-WdC" secondAttribute="trailing" constant="3" id="GWs-ea-LCS"/>
+                    <constraint firstItem="dYY-W1-RWB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="P0h-Oc-umL"/>
+                    <constraint firstItem="dxB-Z9-WdC" firstAttribute="centerY" secondItem="jkS-r3-nxR" secondAttribute="centerY" id="WyZ-n2-jv0"/>
+                    <constraint firstAttribute="trailing" secondItem="dYY-W1-RWB" secondAttribute="trailing" constant="10" id="X28-rE-t0A"/>
+                    <constraint firstItem="jkS-r3-nxR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="qEn-MC-Hna"/>
+                    <constraint firstItem="dxB-Z9-WdC" firstAttribute="leading" secondItem="jkS-r3-nxR" secondAttribute="trailing" constant="8" id="wIU-3r-Nu3"/>
+                    <constraint firstItem="jkS-r3-nxR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="xRY-zq-nue"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descLabel" destination="dYY-W1-RWB" id="06L-J2-Ydx"/>
+                <outlet property="descX_axis" destination="GWs-ea-LCS" id="peS-B3-KcF"/>
+                <outlet property="headinLabel" destination="dxB-Z9-WdC" id="cYk-iB-AeN"/>
+                <outlet property="headingLaelX_Axis" destination="wIU-3r-Nu3" id="6ac-8z-YFV"/>
+                <outlet property="headingWidthConstant" destination="ahB-xO-SZY" id="FlN-zp-HJU"/>
+                <outlet property="iconImageView" destination="jkS-r3-nxR" id="i59-uu-Qoh"/>
+                <outlet property="imageWidth" destination="yig-Aj-oKP" id="TQQ-i0-bzT"/>
+                <outlet property="imageX_Axis" destination="xRY-zq-nue" id="56W-xW-wcx"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Wallet" width="12" height="12"/>
+    </resources>
+</document>

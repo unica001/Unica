@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Regular.ttf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="countryCell" id="gTV-IL-0wX" customClass="MPCountrySelectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMR-Xf-S7C">
+                        <rect key="frame" x="5" y="0.0" width="140" height="30"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="EDK-Vv-VkZ"/>
+                            <constraint firstAttribute="width" constant="140" id="iTg-0p-xUD"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S6V-MU-FDy">
+                        <rect key="frame" x="133" y="7" width="15" height="15"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="Zkx-uM-4Yf"/>
+                            <constraint firstAttribute="height" constant="15" id="xad-A6-sdQ"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="close"/>
+                    </button>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.2470588235" green="0.61654954289999997" blue="0.0098626429439999993" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="aMR-Xf-S7C" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="9Cs-JY-au8"/>
+                <constraint firstItem="aMR-Xf-S7C" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="BGL-fu-5vO"/>
+                <constraint firstItem="S6V-MU-FDy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="7" id="GWR-TA-Wet"/>
+                <constraint firstAttribute="trailing" secondItem="aMR-Xf-S7C" secondAttribute="trailing" constant="5" id="U1y-yf-m5S"/>
+                <constraint firstAttribute="trailing" secondItem="S6V-MU-FDy" secondAttribute="trailing" constant="2" id="rer-k1-Nkh"/>
+            </constraints>
+            <size key="customSize" width="172" height="30"/>
+            <connections>
+                <outlet property="countryLabelWidth" destination="iTg-0p-xUD" id="y6B-kz-Qo9"/>
+                <outlet property="countryNameLabel" destination="aMR-Xf-S7C" id="pwO-7d-665"/>
+                <outlet property="crossButton" destination="S6V-MU-FDy" id="upn-XJ-cjT"/>
+            </connections>
+            <point key="canvasLocation" x="-10" y="16"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="close" width="10" height="10"/>
+    </resources>
+</document>

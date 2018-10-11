@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Regular.ttf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="countryCell" id="KGk-i7-Jjw" customClass="CountryCell">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="100" height="29.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uk1-gS-8gg">
+                        <rect key="frame" x="5" y="5" width="30" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="NDs-zG-PlI"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="ZWz-i4-5XM"/>
+                            <constraint firstAttribute="height" constant="20" id="fNH-ob-YWV"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="us6-im-8Td">
+                        <rect key="frame" x="40" y="5" width="55" height="20"/>
+                        <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="9i2-5D-VM0"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Gxf-Kt-XVe"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="us6-im-8Td" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="UqO-hj-Pfq"/>
+                    <constraint firstAttribute="trailing" secondItem="us6-im-8Td" secondAttribute="trailing" constant="5" id="d9F-xh-pWa"/>
+                    <constraint firstItem="uk1-gS-8gg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="dcr-yW-Mvh"/>
+                    <constraint firstItem="us6-im-8Td" firstAttribute="leading" secondItem="uk1-gS-8gg" secondAttribute="trailing" constant="5" id="mlr-bW-bml"/>
+                    <constraint firstItem="us6-im-8Td" firstAttribute="leading" secondItem="uk1-gS-8gg" secondAttribute="trailing" constant="5" id="wjY-MN-y0g"/>
+                    <constraint firstItem="uk1-gS-8gg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ys8-nX-1Gc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="countryImage" destination="uk1-gS-8gg" id="Spm-9T-RLw"/>
+                <outlet property="countryName" destination="us6-im-8Td" id="j1a-Ca-nml"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

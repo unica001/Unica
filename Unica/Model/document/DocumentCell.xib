@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="Documentcell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9iW-ec-8iF">
+                        <rect key="frame" x="18" y="13.5" width="244" height="16.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16.5" id="bkX-aE-HJB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FhG-E4-Gr2">
+                        <rect key="frame" x="272" y="10" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="LWW-5O-cRd"/>
+                            <constraint firstAttribute="height" constant="25" id="ReL-0K-QeD"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9iW-ec-8iF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="11j-fa-YhI"/>
+                    <constraint firstItem="9iW-ec-8iF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="5qc-jY-arB"/>
+                    <constraint firstItem="FhG-E4-Gr2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AOX-zq-Syr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="FhG-E4-Gr2" secondAttribute="trailing" constant="15" id="H8w-VS-xce"/>
+                    <constraint firstItem="FhG-E4-Gr2" firstAttribute="leading" secondItem="9iW-ec-8iF" secondAttribute="trailing" constant="10" id="fNh-4G-BYT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="checkImageView" destination="FhG-E4-Gr2" id="Ifl-zX-Vj4"/>
+                <outlet property="fileNameHightConstraint" destination="bkX-aE-HJB" id="65S-rC-OUO"/>
+                <outlet property="fileNameLabel" destination="9iW-ec-8iF" id="mee-Qp-hDG"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

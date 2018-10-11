@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Regular.ttf">
+            <string>SFUIText-Regular</string>
+        </array>
+        <array key="SFUIText-Semibold.ttf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddEventPopUp">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m7U-aW-GNl">
+                    <rect key="frame" x="10" y="35" width="175" height="45"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name of the Event" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5RE-Wx-7rW">
+                            <rect key="frame" x="8" y="4" width="167" height="37"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="54n-8F-rSe"/>
+                        <constraint firstItem="5RE-Wx-7rW" firstAttribute="top" secondItem="m7U-aW-GNl" secondAttribute="top" constant="4" id="9ph-m0-4oe"/>
+                        <constraint firstAttribute="trailing" secondItem="5RE-Wx-7rW" secondAttribute="trailing" id="Bba-cC-C7s"/>
+                        <constraint firstItem="5RE-Wx-7rW" firstAttribute="leading" secondItem="m7U-aW-GNl" secondAttribute="leading" constant="8" id="lpD-CF-M54"/>
+                        <constraint firstAttribute="bottom" secondItem="5RE-Wx-7rW" secondAttribute="bottom" constant="4" id="x0p-bb-gBR"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd8-ts-P2M">
+                    <rect key="frame" x="195" y="35" width="170" height="45"/>
+                    <subviews>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gr0-fm-ZpB">
+                            <rect key="frame" x="0.0" y="0.0" width="170" height="45"/>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Calendar" translatesAutoresizingMaskIntoConstraints="NO" id="8tc-qb-30y">
+                            <rect key="frame" x="145" y="12.5" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Mwe-gf-sfA"/>
+                                <constraint firstAttribute="width" constant="20" id="rJU-o4-pQ4"/>
+                            </constraints>
+                        </imageView>
+                        <textField hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Event End Date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gev-rY-7Bz">
+                            <rect key="frame" x="5" y="7.5" width="137" height="30"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="gr0-fm-ZpB" firstAttribute="leading" secondItem="xd8-ts-P2M" secondAttribute="leading" id="2bZ-zo-8zR"/>
+                        <constraint firstItem="8tc-qb-30y" firstAttribute="leading" secondItem="Gev-rY-7Bz" secondAttribute="trailing" constant="3" id="33F-MK-vQR"/>
+                        <constraint firstAttribute="height" constant="45" id="3rL-Zl-SJX"/>
+                        <constraint firstAttribute="bottom" secondItem="gr0-fm-ZpB" secondAttribute="bottom" id="6HQ-hY-AcO"/>
+                        <constraint firstItem="8tc-qb-30y" firstAttribute="centerY" secondItem="xd8-ts-P2M" secondAttribute="centerY" id="AW6-zK-JmH"/>
+                        <constraint firstAttribute="trailing" secondItem="gr0-fm-ZpB" secondAttribute="trailing" id="QCG-UF-y5b"/>
+                        <constraint firstItem="Gev-rY-7Bz" firstAttribute="leading" secondItem="xd8-ts-P2M" secondAttribute="leading" constant="5" id="QwP-Ot-OE0"/>
+                        <constraint firstAttribute="bottom" secondItem="Gev-rY-7Bz" secondAttribute="bottom" constant="7.5" id="RvP-2X-aql"/>
+                        <constraint firstAttribute="trailing" secondItem="8tc-qb-30y" secondAttribute="trailing" constant="5" id="avB-Io-KpB"/>
+                        <constraint firstItem="gr0-fm-ZpB" firstAttribute="top" secondItem="xd8-ts-P2M" secondAttribute="top" id="b3d-EN-RVC"/>
+                        <constraint firstItem="Gev-rY-7Bz" firstAttribute="top" secondItem="xd8-ts-P2M" secondAttribute="top" constant="7.5" id="mJO-uO-XcW"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLa-3l-w7u">
+                    <rect key="frame" x="65" y="118" width="115" height="34"/>
+                    <color key="backgroundColor" red="0.085413135589999994" green="0.34003537890000002" blue="0.60281348229999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="ubq-ik-sQv"/>
+                        <constraint firstAttribute="width" constant="115" id="ui9-cQ-qHe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                    <state key="normal" title="OK">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnO-EG-54V">
+                    <rect key="frame" x="195" y="118" width="115" height="34"/>
+                    <color key="backgroundColor" red="0.96862745098039216" green="0.16470588235294117" blue="0.27450980392156865" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                    <state key="normal" title="CANCEL">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziG-RW-F07">
+                    <rect key="frame" x="10" y="88" width="322" height="21"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
+                    <color key="textColor" red="1" green="0.2666666667" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="m7U-aW-GNl" firstAttribute="centerY" secondItem="xd8-ts-P2M" secondAttribute="centerY" id="2py-74-XjK"/>
+                <constraint firstItem="xd8-ts-P2M" firstAttribute="leading" secondItem="m7U-aW-GNl" secondAttribute="trailing" constant="10" id="3py-q0-Rsu"/>
+                <constraint firstAttribute="bottomMargin" secondItem="bLa-3l-w7u" secondAttribute="bottom" constant="8" id="567-Hf-QZw"/>
+                <constraint firstItem="bLa-3l-w7u" firstAttribute="top" secondItem="ziG-RW-F07" secondAttribute="bottom" constant="9" id="7aj-TN-Wjx"/>
+                <constraint firstItem="fnO-EG-54V" firstAttribute="centerY" secondItem="bLa-3l-w7u" secondAttribute="centerY" id="BC6-im-LJy"/>
+                <constraint firstItem="m7U-aW-GNl" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="Emt-Uz-n7v"/>
+                <constraint firstItem="fnO-EG-54V" firstAttribute="height" secondItem="bLa-3l-w7u" secondAttribute="height" id="Ung-p5-I1g"/>
+                <constraint firstItem="bLa-3l-w7u" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerXWithinMargins" constant="-65" id="c9C-eS-e8G"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ziG-RW-F07" secondAttribute="trailing" constant="43" id="fM6-rT-EuX"/>
+                <constraint firstItem="xd8-ts-P2M" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="170:375" id="iZe-iU-DAY"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xd8-ts-P2M" secondAttribute="trailing" constant="10" id="kUB-ys-2es"/>
+                <constraint firstItem="ziG-RW-F07" firstAttribute="top" secondItem="m7U-aW-GNl" secondAttribute="bottom" constant="8" id="mVX-5v-yO1"/>
+                <constraint firstItem="fnO-EG-54V" firstAttribute="width" secondItem="bLa-3l-w7u" secondAttribute="width" id="oBk-SJ-W2d"/>
+                <constraint firstItem="ziG-RW-F07" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="ol9-hP-5hg"/>
+                <constraint firstItem="xd8-ts-P2M" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="35" id="xh5-HJ-afX"/>
+                <constraint firstItem="fnO-EG-54V" firstAttribute="leading" secondItem="bLa-3l-w7u" secondAttribute="trailing" constant="15" id="y7W-sU-gx7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="btnCalender" destination="gr0-fm-ZpB" id="1lR-bg-X3h"/>
+                <outlet property="btnCancel" destination="fnO-EG-54V" id="bZI-dP-dyf"/>
+                <outlet property="btnOk" destination="bLa-3l-w7u" id="hev-t5-xku"/>
+                <outlet property="lblMsg" destination="ziG-RW-F07" id="lka-vu-gKn"/>
+                <outlet property="txtFieldEndDate" destination="Gev-rY-7Bz" id="0jh-jo-38g"/>
+                <outlet property="txtFieldEvent" destination="5RE-Wx-7rW" id="bW4-Mn-hG6"/>
+                <outlet property="viewEndDate" destination="xd8-ts-P2M" id="1YC-rV-UrT"/>
+                <outlet property="viewEvent" destination="m7U-aW-GNl" id="IhX-Dn-xdV"/>
+            </connections>
+            <point key="canvasLocation" x="-80.5" y="-35"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Calendar" width="12" height="12"/>
+    </resources>
+</document>

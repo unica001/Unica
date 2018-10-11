@@ -1,0 +1,80 @@
+{
+    "predictLevel": [
+              {
+              "id": "1",
+              "name": "IELTS English Level Description",
+              "ielts": "(1.0 - 9.0)",
+              "toeflibt": "(0 - 120)",
+                     },
+        {
+                     "id": "2",
+                     "name": "Expert",
+                     "ielts": "9.0",
+                     "toeflibt": "120",
+                     },
+                     {
+                     "id": "2",
+                     "name": "Expert",
+                     "ielts": "9.0",
+                     "toeflibt": "120",
+                     },
+                     {
+                     "id": "3",
+                     "name": "Very Good",
+                     "ielts": "8.5",
+                     "toeflibt": "115-119",
+                     }
+                     ,
+                     {
+                     "id": "4",
+                     "name": "Very Good",
+                     "ielts": "8",
+                     "toeflibt": "110-114",
+                     },
+                     {
+                     "id": "5",
+                     "name": "Good",
+                     "ielts": "7.5",
+                     "toeflibt": "102-109",
+                     },
+                     {
+                     "id": "6",
+                     "name": "Good",
+                     "ielts": "7",
+                     "toeflibt": "94-101",
+                     },
+                     
+                     {
+                     "id": "7",
+                     "name": "Competent",
+                     "ielts": "6.5",
+                     "toeflibt": "79-93",
+                     },
+                     {
+                     "id": "8",
+                     "name": "Modest",
+                     "ielts": "5.5",
+                     "toeflibt": "46-59",
+                     },
+                     {
+                     "id": "9",
+                     "name": "Modest",
+                     "ielts": "5",
+                     "toeflibt": "35-45",
+                     },
+                     {
+                     "id": "10",
+                     "name": "Limited",
+                     "ielts": "4.5",
+                     "toeflibt": "32-34",
+                     },
+                     {
+                     "id": "11",
+                     "name": "Extremely Limited",
+                     "ielts": "< 4.0",
+                     "toeflibt": "< 31",
+                     }
+
+
+              ]
+}

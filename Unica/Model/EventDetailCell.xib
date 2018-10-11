@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Light.ttf">
+            <string>SFUIText-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventDetailCell" id="KGk-i7-Jjw" customClass="EventDetailCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="39.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OvI-DS-doT">
+                        <rect key="frame" x="40" y="0.0" width="275" height="40"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="yqJ-CE-naH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Calendar" translatesAutoresizingMaskIntoConstraints="NO" id="5tS-GM-U9i">
+                        <rect key="frame" x="10" y="10" width="18" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="FcK-oD-ciK"/>
+                            <constraint firstAttribute="height" constant="18" id="jKQ-ZB-ych"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="OvI-DS-doT" secondAttribute="trailing" constant="5" id="7qK-J0-dj7"/>
+                    <constraint firstItem="OvI-DS-doT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="b7p-R4-Zgd"/>
+                    <constraint firstItem="5tS-GM-U9i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hZ1-cF-0xk"/>
+                    <constraint firstItem="OvI-DS-doT" firstAttribute="leading" secondItem="5tS-GM-U9i" secondAttribute="trailing" constant="12" id="lLn-On-6Ij"/>
+                    <constraint firstItem="5tS-GM-U9i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="zGj-7j-cgv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconTopSpaceconstant" destination="hZ1-cF-0xk" id="EoS-B4-rdD"/>
+                <outlet property="logoImageView" destination="5tS-GM-U9i" id="bEE-jb-cdr"/>
+                <outlet property="logoImageWidth" destination="FcK-oD-ciK" id="oTd-dw-7DE"/>
+                <outlet property="nameLabel" destination="OvI-DS-doT" id="9dl-ka-U2o"/>
+                <outlet property="nameLabelHeight" destination="yqJ-CE-naH" id="Z5L-Bi-PMs"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Calendar" width="12" height="12"/>
+    </resources>
+</document>

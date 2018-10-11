@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Regular.ttf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="85" id="KGk-i7-Jjw" customClass="studentCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="84.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9s-2Z-X9j">
+                        <rect key="frame" x="169" y="5" width="146" height="74.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asdfghgfdsadfgdfgh gfhfdsa sdfghfdsa sdfghjgfds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auV-jK-RXH">
+                                <rect key="frame" x="8" y="3" width="134" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="SgV-fs-50g"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="auV-jK-RXH" firstAttribute="leading" secondItem="Z9s-2Z-X9j" secondAttribute="leading" constant="8" id="Ms5-C9-Cds"/>
+                            <constraint firstAttribute="bottom" secondItem="auV-jK-RXH" secondAttribute="bottom" constant="3" id="XMk-Oy-dDb"/>
+                            <constraint firstAttribute="trailing" secondItem="auV-jK-RXH" secondAttribute="trailing" constant="4" id="d22-eh-BzP"/>
+                            <constraint firstItem="auV-jK-RXH" firstAttribute="top" secondItem="Z9s-2Z-X9j" secondAttribute="top" constant="3" id="nP6-DO-dIR"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hjknbvcx dfghj asdfghjk sdfghj sdfghjk sdfghj " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmW-Dk-afJ">
+                        <rect key="frame" x="18" y="17.5" width="146" height="50.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="zWN-UB-52i"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Z9s-2Z-X9j" firstAttribute="width" secondItem="kmW-Dk-afJ" secondAttribute="width" id="9Lf-9k-U44"/>
+                    <constraint firstItem="kmW-Dk-afJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="PMT-3R-MsK"/>
+                    <constraint firstAttribute="bottom" secondItem="Z9s-2Z-X9j" secondAttribute="bottom" constant="5" id="VqV-3h-Fkb"/>
+                    <constraint firstItem="Z9s-2Z-X9j" firstAttribute="leading" secondItem="kmW-Dk-afJ" secondAttribute="trailing" constant="5" id="dlI-cB-K0x"/>
+                    <constraint firstAttribute="trailing" secondItem="Z9s-2Z-X9j" secondAttribute="trailing" constant="5" id="ghF-Hm-eIx"/>
+                    <constraint firstItem="kmW-Dk-afJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="k8Q-Lf-Eol"/>
+                    <constraint firstItem="Z9s-2Z-X9j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="nwk-9m-HdA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="contentHeaderLabel" destination="kmW-Dk-afJ" id="DSk-yL-I5G"/>
+                <outlet property="detailLabel" destination="auV-jK-RXH" id="hzS-aF-1VW"/>
+                <outlet property="outerView" destination="Z9s-2Z-X9j" id="n8E-1E-IOf"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="105.5"/>
+        </tableViewCell>
+    </objects>
+</document>
