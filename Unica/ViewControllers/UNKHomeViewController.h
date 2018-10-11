@@ -12,7 +12,8 @@
 
 
 @interface UNKHomeViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,SWRevealViewControllerDelegate,UIGestureRecognizerDelegate>{
-
+    __weak IBOutlet UIView *viewSearchOption;
+    
     __weak IBOutlet UIBarButtonItem *_backButton;
 
     __weak IBOutlet UICollectionView *_collectionView;
@@ -29,7 +30,7 @@
     
     UILabel *badgeLabel;
 }
-
+@property(nonatomic, assign) BOOL isQuickShown;
 @property(nonatomic, strong) id<GAITracker> tracker;
 
 @property (strong, nonatomic) UIWindow *window;

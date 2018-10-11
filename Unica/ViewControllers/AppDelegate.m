@@ -559,7 +559,8 @@ static NSString * const kClientID = @"616694839236-iq0tue5bstbj6p782fo3vj47bemak
                     UIStoryboard *storyBoard =[UIStoryboard storyboardWithName:@"Main" bundle:nil];
                     
                     UNKHomeViewController * homeViewController =[storyBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
-                    
+                    homeViewController.isQuickShown = YES;
+
                     UNKRevealMenuViewController *rearViewController = [storyBoard instantiateViewControllerWithIdentifier:@"revealMenuView"];
                     UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
                     
@@ -637,7 +638,8 @@ static NSString * const kClientID = @"616694839236-iq0tue5bstbj6p782fo3vj47bemak
                         UIStoryboard *storyBoard =[UIStoryboard storyboardWithName:@"Main" bundle:nil];
                         
                         UNKHomeViewController * homeViewController =[storyBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
-                        
+                        homeViewController.isQuickShown = YES;
+
                         UNKRevealMenuViewController *rearViewController = [storyBoard instantiateViewControllerWithIdentifier:@"revealMenuView"];
                         UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
                         

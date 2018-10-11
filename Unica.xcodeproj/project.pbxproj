@@ -235,6 +235,23 @@
 		9A48358B216E215900127D52 /* MyScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48358A216E215900127D52 /* MyScheduleViewController.m */; };
 		9A48358F216E24AB00127D52 /* MyScheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48358D216E24AB00127D52 /* MyScheduleCell.m */; };
 		9A483590216E24AB00127D52 /* MyScheduleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A48358E216E24AB00127D52 /* MyScheduleCell.xib */; };
+		9A4835A3216F75B400127D52 /* MeetingReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A483593216F75B000127D52 /* MeetingReportCell.m */; };
+		9A4835A4216F75B400127D52 /* MeetingReportParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A483595216F75B100127D52 /* MeetingReportParticipantCell.xib */; };
+		9A4835A5216F75B400127D52 /* MeetingReportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A483597216F75B200127D52 /* MeetingReportCell.xib */; };
+		9A4835A6216F75B400127D52 /* UNKRecordExpressionListViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48359A216F75B200127D52 /* UNKRecordExpressionListViewC.m */; };
+		9A4835A7216F75B400127D52 /* UNKMeetingParticipantViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48359B216F75B200127D52 /* UNKMeetingParticipantViewC.m */; };
+		9A4835A8216F75B400127D52 /* UNKRecordAllParticipantViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48359C216F75B200127D52 /* UNKRecordAllParticipantViewC.m */; };
+		9A4835A9216F75B400127D52 /* UNKRecordExpressionViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48359D216F75B300127D52 /* UNKRecordExpressionViewC.m */; };
+		9A4835AA216F75B400127D52 /* UNKMeetingReportViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A48359F216F75B300127D52 /* UNKMeetingReportViewC.m */; };
+		9A4835AB216F75B400127D52 /* MeetingReportParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835A1216F75B300127D52 /* MeetingReportParticipantCell.m */; };
+		9A4835B4216F766100127D52 /* ShortlistCourseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A4835AF216F766000127D52 /* ShortlistCourseCell.xib */; };
+		9A4835B5216F766100127D52 /* ShortlistCourseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835B1216F766000127D52 /* ShortlistCourseCell.m */; };
+		9A4835B6216F766100127D52 /* ShortlistedViewc.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835B2216F766100127D52 /* ShortlistedViewc.m */; };
+		9A4835BA216F76B200127D52 /* QuickSearchViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835B9216F76B100127D52 /* QuickSearchViewC.m */; };
+		9A4835C2216F789200127D52 /* UNKCountryFilterViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835BC216F789100127D52 /* UNKCountryFilterViewC.m */; };
+		9A4835C3216F789200127D52 /* UNKEventFilterViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835BE216F789100127D52 /* UNKEventFilterViewC.m */; };
+		9A4835C4216F789200127D52 /* UNKFilterViewC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4835C1216F789200127D52 /* UNKFilterViewC.m */; };
+		9A4835C6216F7B9400127D52 /* Student.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A4835C5216F7B9300127D52 /* Student.storyboard */; };
 		9A62DADE2165D95700FFCCF7 /* AjentHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A62DADD2165D95700FFCCF7 /* AjentHeaderCell.xib */; };
 		9A62DAE12166180800FFCCF7 /* ParticipantsSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A62DAE02166180800FFCCF7 /* ParticipantsSegmentViewController.m */; };
 		9A62DAE42166265F00FFCCF7 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A62DAE32166265F00FFCCF7 /* ParticipantsViewController.m */; };
@@ -710,6 +727,36 @@
 		9A48358C216E24AB00127D52 /* MyScheduleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScheduleCell.h; sourceTree = "<group>"; };
 		9A48358D216E24AB00127D52 /* MyScheduleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScheduleCell.m; sourceTree = "<group>"; };
 		9A48358E216E24AB00127D52 /* MyScheduleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyScheduleCell.xib; sourceTree = "<group>"; };
+		9A483593216F75B000127D52 /* MeetingReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeetingReportCell.m; path = "Meeting Report/MeetingReportCell.m"; sourceTree = "<group>"; };
+		9A483594216F75B100127D52 /* MeetingReportParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeetingReportParticipantCell.h; path = "Meeting Report/MeetingReportParticipantCell.h"; sourceTree = "<group>"; };
+		9A483595216F75B100127D52 /* MeetingReportParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeetingReportParticipantCell.xib; path = "Meeting Report/MeetingReportParticipantCell.xib"; sourceTree = "<group>"; };
+		9A483596216F75B100127D52 /* UNKMeetingReportViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKMeetingReportViewC.h; path = "Meeting Report/UNKMeetingReportViewC.h"; sourceTree = "<group>"; };
+		9A483597216F75B200127D52 /* MeetingReportCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeetingReportCell.xib; path = "Meeting Report/MeetingReportCell.xib"; sourceTree = "<group>"; };
+		9A483598216F75B200127D52 /* UNKRecordExpressionListViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKRecordExpressionListViewC.h; path = "Meeting Report/UNKRecordExpressionListViewC.h"; sourceTree = "<group>"; };
+		9A483599216F75B200127D52 /* MeetingReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeetingReportCell.h; path = "Meeting Report/MeetingReportCell.h"; sourceTree = "<group>"; };
+		9A48359A216F75B200127D52 /* UNKRecordExpressionListViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKRecordExpressionListViewC.m; path = "Meeting Report/UNKRecordExpressionListViewC.m"; sourceTree = "<group>"; };
+		9A48359B216F75B200127D52 /* UNKMeetingParticipantViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKMeetingParticipantViewC.m; path = "Meeting Report/UNKMeetingParticipantViewC.m"; sourceTree = "<group>"; };
+		9A48359C216F75B200127D52 /* UNKRecordAllParticipantViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKRecordAllParticipantViewC.m; path = "Meeting Report/UNKRecordAllParticipantViewC.m"; sourceTree = "<group>"; };
+		9A48359D216F75B300127D52 /* UNKRecordExpressionViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKRecordExpressionViewC.m; path = "Meeting Report/UNKRecordExpressionViewC.m"; sourceTree = "<group>"; };
+		9A48359E216F75B300127D52 /* UNKMeetingParticipantViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKMeetingParticipantViewC.h; path = "Meeting Report/UNKMeetingParticipantViewC.h"; sourceTree = "<group>"; };
+		9A48359F216F75B300127D52 /* UNKMeetingReportViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKMeetingReportViewC.m; path = "Meeting Report/UNKMeetingReportViewC.m"; sourceTree = "<group>"; };
+		9A4835A0216F75B300127D52 /* UNKRecordAllParticipantViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKRecordAllParticipantViewC.h; path = "Meeting Report/UNKRecordAllParticipantViewC.h"; sourceTree = "<group>"; };
+		9A4835A1216F75B300127D52 /* MeetingReportParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeetingReportParticipantCell.m; path = "Meeting Report/MeetingReportParticipantCell.m"; sourceTree = "<group>"; };
+		9A4835A2216F75B400127D52 /* UNKRecordExpressionViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKRecordExpressionViewC.h; path = "Meeting Report/UNKRecordExpressionViewC.h"; sourceTree = "<group>"; };
+		9A4835AF216F766000127D52 /* ShortlistCourseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShortlistCourseCell.xib; path = Shorlisted/ShortlistCourseCell.xib; sourceTree = "<group>"; };
+		9A4835B0216F766000127D52 /* ShortlistCourseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShortlistCourseCell.h; path = Shorlisted/ShortlistCourseCell.h; sourceTree = "<group>"; };
+		9A4835B1216F766000127D52 /* ShortlistCourseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortlistCourseCell.m; path = Shorlisted/ShortlistCourseCell.m; sourceTree = "<group>"; };
+		9A4835B2216F766100127D52 /* ShortlistedViewc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShortlistedViewc.m; path = Shorlisted/ShortlistedViewc.m; sourceTree = "<group>"; };
+		9A4835B3216F766100127D52 /* ShortlistedViewc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShortlistedViewc.h; path = Shorlisted/ShortlistedViewc.h; sourceTree = "<group>"; };
+		9A4835B8216F76B100127D52 /* QuickSearchViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickSearchViewC.h; path = QuickSearch/QuickSearchViewC.h; sourceTree = "<group>"; };
+		9A4835B9216F76B100127D52 /* QuickSearchViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickSearchViewC.m; path = QuickSearch/QuickSearchViewC.m; sourceTree = "<group>"; };
+		9A4835BC216F789100127D52 /* UNKCountryFilterViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKCountryFilterViewC.m; path = Filter/UNKCountryFilterViewC.m; sourceTree = "<group>"; };
+		9A4835BD216F789100127D52 /* UNKFilterViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKFilterViewC.h; path = Filter/UNKFilterViewC.h; sourceTree = "<group>"; };
+		9A4835BE216F789100127D52 /* UNKEventFilterViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKEventFilterViewC.m; path = Filter/UNKEventFilterViewC.m; sourceTree = "<group>"; };
+		9A4835BF216F789200127D52 /* UNKEventFilterViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKEventFilterViewC.h; path = Filter/UNKEventFilterViewC.h; sourceTree = "<group>"; };
+		9A4835C0216F789200127D52 /* UNKCountryFilterViewC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKCountryFilterViewC.h; path = Filter/UNKCountryFilterViewC.h; sourceTree = "<group>"; };
+		9A4835C1216F789200127D52 /* UNKFilterViewC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKFilterViewC.m; path = Filter/UNKFilterViewC.m; sourceTree = "<group>"; };
+		9A4835C5216F7B9300127D52 /* Student.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Student.storyboard; sourceTree = "<group>"; };
 		9A62DADD2165D95700FFCCF7 /* AjentHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AjentHeaderCell.xib; sourceTree = "<group>"; };
 		9A62DADF2166180800FFCCF7 /* ParticipantsSegmentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticipantsSegmentViewController.h; sourceTree = "<group>"; };
 		9A62DAE02166180800FFCCF7 /* ParticipantsSegmentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParticipantsSegmentViewController.m; sourceTree = "<group>"; };
@@ -1356,6 +1403,7 @@
 				0EA40FB22077627E0021B1E8 /* agent.storyboard */,
 				8891FFF71E66928A00233A3F /* Main.storyboard */,
 				8891FFFF1E66928A00233A3F /* LaunchScreen.storyboard */,
+				9A4835C5216F7B9300127D52 /* Student.storyboard */,
 				100521541E8E8700005B3DDF /* GAF.storyboard */,
 			);
 			name = StoryBoard;
@@ -1433,6 +1481,10 @@
 		8891000C1E66938800233A3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9A4835BB216F787900127D52 /* Filter */,
+				9A4835B7216F767200127D52 /* QuickSearch */,
+				9A4835AE216F764E00127D52 /* Shorlisted */,
+				9A483592216F756400127D52 /* Meeting Report */,
 				88C25AE51E8A35BD00314BDB /* Course */,
 				10DD7F981F20C81F0025679D /* UNKNotificationViewController.h */,
 				10DD7F991F20C81F0025679D /* UNKNotificationViewController.m */,
@@ -1844,6 +1896,63 @@
 			name = MySchedule;
 			sourceTree = "<group>";
 		};
+		9A483592216F756400127D52 /* Meeting Report */ = {
+			isa = PBXGroup;
+			children = (
+				9A483599216F75B200127D52 /* MeetingReportCell.h */,
+				9A483593216F75B000127D52 /* MeetingReportCell.m */,
+				9A483597216F75B200127D52 /* MeetingReportCell.xib */,
+				9A483594216F75B100127D52 /* MeetingReportParticipantCell.h */,
+				9A4835A1216F75B300127D52 /* MeetingReportParticipantCell.m */,
+				9A483595216F75B100127D52 /* MeetingReportParticipantCell.xib */,
+				9A48359E216F75B300127D52 /* UNKMeetingParticipantViewC.h */,
+				9A48359B216F75B200127D52 /* UNKMeetingParticipantViewC.m */,
+				9A483596216F75B100127D52 /* UNKMeetingReportViewC.h */,
+				9A48359F216F75B300127D52 /* UNKMeetingReportViewC.m */,
+				9A4835A0216F75B300127D52 /* UNKRecordAllParticipantViewC.h */,
+				9A48359C216F75B200127D52 /* UNKRecordAllParticipantViewC.m */,
+				9A483598216F75B200127D52 /* UNKRecordExpressionListViewC.h */,
+				9A48359A216F75B200127D52 /* UNKRecordExpressionListViewC.m */,
+				9A4835A2216F75B400127D52 /* UNKRecordExpressionViewC.h */,
+				9A48359D216F75B300127D52 /* UNKRecordExpressionViewC.m */,
+			);
+			name = "Meeting Report";
+			sourceTree = "<group>";
+		};
+		9A4835AE216F764E00127D52 /* Shorlisted */ = {
+			isa = PBXGroup;
+			children = (
+				9A4835B0216F766000127D52 /* ShortlistCourseCell.h */,
+				9A4835B1216F766000127D52 /* ShortlistCourseCell.m */,
+				9A4835AF216F766000127D52 /* ShortlistCourseCell.xib */,
+				9A4835B3216F766100127D52 /* ShortlistedViewc.h */,
+				9A4835B2216F766100127D52 /* ShortlistedViewc.m */,
+			);
+			name = Shorlisted;
+			sourceTree = "<group>";
+		};
+		9A4835B7216F767200127D52 /* QuickSearch */ = {
+			isa = PBXGroup;
+			children = (
+				9A4835B8216F76B100127D52 /* QuickSearchViewC.h */,
+				9A4835B9216F76B100127D52 /* QuickSearchViewC.m */,
+			);
+			name = QuickSearch;
+			sourceTree = "<group>";
+		};
+		9A4835BB216F787900127D52 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				9A4835C0216F789200127D52 /* UNKCountryFilterViewC.h */,
+				9A4835BC216F789100127D52 /* UNKCountryFilterViewC.m */,
+				9A4835BF216F789200127D52 /* UNKEventFilterViewC.h */,
+				9A4835BE216F789100127D52 /* UNKEventFilterViewC.m */,
+				9A4835BD216F789100127D52 /* UNKFilterViewC.h */,
+				9A4835C1216F789200127D52 /* UNKFilterViewC.m */,
+			);
+			name = Filter;
+			sourceTree = "<group>";
+		};
 		9A62DADC2165D93C00FFCCF7 /* AjentCellHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -2122,6 +2231,7 @@
 				10D04C321F34448100389D8D /* Config.plist in Resources */,
 				88694F4A1E6825D10036EB54 /* SFUIText-Medium.ttf in Resources */,
 				BAF4758B207BDBA5000BB312 /* studentCell.xib in Resources */,
+				9A4835B4216F766100127D52 /* ShortlistCourseCell.xib in Resources */,
 				88DB5FCE1E1881D1002CBB87 /* countryDataCell.xib in Resources */,
 				88ADDC381E8BD8C6007114FA /* CourseDescriptionCell.xib in Resources */,
 				10D04C401F34448200389D8D /* WebViewController.xib in Resources */,
@@ -2160,6 +2270,7 @@
 				9A62DADE2165D95700FFCCF7 /* AjentHeaderCell.xib in Resources */,
 				BA1609C920AF04F8007B7E8E /* Cellfilter.xib in Resources */,
 				10D04C4B1F34448200389D8D /* uncheck.png in Resources */,
+				9A4835A5216F75B400127D52 /* MeetingReportCell.xib in Resources */,
 				C42A1C6B1F55A42B0006E734 /* CashAndNetBankingCell_iPad.xib in Resources */,
 				88694F401E6822650036EB54 /* SignInCell.xib in Resources */,
 				0EA40FB32077627E0021B1E8 /* agent.storyboard in Resources */,
@@ -2173,6 +2284,7 @@
 				8891FFF91E66928A00233A3F /* Main.storyboard in Resources */,
 				BA1609C420AEDE76007B7E8E /* BusinessFilterPopUP.xib in Resources */,
 				884106D51E7298A6008051F5 /* CountryCell.xib in Resources */,
+				9A4835A4216F75B400127D52 /* MeetingReportParticipantCell.xib in Resources */,
 				C42A1C6E1F55A42B0006E734 /* CreditCardCell_iPad.xib in Resources */,
 				88D1A8481F681397004E9758 /* courseFeeCell.xib in Resources */,
 				10D04C411F34448200389D8D /* arrow.png in Resources */,
@@ -2200,6 +2312,7 @@
 				BAF475D2207BEFBE000BB312 /* filterpopView.xib in Resources */,
 				88DC704A1E9798C9000D527A /* settingCell.xib in Resources */,
 				10D04C481F34448200389D8D /* RadioOff.png in Resources */,
+				9A4835C6216F7B9400127D52 /* Student.storyboard in Resources */,
 				C42A1C6C1F55A42B0006E734 /* CashAndNetBankingCell.xib in Resources */,
 				10D04C3C1F34448100389D8D /* PaymentModeViewController.xib in Resources */,
 				10D04C451F34448200389D8D /* close@2x.png in Resources */,
@@ -2420,12 +2533,16 @@
 				88D136F31E8134210034E15D /* UNKAgentFilterViewController.m in Sources */,
 				104DE7A51F2B3DDA00BE94E1 /* notificationCell.m in Sources */,
 				8891FFFC1E66928A00233A3F /* Unica.xcdatamodeld in Sources */,
+				9A4835B6216F766100127D52 /* ShortlistedViewc.m in Sources */,
 				0EA40FE22079140F0021B1E8 /* remarkCell.m in Sources */,
 				8891001C1E6696A900233A3F /* PhoneNumberFormatter.m in Sources */,
 				888D09901E99F70D00F6D103 /* ContactUsCell.m in Sources */,
+				9A4835AA216F75B400127D52 /* UNKMeetingReportViewC.m in Sources */,
 				9BA5DD0B1E90B2D40033EA85 /* UNKEventViewController.m in Sources */,
 				BAF4758F207BE1CE000BB312 /* XYPieChart.m in Sources */,
+				9A4835C4216F789200127D52 /* UNKFilterViewC.m in Sources */,
 				0EA40FC6207772B00021B1E8 /* ViewBusinessCardDetailVC.m in Sources */,
+				9A4835A9216F75B400127D52 /* UNKRecordExpressionViewC.m in Sources */,
 				9A62DAE12166180800FFCCF7 /* ParticipantsSegmentViewController.m in Sources */,
 				88DC70491E9798C9000D527A /* settingCell.m in Sources */,
 				889100191E66969B00233A3F /* Control.m in Sources */,
@@ -2439,6 +2556,7 @@
 				88ADDC371E8BD8C6007114FA /* CourseDescriptionCell.m in Sources */,
 				88ADDC331E8BC39B007114FA /* UNKCourseDetailsViewController.m in Sources */,
 				BA1609C220AEDB61007B7E8E /* BusinessFilterPopUP.m in Sources */,
+				9A4835A7216F75B400127D52 /* UNKMeetingParticipantViewC.m in Sources */,
 				0EA40FC9207773820021B1E8 /* BusinessCardListVC.m in Sources */,
 				0EA40FBD207771EB0021B1E8 /* AgentHomeVC.m in Sources */,
 				BAF475BA207BE850000BB312 /* PNCircleChart.m in Sources */,
@@ -2454,6 +2572,7 @@
 				88694F591E6826FF0036EB54 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				88694F411E6822650036EB54 /* SignInCell.m in Sources */,
 				0EA40FD920790A3E0021B1E8 /* busunesCardCell.m in Sources */,
+				9A4835BA216F76B200127D52 /* QuickSearchViewC.m in Sources */,
 				100521661E8E8787005B3DDF /* GlobalApplicationStep3ViewController.m in Sources */,
 				88498F941E8D2B8E00D39C7B /* UNKInstitudeVideoViewController.m in Sources */,
 				BAF475C3207BE850000BB312 /* PNRadarChartDataItem.m in Sources */,
@@ -2475,6 +2594,7 @@
 				8891FFF01E66928A00233A3F /* main.m in Sources */,
 				883C37AD1E9642BC000A40AA /* FavouriteCell.m in Sources */,
 				BAF475C6207BE850000BB312 /* PNScatterChartDataItem.m in Sources */,
+				9A4835A8216F75B400127D52 /* UNKRecordAllParticipantViewC.m in Sources */,
 				881318431F46F7C300DAF87A /* UNKQuestionnaireViewController.m in Sources */,
 				88A1FE331F679AD200FE0731 /* MPCountrySelectionCell.m in Sources */,
 				88694F601E6849E70036EB54 /* UNKForgotPasswordViewController.m in Sources */,
@@ -2483,6 +2603,7 @@
 				88498F8B1E8D28B400D39C7B /* UNKInstitudeViewController.m in Sources */,
 				88C25AE81E8A35E200314BDB /* UNKCourseViewController.m in Sources */,
 				885BDEE51E66B67E0091CCAF /* UNKSignInViewController.m in Sources */,
+				9A4835B5216F766100127D52 /* ShortlistCourseCell.m in Sources */,
 				88FF93A31E6ECB5D00D0652C /* MPStep1TextFieldCell.m in Sources */,
 				104DE7B81F2B3E9F00BE94E1 /* ResultTextFieldCell.m in Sources */,
 				88D136CF1E7F9A950034E15D /* SKSplashView.m in Sources */,
@@ -2499,6 +2620,7 @@
 				8891001F1E6696B700233A3F /* Utility.m in Sources */,
 				88FF93931E6E96E500D0652C /* UNKRevealMenuViewController.m in Sources */,
 				9A62DAE42166265F00FFCCF7 /* ParticipantsViewController.m in Sources */,
+				9A4835A6216F75B400127D52 /* UNKRecordExpressionListViewC.m in Sources */,
 				889100221E6696C400233A3F /* ConnectionManager.m in Sources */,
 				88694F581E6826FF0036EB54 /* TPKeyboardAvoidingTableView.m in Sources */,
 				88694F631E6855C70036EB54 /* UNKOTPViewController.m in Sources */,
@@ -2520,6 +2642,7 @@
 				884C479B1E976E4E002C9F2C /* UNKApplicationStatusViewController.m in Sources */,
 				10DD7F9A1F20C81F0025679D /* UNKNotificationViewController.m in Sources */,
 				0EA40FE7207A26E10021B1E8 /* viewBusinessCardCell.m in Sources */,
+				9A4835AB216F75B400127D52 /* MeetingReportParticipantCell.m in Sources */,
 				88DA4FF21E936E9300CEC2B9 /* VideoCell.m in Sources */,
 				9A483577216B776200127D52 /* ParticipantDetailViewController.m in Sources */,
 				886943D21E79001600A053DE /* HomeCollectionCell.m in Sources */,
@@ -2537,7 +2660,9 @@
 				100521971E8E88B8005B3DDF /* RadioButtonStep3.m in Sources */,
 				0EA40FCF207774380021B1E8 /* StudentDetailVC.m in Sources */,
 				98FD76C41F5D66F3007FE4E6 /* UNKGradeViewController.m in Sources */,
+				9A4835A3216F75B400127D52 /* MeetingReportCell.m in Sources */,
 				88D136CE1E7F9A950034E15D /* SKSplashIcon.m in Sources */,
+				9A4835C3216F789200127D52 /* UNKEventFilterViewC.m in Sources */,
 				884106C11E71BDA6008051F5 /* PredictLevelCell.m in Sources */,
 				BAF475C5207BE850000BB312 /* PNScatterChartData.m in Sources */,
 				BAF475B9207BE850000BB312 /* PNChartLabel.m in Sources */,
@@ -2554,6 +2679,7 @@
 				9ADA64C721672818006F659B /* ParticipantsCell.m in Sources */,
 				889100261E66972D00233A3F /* MBProgressHUD.m in Sources */,
 				9BA5DD101E90B31B0033EA85 /* EventCell.m in Sources */,
+				9A4835C2216F789200127D52 /* UNKCountryFilterViewC.m in Sources */,
 				108E71C31F31A21400A7916E /* Documentcell.m in Sources */,
 				88D136F01E8133B00034E15D /* YSLScrollMenuView.m in Sources */,
 				100521651E8E8787005B3DDF /* GlobalApplicationStep2ViewController.m in Sources */,

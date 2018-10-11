@@ -46,7 +46,8 @@
     UIStoryboard *storyBoard =[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     UNKHomeViewController * homeViewController =[storyBoard instantiateViewControllerWithIdentifier:@"homeViewController"];
-    
+    homeViewController.isQuickShown = YES;
+
     UNKRevealMenuViewController *rearViewController = [storyBoard instantiateViewControllerWithIdentifier:@"revealMenuView"];
     UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
     

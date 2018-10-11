@@ -648,10 +648,16 @@
 #define kbuttons @"buttons"
 #define kpark_free @"park_free"
 
+#define kMeetingReport @"meetingReport"
+#define kselectEvent @"selectEvent"
+#define KEvent @"Event"
+#define kTYPE @"TYPE"
+#define kEVENT @"EVENT"
 #define kMySchedule @"My Schedule"
 #define kViewParticipants @"View Participants"
 #define kRecord Expression @"Record Expression"
 #define kMeeting Report @"Meeting Report"
+#define kselectCountry @"selectCountry"
 
 #define kpayment_id @"payment_id"
 #define kpayment_response @"payment_response"

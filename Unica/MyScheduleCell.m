@@ -50,6 +50,7 @@
         else  if ([buttons[0][kType] integerValue] == 0) { // Park Free
             _viewButtons.hidden = true;
             _parkFreeLabel.text = buttons[0][kName];
+            _parkFreeLabel.hidden = false;
         }
         
     }

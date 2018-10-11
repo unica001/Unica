@@ -53,7 +53,7 @@
     if ([self.incomingViewType isEqualToString:kRegister]) {
         
         _lockImage.image = [UIImage imageNamed:@"Mobile"];
-        _OTPLabel.text = @"Sit Back & Relax! you will receive an OTP on your registered Email Id and Mobile number.";
+        _OTPLabel.text = @"Sit Back & Relax! you will receive an OTP on your registered Email Id.";
         _verifyLabel.text = @"Enter OTP below in case if we fail to detect it automatically ";
         // self.title = @"Mobile Verification";
         
@@ -70,7 +70,7 @@
         [self.navigationItem.leftBarButtonItem setTintColor:[UIColor clearColor]];
         [self.navigationItem.leftBarButtonItem setEnabled:NO];
         
-        _mobileNumberLabel.text = [loginDictionary valueForKey:kMobileNumber];
+        _mobileNumberLabel.text = [loginDictionary valueForKey:kEmail];
         
         
     }

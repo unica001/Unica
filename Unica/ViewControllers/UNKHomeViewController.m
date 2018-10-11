@@ -18,6 +18,9 @@
 #import "UNKWebViewController.h"
 #import "UNKComingSoonViewController.h"
 #import "UNKNotificationViewController.h"
+#import "QuickSearchViewC.h"
+#import "ShortlistedViewc.h"
+#import "UNKMeetingReportViewC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface UNKHomeViewController (){
@@ -33,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     [self getbanner];
     // google analytics
@@ -55,9 +59,9 @@
     }
     self.revealViewController.delegate = self;
 
-    _textArray = [NSMutableArray arrayWithObjects:@"SEARCH\nAGENTS",@"SEARCH\nCOURSES",@"SEARCH\nEVENTS",@"MY UNICA CODE",@"FAVOURITES",@"SCHOLARSHIP",@"GLOBAL\n APPLICATION",@"MY\nAPPLICATIONS",@"REFER\nA FRIEND",@"FEATURED\nDESTINATIONS",@"IMPORTANT\nLINKS",@"NOTIFICATIONS",nil];
-    
-    _imagesArray = [NSMutableArray arrayWithObjects:@"HomeSearchAgents",@"HomeSearchCourses",@"HomeSearchEvents",@"HomeMyUnicaCode",@"HomeFavorites",@"HomeScholarship",@"HomeGlobalApplicationForm",@"HomeMYApplication",@"HomeReferAFriend",@"HomeFeaturedDestinations",@"HomeImportantLinks",@"NotificationHome",nil];
+    _textArray = [NSMutableArray arrayWithObjects:@"SEARCH\nAGENTS",@"SEARCH\nCOURSES",@"SEARCH\nEVENTS",@"MY UNICA CODE",@"FAVOURITES", @"SHORTLISTED COURSES",@"SCHOLARSHIP",@"GLOBAL\n APPLICATION",@"MY\nAPPLICATIONS",@"REFER\nA FRIEND",@"IMPORTANT\nLINKS",@"NOTIFICATIONS",nil];
+    //@"FEATURED\nDESTINATIONS"@"HomeFeaturedDestinations"
+    _imagesArray = [NSMutableArray arrayWithObjects:@"HomeSearchAgents",@"HomeSearchCourses",@"HomeSearchEvents",@"HomeMyUnicaCode",@"HomeFavorites", @"", @"HomeScholarship",  @"HomeGlobalApplicationForm", @"HomeMYApplication",@"HomeReferAFriend",@"HomeImportantLinks",@"NotificationHome",nil];
     
     
     // bucket product count label
@@ -70,7 +74,11 @@
     badgeLabel.textAlignment = NSTextAlignmentCenter;
     badgeLabel.font = [UIFont systemFontOfSize:12];
     [self.navigationController.navigationBar addSubview:badgeLabel];
-    
+    if (_isQuickShown) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
+        QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
+        [self presentViewController:quickSearchViewC animated:false completion:nil];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -81,8 +89,6 @@
     [self unreadNotificationCount];
 
 }
-
-
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -163,7 +169,8 @@
         [self performSegueWithIdentifier:kAgentSegueIdentifier sender:kHomeView];
     }
      else if (indexPath.row == 1) {
-         [self performSegueWithIdentifier:kCourseSegueIdentifier sender:kHomeView];
+
+         [viewSearchOption setHidden:NO];
      }
      else if (indexPath.row == 2) {
          [self performSegueWithIdentifier:keventSegueIdentifier sender:kHomeView];
@@ -172,33 +179,39 @@
         [self performSegueWithIdentifier:kmyUnicaCodeSegueIdentifier sender:kHomeView];
     }
     else if (indexPath.row == 4) {// favourite
+       
         [self performSegueWithIdentifier:kAgentFilterSegueIdentifier sender:kFavourite];
-    }
-    else if (indexPath.row == 5) {
-        [self performSegueWithIdentifier:kwebviewSegueIdentifier sender:kSCHLOARSHIP];
+    } else if (indexPath.row == 5) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
+        ShortlistedViewc *shortlistViewC = (ShortlistedViewc*)[storyBoard instantiateViewControllerWithIdentifier:@"ShortlistedViewc"];
+        [self.navigationController pushViewController:shortlistViewC animated:YES];
     }
     else if (indexPath.row == 6) {
+        [self performSegueWithIdentifier:kwebviewSegueIdentifier sender:kSCHLOARSHIP];
+    }
+    else if (indexPath.row == 7) {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"GAF" bundle:[NSBundle mainBundle]];
         GlobalApplicationStep1ViewController *_GAFStep1ViewController = [storyBoard instantiateViewControllerWithIdentifier:kGAFStepp1StoryboardID];
         
         [self.navigationController pushViewController:_GAFStep1ViewController animated:YES];
     }
-    else if (indexPath.row == 7) {// my application
+    else if (indexPath.row == 8) {// my application
         [self performSegueWithIdentifier:kapplicationStatusSegueIdentifier sender:kHomeView];
     }
-    else if (indexPath.row == 8) {
+    else if (indexPath.row == 9) {
         [self performSegueWithIdentifier:kreferFriendSegueIdentifier sender:nil];
     }
-    else if (indexPath.row == 9) {
-        [self performSegueWithIdentifier:kwebviewSegueIdentifier sender:kFETUREDDESTINATION];
-    }
+//    else if (indexPath.row == 9) {
+//        [self performSegueWithIdentifier:kwebviewSegueIdentifier sender:kFETUREDDESTINATION];
+//    }
     else if (indexPath.row == 10) {
         [self performSegueWithIdentifier:kwebviewSegueIdentifier sender:kIMPORTANTLINK];
     }
    else if (indexPath.row == 11) { // notification
         [self performSegueWithIdentifier:knotificationSegueIdentifier sender:kNotifications];
     }
-  }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -384,6 +397,24 @@
 
 
 #pragma mark - Button _Clicked
+
+- (IBAction)tapQuickSearch:(UIButton *)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
+    QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
+    [self presentViewController:quickSearchViewC animated:false completion:nil];
+    [viewSearchOption setHidden:true];
+}
+
+- (IBAction)tapDetailSearch:(UIButton *)sender {
+    [self performSegueWithIdentifier:kCourseSegueIdentifier sender:kHomeView];
+    [viewSearchOption setHidden:true];
+}
+
+- (IBAction)tapHideSearch:(UIButton *)sender {
+    [viewSearchOption setHidden:true];
+}
+
+
 -(void)leftButton_Clicked:(UIButton *)sende{
     
     if (_mainScrollView.contentOffset.x != 0) {

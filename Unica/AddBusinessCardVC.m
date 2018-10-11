@@ -14,10 +14,10 @@
 @interface AddBusinessCardVC ()
 {
      NSMutableArray *headerTextArray;
-    UITextField *deligateTextField,*organisationtextField,*emailTextField,*phonetextField,*designationtextField,*locationtextField,*actiontextField,*categoryTextField,*templatetextField,*dateTextField;
+    UITextField *deligateTextField,*organisationtextField,*emailTextField,*phonetextField,*designationtextField,*locationtextField,*actiontextField,*categoryTextField,*templatetextField,*dateTextField, *countryTextField;
     UITextView *remarktextView;
-    NSArray *actions,*category,*template;
-    NSMutableDictionary *loginDictionary,*categoryDictionary,*actionDicationary,*templateDictionary;
+    NSArray *actions,*category,*template, *country;
+    NSMutableDictionary *loginDictionary,*categoryDictionary,*actionDicationary,*templateDictionary, *countryDictionary;
     BOOL isImageUploaded;
     __weak IBOutlet UIButton *submitButton;
     UIImage *originalImage;
@@ -34,6 +34,7 @@
     
     actions =[[[UtilityPlist getData:KActions] valueForKey:kAPIPayload] valueForKey:@"action_lists"];
     category =[[[UtilityPlist getData:Kcategories] valueForKey:kAPIPayload] valueForKey:@"category_lists"];
+    country = [[UtilityPlist getData:KCountryList] valueForKey:@"countries"];
     loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     [self setupInitialLayout];
     if(self.detailDic!=nil)
@@ -88,12 +89,22 @@
     }
     
     
+    
      NSPredicate *predicate3 =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[self.detailDic valueForKey:@"template"] value:@""]];
     NSArray *filtredArray3 = [template filteredArrayUsingPredicate:predicate3];
     if(filtredArray3.count>0)
     {
         templatetextField.text = [[filtredArray3 objectAtIndex:0] valueForKey:@"title"];
         templateDictionary = [filtredArray3 objectAtIndex:0] ;
+    }
+    
+    NSPredicate *predicate4 =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[self.detailDic valueForKey:@"country_id"] value:@""]];
+    
+    NSArray *filtredArray4 = [country filteredArrayUsingPredicate:predicate4];
+    if(filtredArray4.count>0)
+    {
+        countryTextField.text = [[filtredArray4 objectAtIndex:0] valueForKey:@"name"];
+        countryDictionary = [filtredArray4 objectAtIndex:0] ;
     }
     
     if([Utility replaceNULL:[self.detailDic valueForKey:@"email_date"] value:@""].length>0)
@@ -122,7 +133,7 @@
     remarktextView.text = [Utility replaceNULL:[self.detailDic valueForKey:@"remarks"] value:@""];
 }
 -(void)setupInitialLayout{
-    headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category",@"Location",@"Remarks",@"Template",@"Date",@"Details automatically fetched from business card",@"Delegate Name",@"Organisation Name",@"Email",@"Phone No",@"Designation", nil];
+    headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category",@"Country", @"Location", @"Remarks", @"Template", @"Date",@"Details automatically fetched from business card",@"Delegate Name",@"Organisation Name",@"Email",@"Phone No",@"Designation", nil];
     
     CGRect frame = CGRectMake(kiPhoneWidth/2+3, 8, kiPhoneWidth/2-42, 25);
     CGRect frame2 = CGRectMake(kiPhoneWidth/2+3, 8, kiPhoneWidth/2-70, 25);
@@ -171,6 +182,11 @@
     categoryTextField.userInteractionEnabled = false;
     categoryTextField.placeholder = @"Select";
     
+    countryTextField = [Control newTextFieldWithOptions:optionDictionary frame:frame2 delgate:self];
+    countryTextField.textColor = [UIColor darkGrayColor];
+    countryTextField.userInteractionEnabled = false;
+    countryTextField.placeholder = @"Select";
+    
     templatetextField = [Control newTextFieldWithOptions:optionDictionary frame:frame2 delgate:self];
     templatetextField.textColor = [UIColor darkGrayColor];
     templatetextField.userInteractionEnabled = false;
@@ -196,14 +212,14 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 12;
+    return 13;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 3 || indexPath.row==6)
+    if(indexPath.row == 4 || indexPath.row==7)
     {
-        if(indexPath.row == 3 )
+        if(indexPath.row == 4 )
         {
             static NSString *cellIdentifier3  =@"signIn8";
             
@@ -270,10 +286,15 @@
             
         }
         else if (indexPath.row == 2) {
+            cell.dropImageView.constant = 25;
+            cell.contenttextField =countryTextField;
+            
+        }
+        else if (indexPath.row == 3) {
             cell.contenttextField = locationtextField;
             
         }
-        else if (indexPath.row == 4) {
+        else if (indexPath.row == 5) {
            // cell.contentLabel.text = @"Select Template";
             cell.dropImageView.constant = 25;
             cell.contenttextField =templatetextField;
@@ -282,7 +303,7 @@
                 cell.lblTemplate.text = strTemplate;
             }
         }
-        else if (indexPath.row == 5) {
+        else if (indexPath.row == 6) {
            // cell.contentLabel.text = @"Select Date";
             cell.dropImageView.constant = 25;
             cell.dropdown.image = [UIImage imageNamed:@"Calendar"];
@@ -297,19 +318,19 @@
             cell.contenttextField = deligateTextField;
             
         }
-        else if (indexPath.row == 8) {
+        else if (indexPath.row == 9) {
             cell.contenttextField = organisationtextField;
             
         }
-        else if (indexPath.row == 9) {
+        else if (indexPath.row == 10) {
             cell.contenttextField = emailTextField;
             
         }
-        else if (indexPath.row == 10) {
+        else if (indexPath.row == 11) {
             cell.contenttextField = phonetextField;
             
         }
-        else if (indexPath.row == 11) {
+        else if (indexPath.row == 12) {
             cell.contenttextField = designationtextField;
             
         }
@@ -382,8 +403,35 @@
             
             
         }
+    else if (indexPath.row == 2) {
+        
+        if(country.count>0)
+        {
+            NSArray *items = [country valueForKey:@"name"];
+            
+            self.picker = [GKActionSheetPicker stringPickerWithItems:items selectCallback:^(id selected) {
+                
+                NSPredicate *predicate =[NSPredicate predicateWithFormat:@"name == %@",selected];
+                
+                NSArray *filtredArray = [country filteredArrayUsingPredicate:predicate];
+                if(filtredArray.count>0)
+                {
+                    countryTextField.text = [NSString stringWithFormat:@"%@", selected];
+                    countryDictionary = [filtredArray objectAtIndex:0];
+                }
+                
+                
+            } cancelCallback:nil];
+            
+            [self.picker presentPickerOnView:self.view];
+            self.picker.title = @"Select Country";
+            [self.picker selectValue:countryTextField.text];
+        }
+        
+        
+    }
     
-      else  if (indexPath.row == 4) {
+      else  if (indexPath.row == 5) {
           
           if(template.count>0)
           {
@@ -410,7 +458,7 @@
             
             
         }
-        else if (indexPath.row == 5 ) {
+        else if (indexPath.row == 6 ) {
             
             
             self.picker = [GKActionSheetPicker datePickerWithMode:UIDatePickerModeDate from:[NSDate date] to:[NSDate dateWithTimeIntervalSinceNow:+60*60*24*365*48] interval:5 selectCallback:^(id selected) {
@@ -435,17 +483,17 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row==3)
+    if(indexPath.row==4)
     {
         return 140;
-    } else if (indexPath.row == 4) {
+    } else if (indexPath.row == 5) {
         return 72;
     }
-    else if (indexPath.row==5)
+    else if (indexPath.row==6)
     {
         return 60;
     }
-    else if (indexPath.row==6)
+    else if (indexPath.row==7)
     {
         return 45;
     }
@@ -734,6 +782,18 @@
         [body appendData:[[NSString stringWithFormat:kContent,@"action"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[actionId dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSString *countryId;
+        if(countryDictionary!=nil)
+        {
+            countryId = [NSString stringWithFormat:@"%@",[countryDictionary valueForKey:@"id"]];
+        }
+        [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:kContent,@"country_id"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[countryId dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
         
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kContent,@"remarks"] dataUsingEncoding:NSUTF8StringEncoding]];

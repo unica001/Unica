@@ -648,6 +648,8 @@ typedef enum _UNKMPSection {
                         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                         
                         UNKHomeViewController *homeViewController = [storyboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+                        homeViewController.isQuickShown = YES;
+
                         [self.navigationController pushViewController:homeViewController animated:true];
                         
                     }];

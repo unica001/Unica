@@ -291,7 +291,6 @@
             
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
             
-            
             [navController setViewControllers: @[dvc] animated: NO ];
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
         };

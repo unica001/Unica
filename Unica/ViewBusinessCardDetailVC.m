@@ -17,7 +17,7 @@
     __weak IBOutlet UITableView *detaialTable;
     __weak IBOutlet UIImageView *cardImageView;
     NSMutableDictionary *detail;
-    NSArray *actions,*category,*template;
+    NSArray *actions,*category,*template, *country;
     NSMutableArray *headerTextArray;
     NSMutableDictionary *loginDictionary,*orignalDic;
     __weak IBOutlet UILabel *lblEventName;
@@ -34,6 +34,7 @@
     loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     actions =[[[UtilityPlist getData:KActions] valueForKey:kAPIPayload] valueForKey:@"action_lists"];
     category =[[[UtilityPlist getData:Kcategories] valueForKey:kAPIPayload] valueForKey:@"category_lists"];
+    country = [[UtilityPlist getData:KCountryList] valueForKey:@"countries"];
     [self setupInitialLayout];
     
         //dispatch_async(dispatch_get_main_queue(), ^{
@@ -55,7 +56,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)setupInitialLayout{
-    headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category",@"Location",@"Remarks",@"Template",@"Date",@"Details automatically fetched from business card",@"Delegate Name",@"Organisation Name",@"Email",@"Phone No",@"Designation", nil];
+    headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category", @"Country",@"Location",@"Remarks",@"Template",@"Date",@"Details automatically fetched from business card",@"Delegate Name",@"Organisation Name",@"Email",@"Phone No",@"Designation", nil];
     
 }
 
@@ -73,9 +74,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 3 || indexPath.row==6)
+    if(indexPath.row == 4 || indexPath.row==7)
     {
-        if(indexPath.row == 3 )
+        if(indexPath.row == 4 )
         {
             static NSString *cellIdentifier3  =@"signIn8";
             
@@ -143,12 +144,16 @@
                 
                 break;
             case 2:
+                cell.detailLabel.text =[Utility replaceNULL:[detail valueForKey:@"country"] value:@""];
+                
+                break;
+            case 3:
                 cell.detailLabel.text =[Utility replaceNULL:[detail valueForKey:@"location"] value:@""] ;
                 break;
-           case 4:
+           case 5:
                 cell.detailLabel.text = [Utility replaceNULL:[detail valueForKey:@"template"] value:@""];
                 break;
-            case 5:
+            case 6:
             {
                 if([Utility replaceNULL:[detail valueForKey:@"email_date"] value:@""].length>0)
                 {
@@ -165,20 +170,20 @@
                 
             }
                 
-            case 7:
+            case 8:
                 cell.detailLabel.text =[Utility replaceNULL:[detail valueForKey:@"delegate_name"] value:@""];
                 break;
                 
-            case 8:
+            case 9:
                 cell.detailLabel.text = [Utility replaceNULL:[detail valueForKey:@"org_name"] value:@""];
                 break;
-            case 9:
+            case 10:
                 cell.detailLabel.text = [Utility replaceNULL:[detail valueForKey:@"email"] value:@""];
                 break;
-            case 10:
+            case 11:
                 cell.detailLabel.text = [Utility replaceNULL:[detail valueForKey:@"mobile"] value:@""];
                 break;
-            case 11:
+            case 12:
                 cell.detailLabel.text =[Utility replaceNULL:[detail valueForKey:@"designaion"] value:@""] ;
                 break;
             
@@ -206,15 +211,15 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row==3)
+    if(indexPath.row==4)
     {
         return 140;
     }
-    else if (indexPath.row==5)
+    else if (indexPath.row==6)
     {
         return 60;
     }
-    else if (indexPath.row==6)
+    else if (indexPath.row==8)
     {
         return 45;
     }
@@ -300,6 +305,24 @@
                     }
                     else{
                         [detail setValue:@"" forKey:@"category"];
+                    }
+                    if([[NSString stringWithFormat:@"%@",[detail valueForKey:@"country_id"]] integerValue]>0)
+                    {
+                        NSPredicate *predicate1 =[NSPredicate predicateWithFormat:@"id == %@",[NSString stringWithFormat:@"%@",[detail valueForKey:@"country_id"]]];
+                        
+                        NSArray *filtredArray1 = [country filteredArrayUsingPredicate:predicate1];
+                        if(filtredArray1.count>0)
+                        {
+                            NSString *title = [[filtredArray1 objectAtIndex:0] valueForKey:@"name"];
+                            [detail setValue:title forKey:@"country"];
+                        }
+                        else{
+                            [detail setValue:@"" forKey:@"country"];
+                        }
+                        
+                    }
+                    else{
+                        [detail setValue:@"" forKey:@"country"];
                     }
                     if([[NSString stringWithFormat:@"%@",[detail valueForKey:@"template"]] integerValue]>0)
                     {
