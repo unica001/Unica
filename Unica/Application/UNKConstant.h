@@ -655,8 +655,8 @@
 #define kEVENT @"EVENT"
 #define kMySchedule @"My Schedule"
 #define kViewParticipants @"View Participants"
-#define kRecord Expression @"Record Expression"
-#define kMeeting Report @"Meeting Report"
+#define kRecordExpression @"Record Expression"
+#define kMeetingreport @"Meeting Report"
 #define kselectCountry @"selectCountry"
 
 #define kpayment_id @"payment_id"

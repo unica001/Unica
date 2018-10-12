@@ -119,15 +119,19 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigation-=s\
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 }
 
 - (IBAction)backButtonAction:(id)sender {
 }
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-  //  [self removePopView];
+
+- (IBAction)filterButtonAction:(id)sender {
+    
+    // Apply filter
 }
+
 
 @end
