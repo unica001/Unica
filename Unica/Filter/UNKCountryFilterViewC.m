@@ -236,6 +236,12 @@
                 }
                 [self.eventCountryFilterArray removeAllObjects];
                 [self.eventCountryFilterArray addObjectsFromArray:filterArray];
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountry];
+                
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountry];
+                
+                [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
+                [kUserDefault synchronize];
             }
             dataTable.hidden = NO;
             courseFilterTable.hidden = YES;

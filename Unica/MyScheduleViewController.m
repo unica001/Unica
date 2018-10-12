@@ -2,7 +2,7 @@
 
 #import "MyScheduleViewController.h"
 
-@interface MyScheduleViewController (){
+@interface MyScheduleViewController() <delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter>{
     
     NSMutableArray *myScheduleArray;
     AppDelegate *appDelegate;
@@ -10,6 +10,11 @@
     int totalRecord;
     BOOL isLoading;
     BOOL isHude;
+    BOOL isFromFilter;
+    
+    NSString *countryIDsString;
+    NSString *typeIDsString;
+    NSString *eventIDsString;
 }
 
 @end
@@ -36,8 +41,57 @@
         }
     }
     self.revealViewController.delegate = self;
+    _countryFilter = [[NSMutableArray alloc] init];
+    _typeFilter = [[NSMutableArray alloc] init];
+    _eventFilter = [[NSMutableArray alloc] init];
+    self.isFilterApply = @"1";
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     pageNumber  = 1;
     isHude = YES;
+    
+    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountry]];
+    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountry] isKindOfClass:[NSMutableArray class]]) {
+        self.countryFilter = [dict valueForKey:kselectCountry];
+    } else {
+        [self.countryFilter removeAllObjects];
+    }
+    if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *countyArray = [self.countryFilter valueForKey:Kid];
+        countryIDsString = [countyArray componentsJoinedByString:@","];
+    } else {
+        countryIDsString = @"";
+    }
+    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselecteService]];
+    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselecteService] isKindOfClass:[NSMutableArray class]]) {
+        self.typeFilter = [dictType valueForKey:kselecteService];
+    } else {
+        [self.typeFilter removeAllObjects];
+    }
+    if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *typeArray = [self.typeFilter valueForKey:Kid];
+        typeIDsString = [typeArray componentsJoinedByString:@","];
+    } else {
+        typeIDsString = @"";
+    }
+    
+    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
+    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
+        self.eventFilter = [dictevent valueForKey:kselectEvent];
+    } else {
+        [self.eventFilter removeAllObjects];
+    }
+    if (self.eventFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *eventArray = [self.eventFilter valueForKey:Kid];
+        eventIDsString = [eventArray componentsJoinedByString:@","];
+    } else {
+        eventIDsString = @"";
+    }
+    NSLog(@"Country id %@, Event id %@, type Id %@", countryIDsString, eventIDsString, typeIDsString);
     [self getScheduleList];
 }
 
@@ -68,7 +122,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *cellIdentifier  =@"MyScheduleCell";
     MyScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MyScheduleCell" owner:self options:nil];
@@ -114,9 +167,39 @@
     
 }
 - (IBAction)filterButtonAction:(id)sender {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+    UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
+    filterViewC.incomingViewType = kScheduleFilter;
+    filterViewC.removeAllFilter = self;
+    filterViewC.applyButtonDelegate = self;
+    filterViewC.agentService = self;
+    filterViewC.eventFilterDelegate = self;
+    [self.navigationController pushViewController:filterViewC animated:YES];
 }
 
 - (IBAction)menuButtonAction:(id)sender {
+}
+
+#pragma mark - Filter delegate
+
+-(void)checkApplyButtonAction:(NSInteger)index{
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    isFromFilter = true;
+}
+
+-(void)removeAllFilter:(NSInteger)index{
+    isFromFilter = true;
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+}
+
+-(void)agentServiceMethod:(NSString *)index{
+    self.isFilterApply = index;
+    isFromFilter = true;
+}
+
+- (void)eventMethod:(NSString *)index {
+    self.isFilterApply = index;
+    isFromFilter = true;
 }
 
 #pragma  mark - Search bar delegate

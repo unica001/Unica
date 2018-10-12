@@ -28,7 +28,7 @@
 //#define kAPIBaseURL @"https://unica.sirez.com/api/"
 #define kAPIBaseURL @"https://www.uniagents.com/apknew/rest/android/"
 
-
+#define kAppDelegate  (AppDelegate*)[[UIApplication sharedApplication] delegate]
 
 #define kAPIResponseTimeout 90
 
@@ -648,6 +648,7 @@
 #define kbuttons @"buttons"
 #define kpark_free @"park_free"
 
+#define kScheduleFilter @"scheduleFilter"
 #define kMeetingReport @"meetingReport"
 #define kselectEvent @"selectEvent"
 #define KEvent @"Event"
