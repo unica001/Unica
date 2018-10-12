@@ -26,6 +26,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {  SWRevealViewController *revealViewController = self.revealViewController;
+        if ( revealViewController )
+        {
+            [menuButton setTarget: self.revealViewController];
+            [menuButton setAction: @selector( revealToggle: )];
+            [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        }
+    }
+    self.revealViewController.delegate = self;
+    
     // Do any additional setup after loading the view.
     [_tblReport registerNib:[UINib nibWithNibName:@"MeetingReportCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportCell"];
 //    _countryFilter = [[NSMutableArray alloc] init];

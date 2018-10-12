@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UNKMeetingReportViewC : UIViewController <delegateForCheckApplyButtonAction, delegateForRemoveAllFilter>{
+@interface UNKMeetingReportViewC : UIViewController <delegateForCheckApplyButtonAction, delegateForRemoveAllFilter,SWRevealViewControllerDelegate>{
     NSMutableArray *arrReport;
     int pageNumber;
+    __weak IBOutlet UIBarButtonItem *menuButton;
     BOOL isLoading;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tblReport;

@@ -252,6 +252,9 @@
             UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
             
             UNKMeetingReportViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKMeetingReportViewC"];
+            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+        [navController setViewControllers: @[meetingView] animated: NO ];
+            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
             
 
 //            if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
