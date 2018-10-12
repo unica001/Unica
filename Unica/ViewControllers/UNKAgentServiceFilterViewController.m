@@ -266,7 +266,13 @@
     else {
         [_selectedServiceArray addObject:[_serviceArray objectAtIndex:indexPath.row]];
     }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselecteService];
     
+    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselecteService];
+    
+    [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
+    [kUserDefault synchronize];
+
     [_serviceTable reloadData];
  
     

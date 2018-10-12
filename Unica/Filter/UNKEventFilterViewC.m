@@ -243,7 +243,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [selectedEventArray removeAllObjects];
     [selectedEventArray addObject:[eventArray objectAtIndex:indexPath.row]];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEvent];
     
+    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEvent];
+    
+    [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
+    [kUserDefault synchronize];
     [tblEvent reloadData];
 }
 

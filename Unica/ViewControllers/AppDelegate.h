@@ -47,6 +47,7 @@
 @property (strong, nonatomic) NSTimer *twoMinTimer;
 @property (strong, nonatomic) NSString *userEventId;
 @property (strong, nonatomic) NSArray *menuArray;
+@property (strong, nonatomic) NSMutableArray *arrQuickSearch;
 
 - (void)saveContext;
 -(void)setTimerForRating;

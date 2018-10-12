@@ -41,8 +41,11 @@
     serviceFilterViewController = [sb instantiateViewControllerWithIdentifier:kAgentServiceSegueIdentifier];
     serviceFilterViewController.agentService = self.agentService;
     serviceFilterViewController.title = kTYPE;
+    
     if ([_incomingViewType isEqualToString:kMeetingReport]) {
         [self setContainerMeetingReport];
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+        [self setContainerMySchedule];
     }
     
     containerVC.delegate = self;
@@ -67,22 +70,27 @@
     [eventTypeFilterView eventList];
 }
 
+- (void)setContainerMySchedule {
+    containerVC = [[YSLContainerViewController alloc] initWithControllers:@[countryFilterView, serviceFilterViewController, eventTypeFilterView] topBarHeight:0 parentViewController:self];
+}
+
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
     if ([_incomingViewType isEqualToString:kMeetingReport]) {
         eventTypeFilterView.title = @"EVENT";
         [eventTypeFilterView eventList];
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+        if (index == 0) {
+            countryFilterView.title = kCOUNTRY;
+        } else if (index == 1) {
+            serviceFilterViewController.title = @"TYPE";
+            [serviceFilterViewController searchSeavices];
+        } else if (index == 2) {
+            eventTypeFilterView.title = @"EVENT";
+            [eventTypeFilterView eventList];
+        }
     }
-//    if (index == 0) {
-//
-//    } else if (index == 1) {
-//        serviceFilterViewController.title = @"TYPE";
-//        [serviceFilterViewController searchSeavices];
-//    } else if (index == 2) {
-//        eventTypeFilterView.title = @"EVENT";
-//        [eventTypeFilterView eventList];
-//    }
     [controller viewWillAppear:YES];
 }
 
@@ -95,6 +103,7 @@
 
         [kUserDefault removeObjectForKey:kselectCountry];
         [kUserDefault removeObjectForKey:kselecteService];
+        [kUserDefault removeObjectForKey:kselectEvent];
         [kUserDefault synchronize];
         
         if ([self.removeAllFilter respondsToSelector:@selector(removeAllFilter:)]) {

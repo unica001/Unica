@@ -11,9 +11,10 @@
 #import "UNKFilterViewC.h"
 #import "UNKMeetingParticipantViewC.h"
 
-@interface UNKMeetingReportViewC ()<delegateForCheckApplyButtonAction,delegateForRemoveAllFilter,delegateEvent,delegateAgentService> {
+@interface UNKMeetingReportViewC ()<delegateForRemoveAllFilter,delegateEvent> {
     BOOL LoadMoreData;
     BOOL isFromFilter;
+    AppDelegate *appDelegate;
 
 //    NSString *countryIDsString;
 //    NSString *typeIDsString;
@@ -41,11 +42,12 @@
     self.revealViewController.delegate = self;
     
     // Do any additional setup after loading the view.
+    appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [_tblReport registerNib:[UINib nibWithNibName:@"MeetingReportCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportCell"];
 //    _countryFilter = [[NSMutableArray alloc] init];
 //    _typeFilter = [[NSMutableArray alloc] init];
     _eventFilter = [[NSMutableArray alloc] init];
-     self.isFilterApply = @"0";
+     self.isFilterApply = @"1";
 //    pageNumber = 1;
     
 }
@@ -73,10 +75,14 @@
     NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
     if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
         self.eventFilter = [dictevent valueForKey:kselectEvent];
+    } else {
+        [self.eventFilter removeAllObjects];
     }
     if (self.eventFilter.count>0 && [self.isFilterApply integerValue] == 1) {
         NSArray *eventArray = [self.eventFilter valueForKey:Kid];
         eventIDsString = [eventArray componentsJoinedByString:@","];
+    } else {
+        eventIDsString = @"";
     }
     [self apiCallMeetingReport];
     NSLog(@"event id %@", eventIDsString);
@@ -106,7 +112,7 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
     filterViewC.incomingViewType = kMeetingReport;
-//    filterViewC.removeAllFilter = self;
+    filterViewC.removeAllFilter = self;
 //    filterViewC.applyButtonDelegate = self;
 //    filterViewC.agentService = self;
     filterViewC.eventFilterDelegate = self;
@@ -160,10 +166,10 @@
 //    isFromFilter = true;
 //}
 //
-//-(void)removeAllFilter:(NSInteger)index{
-//    isFromFilter = true;
-//    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
-//}
+-(void)removeAllFilter:(NSInteger)index{
+    isFromFilter = true;
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+}
 //
 //-(void)agentServiceMethod:(NSString *)index{
 //    self.isFilterApply = index;
@@ -191,9 +197,10 @@
     if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
-    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+    [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
+//    [dictionary setValue:@"I" forKey:@"user_type"];
+//    [dictionary setValue:@"17" forKey:@"event_id"];
+//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
 //    [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];
     
