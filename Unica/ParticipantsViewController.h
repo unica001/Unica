@@ -33,7 +33,8 @@
 @property (nonatomic, strong) ADPopupView *visiblePopup;
 
 
-- (IBAction)selectAllButtonAction:(id)sender;
+
 -(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch;
 
+- (IBAction)selectAllButtonAction:(id)sender;
 @end

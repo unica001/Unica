@@ -25,5 +25,6 @@
 
 @property(nonatomic,retain) NSString *eventID;
 - (IBAction)backButtonAction:(id)sender;
+- (IBAction)filterButtonAction:(id)sender;
 
 @end

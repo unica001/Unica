@@ -25,7 +25,7 @@
 
 -(void)setParticipantsData:(NSDictionary *)dict viewType:(NSString*)viewType selectedArray:(NSArray*)selectedArray title:(NSString*)title{
     
-    [_nameButton setTitle:[dict valueForKey:kName] forState:UIControlStateNormal];
+    [_nameButton setTitle:[Utility replaceNULL:[dict valueForKey:kName] value:@""] forState:UIControlStateNormal];
     _universityName.text = [Utility replaceNULL:[dict valueForKey:korganisationName] value:@""];
     _typeLabel.text = [Utility replaceNULL:[dict valueForKey:kType] value:@""];
     _countryLabel.text = [Utility replaceNULL:[dict valueForKey:kCountry] value:@""];

@@ -9,7 +9,7 @@
 #import "AgentRevelMenuVC.h"
 #import "MenuCell.h"
 #import "userSelectionVC.h"
-
+#import "UNKMeetingReportViewC.h"
 @interface AgentRevelMenuVC ()
 {
     NSMutableArray *menuImagesArray;
@@ -246,6 +246,27 @@
         }
         else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kMySchedule]) {
             [self performSegueWithIdentifier:kmyScheduleSegueIdentifier sender:nil];
+        }
+        else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kMeetingreport]) {
+            
+            UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+            
+            UNKMeetingReportViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKMeetingReportViewC"];
+            
+
+//            if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
+//            {
+//                SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
+//
+//                swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
+//
+//                    UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+//
+//                    [navController setViewControllers: @[dvc] animated: NO ];
+//                    [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+//                };
+//            }
+
         }
     }
     else{
