@@ -2,10 +2,13 @@
 
 #import "ParticipantsSegmentViewController.h"
 
-@interface ParticipantsSegmentViewController (){
+@interface ParticipantsSegmentViewController() <delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter>{
     
     NSInteger selectedIndex;
     NSString *selectedTap;
+    BOOL isFromFilter;
+    NSString *countryIDsString;
+    NSString *typeIDsString;
 }
 
 @end
@@ -31,6 +34,37 @@
     UITextField *searchField = [searchBar valueForKey:@"_searchField"];
     searchField.textColor = [UIColor whiteColor];
     searchField.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryParticipant]];
+    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryParticipant] isKindOfClass:[NSMutableArray class]]) {
+        self.countryFilter = [dict valueForKey:kselectCountryParticipant];
+    } else {
+        [self.countryFilter removeAllObjects];
+    }
+    if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *countyArray = [self.countryFilter valueForKey:Kid];
+        countryIDsString = [countyArray componentsJoinedByString:@","];
+    } else {
+        countryIDsString = @"";
+    }
+    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeParticipant]];
+    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeParticipant] isKindOfClass:[NSMutableArray class]]) {
+        self.typeFilter = [dictType valueForKey:kselectTypeParticipant];
+    } else {
+        [self.typeFilter removeAllObjects];
+    }
+    if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *typeArray = [self.typeFilter valueForKey:@"filterId"];
+        typeIDsString = [typeArray componentsJoinedByString:@","];
+    } else {
+        typeIDsString = @"";
+    }
+
+    NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
+     [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
 }
 
 -(void)favouriteSliderController:(NSString*)eventID{
@@ -88,7 +122,7 @@
     
     [searchBar resignFirstResponder];
     
-    [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true];
+    [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
     
     searchBar.text = @"";
 
@@ -100,15 +134,15 @@
     
     if (index == 0){
         selectedTap =  @"All";
-        [participantsViewAll reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true];
+        [participantsViewAll reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
     }
     else if (index == 1){
         selectedTap =  @"Received";
-        [participantsViewRecieved reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true];
+        [participantsViewRecieved reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
     }
     else if (index == 2){
         selectedTap =  @"Send";
-        [participantsViewSend reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true];
+        [participantsViewSend reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
     }
 
     
@@ -125,13 +159,41 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 }
 
+#pragma mark - IBAction Methods
 - (IBAction)backButtonAction:(id)sender {
 }
 
 - (IBAction)filterButtonAction:(id)sender {
-    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+    UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
+    filterViewC.incomingViewType = kParticipantFilter;
+    filterViewC.removeAllFilter = self;
+    filterViewC.applyButtonDelegate = self;
+    filterViewC.agentService = self;
+    [self.navigationController pushViewController:filterViewC animated:YES];
     // Apply filter
 }
 
+#pragma mark - Filter delegate
+
+-(void)checkApplyButtonAction:(NSInteger)index{
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    isFromFilter = true;
+}
+
+-(void)removeAllFilter:(NSInteger)index{
+    isFromFilter = true;
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+}
+
+-(void)agentServiceMethod:(NSString *)index{
+    self.isFilterApply = index;
+    isFromFilter = true;
+}
+
+- (void)eventMethod:(NSString *)index {
+    self.isFilterApply = index;
+    isFromFilter = true;
+}
 
 @end

@@ -71,7 +71,7 @@
         [self.typeFilter removeAllObjects];
     }
     if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
-        NSArray *typeArray = [self.typeFilter valueForKey:Kid];
+        NSArray *typeArray = [self.typeFilter valueForKey:@"filterId"];
         typeIDsString = [typeArray componentsJoinedByString:@","];
     } else {
         typeIDsString = @"";
@@ -230,8 +230,7 @@
                 [self getScheduleList];
             }
         }
-    }
-    else{
+    } else{
         tableView.tableFooterView = nil;
     }
 }

@@ -26,5 +26,7 @@
 @property(nonatomic,retain) NSString *eventID;
 - (IBAction)backButtonAction:(id)sender;
 - (IBAction)filterButtonAction:(id)sender;
-
+@property (nonatomic,retain) NSString *isFilterApply;
+@property (nonatomic,retain) NSMutableArray *countryFilter;
+@property (nonatomic,retain) NSMutableArray *typeFilter;
 @end

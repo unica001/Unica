@@ -46,7 +46,7 @@
     pageNumber = 1;
     
     eventArray = [[NSMutableArray alloc]init];
-    
+    selectedEventArray = [[NSMutableArray alloc]init];
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventMeeting]];
         if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectEventMeeting] isKindOfClass:[NSMutableArray class]]) {

@@ -34,7 +34,7 @@
 
 
 
--(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch;
+-(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch countryId:(NSString *)countryId typeId:(NSString *)typeId;
 
 - (IBAction)selectAllButtonAction:(id)sender;
 @end

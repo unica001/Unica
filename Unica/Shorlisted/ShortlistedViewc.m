@@ -28,6 +28,11 @@
     // Do any additional setup after loading the view.
     pageNumber = 1;
    [_tblViewShortlisted registerNib:[UINib nibWithNibName:@"ShortlistCourseCell" bundle:nil] forCellReuseIdentifier:@"ShortlistCourseCell"];
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor blackColor];
+    [self.view addSubview:messageLabel];
     [self apiCallShortlistedCourse];
 }
 
@@ -502,12 +507,16 @@
                     currancyString =[NSString stringWithFormat:@"%@",[arr objectAtIndex:1]];
                     applied_count = [[payloadDictionary valueForKey:@"applied_count"] integerValue];
                     apply_limit = [[payloadDictionary valueForKey:@"apply_limit"] integerValue];
+                    messageLabel.text = @"";
+                    [messageLabel setHidden:YES];
                     [_tblViewShortlisted reloadData];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (pageNumber ==1) {
                             [_courseArray removeAllObjects];
                             [_tblViewShortlisted reloadData];
+                            messageLabel.text = @"No records found";
+                            messageLabel.hidden = NO;
                         } else{
                             LoadMoreData = false;
                         }

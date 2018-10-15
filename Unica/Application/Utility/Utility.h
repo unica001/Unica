@@ -47,6 +47,7 @@
 
 + (void)showAlertViewControllerIn:(UIViewController*)controller title:(NSString*)title message:(NSString*)message block:(void(^)                   (int sum))block;
 
++ (void)showAlertViewContinueControllerIn:(UIViewController*)controller title:(NSString*)title message:(NSString*)message block:(void(^)                   (int sum))block;
 
 #pragma mark - ALERT CONTROLLER WITH TWO BUTTONS
 

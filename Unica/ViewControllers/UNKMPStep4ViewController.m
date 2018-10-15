@@ -333,8 +333,10 @@ typedef enum _UNKMPSection {
                         [kUserDefault removeObjectForKey:kGAPStep2];
                         [kUserDefault removeObjectForKey:kGAPStep3];
                         [kUserDefault removeObjectForKey:kGAPStep4];
-
-                        [self backToHome];
+                        [Utility showAlertViewContinueControllerIn:self title:@"" message:@"Thanks for telling us about your preferences we will now recommend you a few options based on your preferences" block:^(int index){
+                            [self backToHome];
+                        }];
+                        
 
                     }
                     
@@ -847,6 +849,8 @@ typedef enum _UNKMPSection {
 }
 
 -(void)backToHome{
+    
+    
     UIStoryboard *storyBoard =[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     UNKHomeViewController * homeViewController =[storyBoard instantiateViewControllerWithIdentifier:@"homeViewController"];

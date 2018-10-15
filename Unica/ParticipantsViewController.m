@@ -8,7 +8,8 @@
     NSMutableArray *selectedArray;
     NSString *viewType;
     NSString *searchtext;
-    
+    NSString *countryId;
+    NSString *typeId;
     AppDelegate *appDelegate;
 
 }
@@ -36,22 +37,23 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self participantsList:false type:viewType searchText:searchtext];
+    [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
 
 }
 
--(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch;{
+-(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch countryId:(NSString *)countryId typeId:(NSString *)typeId {
     
     viewType = type;
     selectedIndex = index+1;
     pageNumber = 1;
     searchtext = searchText;
-
+    countryId = countryId;
+    typeId = typeId;
 //    if (fromSearch == true){
 //        pageNumber = 1;
 //        [tableView setContentOffset:CGPointZero animated:YES];
 //    }
-    [self participantsList:false type:type searchText:searchText];
+    [self participantsList:false type:type searchText:searchText countryId:countryId typeId:typeId];
 }
 
 - (IBAction)cdfxxzcxc:(id)sender {
@@ -187,7 +189,7 @@
 
 #pragma mark - APIS
 
--(void)participantsList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText{
+-(void)participantsList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId {
     
     NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
@@ -208,8 +210,8 @@
     [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     [dictionary setValue:[NSString stringWithFormat:@"%ld",(long)selectedIndex] forKey:kprticipantType];
-    [dictionary setValue:@"" forKey:kcountryId];
-    [dictionary setValue:@"" forKey:kfilterType];
+    [dictionary setValue:countryId forKey:kcountryId];
+    [dictionary setValue:typeId forKey:kfilterType];
     [dictionary setValue:searchText forKey:ksearchText];
 
 
@@ -343,7 +345,7 @@
                             if (selectedArray.count> 0) {
                                 [selectedArray removeAllObjects];
                             }
-                            [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false];
+                            [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false countryId:countryId typeId:typeId];
                             
                         }];
                     }
@@ -376,7 +378,7 @@
                         if (selectedArray.count> 0) {
                             [selectedArray removeAllObjects];
                         }
-                        [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false];
+                        [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false countryId:countryId typeId:typeId];
                     }];
                 }
             });
