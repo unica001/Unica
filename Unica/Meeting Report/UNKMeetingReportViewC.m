@@ -41,7 +41,6 @@
     }
     self.revealViewController.delegate = self;
     
-    // Do any additional setup after loading the view.
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [_tblReport registerNib:[UINib nibWithNibName:@"MeetingReportCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportCell"];
 //    _countryFilter = [[NSMutableArray alloc] init];
@@ -128,7 +127,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 125;
+    return 105;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -157,6 +156,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     UNKMeetingParticipantViewC *viewC = [sb instantiateViewControllerWithIdentifier:@"UNKMeetingParticipantViewC"];
+    viewC.meetingReportDict = arrReport[indexPath.row];
     [self.navigationController pushViewController:viewC animated:YES];
 }
 
@@ -199,10 +199,10 @@
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
     [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
-//    [dictionary setValue:@"I" forKey:@"user_type"];
-//    [dictionary setValue:@"17" forKey:@"event_id"];
-//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
-//    [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
+    [dictionary setValue:@"I" forKey:@"user_type"];
+    [dictionary setValue:@"17" forKey:@"event_id"];
+    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+    [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];
     
     

@@ -25,9 +25,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fg4-gz-Wwl">
-                        <rect key="frame" x="10" y="10" width="300" height="152.5"/>
+                        <rect key="frame" x="8" y="8" width="304" height="162.5"/>
                         <subviews>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TAq-Qd-Xoe">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TAq-Qd-Xoe">
                                 <rect key="frame" x="10" y="10" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -43,7 +43,7 @@
                                 </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnv-QP-iDT">
-                                <rect key="frame" x="80" y="10" width="210" height="20"/>
+                                <rect key="frame" x="80" y="10" width="214" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="SzY-T6-1HA"/>
@@ -54,14 +54,14 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dfdsfdfsdfd dfddfddfdfdfdfdfdfdsfdsfdff" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPN-F6-Qkw">
-                                <rect key="frame" x="80" y="33" width="210" height="22"/>
+                                <rect key="frame" x="80" y="33" width="214" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ghg" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9XQ-rm-73l">
-                                <rect key="frame" x="80" y="54.5" width="210" height="20"/>
+                                <rect key="frame" x="80" y="64.5" width="214" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="kpv-3E-2A6"/>
@@ -70,7 +70,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hghgh" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs3-EW-mHV">
-                                <rect key="frame" x="80" y="75" width="210" height="20"/>
+                                <rect key="frame" x="80" y="85" width="214" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="mwi-PP-p0o"/>
@@ -79,7 +79,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DWY-7h-vRy">
-                                <rect key="frame" x="267" y="114" width="25" height="25"/>
+                                <rect key="frame" x="271" y="124" width="25" height="25"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Knz-xA-vnN"/>
@@ -89,7 +89,7 @@
                                 <state key="normal" image="mail"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTa-St-eVX">
-                                <rect key="frame" x="80" y="108" width="156" height="35"/>
+                                <rect key="frame" x="80" y="118" width="156" height="35"/>
                                 <color key="backgroundColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Riu-4w-pcZ"/>
@@ -134,10 +134,10 @@
                 </subviews>
                 <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="Fg4-gz-Wwl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4NW-Lf-T0g"/>
-                    <constraint firstAttribute="trailing" secondItem="Fg4-gz-Wwl" secondAttribute="trailing" constant="10" id="A2T-B5-aM4"/>
-                    <constraint firstAttribute="bottom" secondItem="Fg4-gz-Wwl" secondAttribute="bottom" constant="8" id="ALA-7t-6xG"/>
-                    <constraint firstItem="Fg4-gz-Wwl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="UZw-YX-O1g"/>
+                    <constraint firstItem="Fg4-gz-Wwl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="4NW-Lf-T0g"/>
+                    <constraint firstAttribute="trailing" secondItem="Fg4-gz-Wwl" secondAttribute="trailing" constant="8" id="A2T-B5-aM4"/>
+                    <constraint firstAttribute="bottom" secondItem="Fg4-gz-Wwl" secondAttribute="bottom" id="ALA-7t-6xG"/>
+                    <constraint firstItem="Fg4-gz-Wwl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="UZw-YX-O1g"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

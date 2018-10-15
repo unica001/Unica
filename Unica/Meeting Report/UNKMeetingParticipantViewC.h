@@ -10,9 +10,11 @@
 
 @interface UNKMeetingParticipantViewC : UIViewController {
     NSMutableArray *arrParticipant;
+    __weak IBOutlet UISearchBar *searchBar;
     int pageNumber;
     BOOL isLoading;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tblParticipant;
+@property(nonatomic,retain) NSDictionary *meetingReportDict;
 
 @end

@@ -657,6 +657,7 @@
 #define kViewParticipants @"View Participants"
 #define kRecordExpression @"Record Expression"
 #define kMeetingreport @"Meeting Report"
+#define kLeadType @"lead_type"
 
 
 #define kpayment_id @"payment_id"
