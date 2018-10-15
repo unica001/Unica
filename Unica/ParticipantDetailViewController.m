@@ -68,8 +68,6 @@
                 }
                 else  if ([buttons[i][@"status"] integerValue] == 1 &&  i == 0) {
                     [_acceptButton setTitle:buttons[i][@"name"] forState:UIControlStateNormal];
-                    _acceptButton.enabled = false;
-                    _acceptButton.alpha = 0.4;
                 }
                 else{
                     [_rejectButton setTitle:buttons[i][@"name"] forState:UIControlStateNormal];

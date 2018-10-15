@@ -236,7 +236,7 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(00.0, 50.0, 0.0, 50.0);
+    return UIEdgeInsetsMake(0.0, 30.0, 0.0, 20.0);
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -420,9 +420,7 @@
 }
 
 - (IBAction)cancelButtonAcrtion:(id)sender {
-        [menuButton setTarget: self.revealViewController];
-        [menuButton setAction: @selector( revealToggle: )];
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 #pragma MARK - APIs call
