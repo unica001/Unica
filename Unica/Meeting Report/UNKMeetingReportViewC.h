@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UNKMeetingReportViewC : UIViewController <delegateForCheckApplyButtonAction, delegateForRemoveAllFilter,SWRevealViewControllerDelegate>{
+@interface UNKMeetingReportViewC : UIViewController < delegateForRemoveAllFilter,SWRevealViewControllerDelegate>{
 
     NSMutableArray *arrReport;
     int pageNumber;

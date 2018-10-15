@@ -14,7 +14,6 @@
     
     NSString *countryIDsString;
     NSString *typeIDsString;
-    NSString *eventIDsString;
 }
 
 @end
@@ -43,7 +42,6 @@
     self.revealViewController.delegate = self;
     _countryFilter = [[NSMutableArray alloc] init];
     _typeFilter = [[NSMutableArray alloc] init];
-    _eventFilter = [[NSMutableArray alloc] init];
     self.isFilterApply = @"1";
     
     
@@ -54,9 +52,9 @@
     pageNumber  = 1;
     isHude = YES;
     
-    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountry]];
-    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountry] isKindOfClass:[NSMutableArray class]]) {
-        self.countryFilter = [dict valueForKey:kselectCountry];
+    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountrySchedule]];
+    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountrySchedule] isKindOfClass:[NSMutableArray class]]) {
+        self.countryFilter = [dict valueForKey:kselectCountrySchedule];
     } else {
         [self.countryFilter removeAllObjects];
     }
@@ -66,9 +64,9 @@
     } else {
         countryIDsString = @"";
     }
-    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselecteService]];
-    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselecteService] isKindOfClass:[NSMutableArray class]]) {
-        self.typeFilter = [dictType valueForKey:kselecteService];
+    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeSchedule]];
+    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeSchedule] isKindOfClass:[NSMutableArray class]]) {
+        self.typeFilter = [dictType valueForKey:kselectTypeSchedule];
     } else {
         [self.typeFilter removeAllObjects];
     }
@@ -79,19 +77,19 @@
         typeIDsString = @"";
     }
     
-    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
-    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
-        self.eventFilter = [dictevent valueForKey:kselectEvent];
-    } else {
-        [self.eventFilter removeAllObjects];
-    }
-    if (self.eventFilter.count>0 && [self.isFilterApply integerValue] == 1) {
-        NSArray *eventArray = [self.eventFilter valueForKey:Kid];
-        eventIDsString = [eventArray componentsJoinedByString:@","];
-    } else {
-        eventIDsString = @"";
-    }
-    NSLog(@"Country id %@, Event id %@, type Id %@", countryIDsString, eventIDsString, typeIDsString);
+//    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
+//    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
+//        self.eventFilter = [dictevent valueForKey:kselectEvent];
+//    } else {
+//        [self.eventFilter removeAllObjects];
+//    }
+//    if (self.eventFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+//        NSArray *eventArray = [self.eventFilter valueForKey:Kid];
+//        eventIDsString = [eventArray componentsJoinedByString:@","];
+//    } else {
+//        eventIDsString = @"";
+//    }
+    NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
     [self getScheduleList];
 }
 
@@ -173,7 +171,6 @@
     filterViewC.removeAllFilter = self;
     filterViewC.applyButtonDelegate = self;
     filterViewC.agentService = self;
-    filterViewC.eventFilterDelegate = self;
     [self.navigationController pushViewController:filterViewC animated:YES];
 }
 

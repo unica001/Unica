@@ -52,14 +52,41 @@
 
     _serviceArray = [[NSMutableArray alloc]init];
     
-    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselecteService]];
+    if ([_incomingViewType isEqualToString:kParticipantFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeParticipant]];
+        
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectTypeParticipant] isKindOfClass:[NSMutableArray class]]) {
+            _selectedServiceArray = [dict valueForKey:kselectTypeParticipant];
+        } else{
+            _selectedServiceArray = [[NSMutableArray alloc]init];
+        }
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeSchedule]];
+        
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectTypeSchedule] isKindOfClass:[NSMutableArray class]]) {
+            _selectedServiceArray = [dict valueForKey:kselectTypeSchedule];
+        } else{
+            _selectedServiceArray = [[NSMutableArray alloc]init];
+        }
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeRecord]];
+        
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectTypeRecord] isKindOfClass:[NSMutableArray class]]) {
+            _selectedServiceArray = [dict valueForKey:kselectTypeRecord];
+        } else{
+            _selectedServiceArray = [[NSMutableArray alloc]init];
+        }
+    } else {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselecteService]];
+        
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselecteService] isKindOfClass:[NSMutableArray class]]) {
+            _selectedServiceArray = [dict valueForKey:kselecteService];
+        } else{
+            _selectedServiceArray = [[NSMutableArray alloc]init];
+        }
+    }
     
-    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselecteService] isKindOfClass:[NSMutableArray class]]) {
-        _selectedServiceArray = [dict valueForKey:kselecteService];
-    }
-    else{
-        _selectedServiceArray = [[NSMutableArray alloc]init];
-    }
+   
     
     NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -266,9 +293,25 @@
     else {
         [_selectedServiceArray addObject:[_serviceArray objectAtIndex:indexPath.row]];
     }
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselecteService];
     
-    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselecteService];
+    if ([_incomingViewType isEqualToString:kParticipantFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeParticipant];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeParticipant];
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeSchedule];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeSchedule];
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeRecord];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeRecord];
+    } else {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselecteService];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselecteService];
+    }
+    
     
     [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
     [kUserDefault synchronize];
@@ -341,14 +384,8 @@
 
 - (IBAction)applyButton_clicked:(id)sender {
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselecteService];
-    
-    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselecteService];
-    
     [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
     [kUserDefault synchronize];
-
-
     
     if ([self.agentService respondsToSelector:@selector(agentServiceMethod:)]) {
         [_agentService agentServiceMethod:@"1"];

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface QuickSearchViewC : UIViewController {
-    NSMutableArray *arrQuickCourse;
     NSMutableDictionary *courseDetailDictioanry;
     NSInteger currentCourse;
     

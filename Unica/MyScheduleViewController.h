@@ -22,5 +22,4 @@
 @property (nonatomic,retain) NSString *isFilterApply;
 @property (nonatomic,retain) NSMutableArray *countryFilter;
 @property (nonatomic,retain) NSMutableArray *typeFilter;
-@property (nonatomic,retain) NSMutableArray *eventFilter;
 @end

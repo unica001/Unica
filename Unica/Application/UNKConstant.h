@@ -648,8 +648,7 @@
 #define kbuttons @"buttons"
 #define kpark_free @"park_free"
 
-#define kScheduleFilter @"scheduleFilter"
-#define kMeetingReport @"meetingReport"
+
 #define kselectEvent @"selectEvent"
 #define KEvent @"Event"
 #define kTYPE @"TYPE"
@@ -658,7 +657,7 @@
 #define kViewParticipants @"View Participants"
 #define kRecordExpression @"Record Expression"
 #define kMeetingreport @"Meeting Report"
-#define kselectCountry @"selectCountry"
+
 
 #define kpayment_id @"payment_id"
 #define kpayment_response @"payment_response"
@@ -676,7 +675,21 @@
 #define kTrakingID @"UA-97530226-1"
 
 
+#define kselectCountrySchedule @"selectCountrySchedule"
+#define kselectCountryParticipant @"selectCountryParticipant"
+#define kselectCountryRecord @"selectCountryRecord"
 
+#define kselectTypeParticipant @"selectTypeParticipant"
+#define kselectTypeSchedule @"selectTypeSchedule"
+#define kselectTypeRecord @"selectTypeRecord"
+
+#define kselectEventMeeting @"selectEventMeeting"
+#define kselectEventRecord @"selectEventRecord"
+
+#define kScheduleFilter @"scheduleFilter"
+#define kMeetingFilter @"meetingFilter"
+#define kParticipantFilter @"participantFilter"
+#define kRecordParticpantFilter @"RecordParticipantFilter"
 
 typedef enum _UNKWebViewMode {
     UNKScholarShip = 101,

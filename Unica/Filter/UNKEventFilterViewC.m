@@ -47,33 +47,29 @@
     
     eventArray = [[NSMutableArray alloc]init];
     
-    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
-    
-    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
-        selectedEventArray = [dict valueForKey:kselectEvent];
+    if ([_incomingViewType isEqualToString:kMeetingFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventMeeting]];
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectEventMeeting] isKindOfClass:[NSMutableArray class]]) {
+            selectedEventArray = [dict valueForKey:kselectEventMeeting];
+        } else{
+            selectedEventArray = [[NSMutableArray alloc]init];
+        }
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventRecord]];
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectEventRecord] isKindOfClass:[NSMutableArray class]]) {
+            selectedEventArray = [dict valueForKey:kselectEventRecord];
+        } else{
+            selectedEventArray = [[NSMutableArray alloc]init];
+        }
+    } else {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
+            selectedEventArray = [dict valueForKey:kselectEvent];
+        } else{
+            selectedEventArray = [[NSMutableArray alloc]init];
+        }
     }
-    else{
-        selectedEventArray = [[NSMutableArray alloc]init];
-    }
-    
-    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
-    
-    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
-        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:Kuserid];
-    }
-    else{
-        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:@"user_id"];
-    }
-    
-
-    if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
-       [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
-    }
-    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
-//    [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-    [self getEventList:dictionary hud:YES];
+    [self getEventList:YES];
 }
 
 #pragma mark - APIS
@@ -85,8 +81,23 @@
  * Organisation Name :- Sirez
  * version no :- 1.0
  ****************************/
--(void)getEventList:(NSMutableDictionary*)dictionary hud:(BOOL)showloader{
+-(void)getEventList:(BOOL)showloader{
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
     
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:Kuserid];
+    }
+    else{
+        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:@"user_id"];
+    }
+    
+    
+    if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
+        [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    }
+    [dictionary setValue:@"I" forKey:@"user_type"];
+    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participated-events.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showloader showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -228,7 +239,7 @@
                         [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:Kuserid];
                     }
                     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-                    [self getEventList:dictionary hud:NO];
+                    [self getEventList:NO];
                 }
             });
         
@@ -243,10 +254,20 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [selectedEventArray removeAllObjects];
     [selectedEventArray addObject:[eventArray objectAtIndex:indexPath.row]];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEvent];
     
-    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEvent];
-    
+    if ([_incomingViewType isEqualToString:kMeetingFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEventMeeting];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEventMeeting];
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEventRecord];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEventRecord];
+    } else {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEvent];
+        
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEvent];
+    }
     [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
     [kUserDefault synchronize];
     [tblEvent reloadData];
@@ -258,13 +279,6 @@
 }
 
 - (IBAction)applyButton_clicked:(id)sender {
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEvent];
-    
-    [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectEvent];
-    
-    [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
-    [kUserDefault synchronize];
     if ([self.eventDelegate respondsToSelector:@selector(eventMethod:)]) {
         [_eventDelegate eventMethod:@"1"];
     }
