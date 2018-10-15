@@ -2465,23 +2465,23 @@
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckBox" translatesAutoresizingMaskIntoConstraints="NO" id="y1c-DB-ACk">
-                                                                <rect key="frame" x="80" y="80" width="20" height="20"/>
+                                                                <rect key="frame" x="86" y="8" width="20" height="20"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="20" id="IfW-4J-Mct"/>
-                                                                    <constraint firstAttribute="height" constant="20" id="YpH-36-7Qi"/>
+                                                                    <constraint firstAttribute="height" constant="20" id="c1n-gM-Cpd"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="t8B-KS-hz6"/>
                                                                 </constraints>
                                                             </imageView>
                                                         </subviews>
                                                     </view>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="y1c-DB-ACk" secondAttribute="trailing" constant="12" id="7Lf-qw-L3n"/>
                                                         <constraint firstAttribute="bottom" secondItem="mru-Gl-Fkf" secondAttribute="bottom" id="Bzf-Qv-xve"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="y1c-DB-ACk" secondAttribute="trailing" constant="6" id="Npw-LJ-Dgh"/>
                                                         <constraint firstItem="mru-Gl-Fkf" firstAttribute="top" secondItem="40z-Iz-TRK" secondAttribute="top" id="df0-eh-NJP"/>
                                                         <constraint firstAttribute="trailing" secondItem="mru-Gl-Fkf" secondAttribute="trailing" id="gtU-pb-Srq"/>
                                                         <constraint firstItem="mru-Gl-Fkf" firstAttribute="leading" secondItem="40z-Iz-TRK" secondAttribute="leading" id="lwH-YX-o3L"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="y1c-DB-ACk" secondAttribute="bottom" constant="12" id="yLX-Bm-40Z"/>
+                                                        <constraint firstItem="y1c-DB-ACk" firstAttribute="top" secondItem="40z-Iz-TRK" secondAttribute="topMargin" id="m7S-yc-k1I"/>
                                                     </constraints>
                                                     <size key="customSize" width="120" height="120"/>
                                                     <connections>

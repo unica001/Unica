@@ -2,6 +2,7 @@
 #import "UNKRecordExpressionController.h"
 #import "remarkCell.h"
 #import "studentCell.h"
+#import "busunesCardCell.h"
 
 @interface UNKRecordExpressionController (){
     
@@ -22,6 +23,7 @@
     NSString *actionID;
     NSString *categoryID;
     NSString *templeteID;
+    NSString *strTemplate;
     
     AppDelegate *appdelegate;
 }
@@ -92,37 +94,75 @@
             return cell;
         }
    
-        static NSString *cellIdentifier3  =@"signIn";
+//        static NSString *cellIdentifier3  =@"signIn";
+//
+//        studentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
+//        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"studentCell" owner:self options:nil];
+//        cell = [nib objectAtIndex:0];
+//
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//        cell.contentHeaderLabel.text = [headerTextArray objectAtIndex:indexPath.row];
+//        cell.outerView.layer.cornerRadius = 3;
+//        cell.outerView.layer.borderWidth = 1;
+//        cell.outerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//        cell.outerView.clipsToBounds = YES;
+//
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.detailLabel.text = actionString;
+//                break;
+//            case 1:
+//                cell.detailLabel.text = categoryString;
+//                break;
+//            case 3:
+//                cell.detailLabel.text = emailTemplateString;
+//                break;
+//            case 4:
+//                cell.detailLabel.text = dateString;
+//                break;
+//
+//            default:
+//                break;
+//        }
     
-        studentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
-        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"studentCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.contentHeaderLabel.text = [headerTextArray objectAtIndex:indexPath.row];
-        cell.outerView.layer.cornerRadius = 3;
-        cell.outerView.layer.borderWidth = 1;
-        cell.outerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        cell.outerView.clipsToBounds = YES;
     
-        switch (indexPath.row) {
-            case 0:
-                cell.detailLabel.text = actionString;
-                break;
-            case 1:
-                cell.detailLabel.text = categoryString;
-                break;
-            case 3:
-                cell.detailLabel.text = emailTemplateString;
-                break;
-            case 4:
-                cell.detailLabel.text = dateString;
-                break;
-              
-            default:
-                break;
+    static NSString *cellIdentifier3  =@"signIn";
+    
+    busunesCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
+    NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"busunesCardCell" owner:self options:nil];
+    cell = [nib objectAtIndex:0];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.contentLabel.text = [headerTextArray objectAtIndex:indexPath.row];
+    cell.contenttextField.userInteractionEnabled = false;
+    cell.contenttextField.placeholder = @"Select";
+
+    if (indexPath.row == 0) {
+        cell.dropImageView.constant = 25;
+        cell.contenttextField.text = actionString;
+    }
+    else if (indexPath.row == 1) {
+        cell.dropImageView.constant = 25;
+        cell.contenttextField.text =categoryString;
+    }
+   
+    else if (indexPath.row == 3) {
+        cell.dropImageView.constant = 25;
+        cell.contenttextField.text = emailTemplateString;
+        if (![strTemplate isEqualToString:@""]) {
+            cell.lblTemplate.hidden = false;
+            cell.lblTemplate.text = strTemplate;
         }
+    }
+    else if (indexPath.row == 4) {
+        cell.dropImageView.constant = 25;
+        cell.dropdown.image = [UIImage imageNamed:@"Calendar"];
+        cell.contenttextField.text = dateString;
+        UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 55, kiPhoneWidth-45, 1)];
+        lbl.backgroundColor = [UIColor lightGrayColor];
+        [cell.contentView addSubview:lbl];
+    }
         return cell;
 }
 
@@ -140,7 +180,7 @@
     {
         return 140;
     }
-    return UITableViewAutomaticDimension;
+        return 50;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -407,6 +447,8 @@
                     template = [payloadDictionary valueForKey:@"template_lists"];
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        strTemplate = [dictionary valueForKey:@"Message"];
+                        [tableView reloadData];
                     });
                 }
             });
