@@ -97,7 +97,7 @@
     else{
         [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:Kuserid];
     }    [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-    if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+    if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
         [self getParticipantType];
     } else {
         [self getServiceList:dictionary hud:YES];
@@ -363,7 +363,7 @@
     
     
     if ([_serviceArray count]>0) {
-        if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
             serviceLabel.text = [[_serviceArray objectAtIndex:indexPath.row] valueForKey:@"filterName"];
         } else {
             serviceLabel.text = [[_serviceArray objectAtIndex:indexPath.row] valueForKey:kservice];
@@ -383,7 +383,7 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  0* NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(isLoading == true)
                 {
-                    if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+                    if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
                         [self getParticipantType];
                     } else {
                         NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
