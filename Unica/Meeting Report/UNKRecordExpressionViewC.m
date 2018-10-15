@@ -17,6 +17,11 @@
     NSInteger currentIndex;
     NSTimer *_timer;
 
+    NSString *countryIDsString;
+    NSString *typeIDsString;
+    NSString *eventIDsString;
+    
+    BOOL isFromFilter;
 }
 
 @end
@@ -26,15 +31,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _countryFilter = [[NSMutableArray alloc] init];
+    _typeFilter = [[NSMutableArray alloc] init];
+    _eventFilter = [[NSMutableArray alloc] init];
+    
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
     
     recordAllParticipantViewC = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordAllParticipantViewC"];
-    recordAllParticipantViewC.title = @"All Participant";
+    recordAllParticipantViewC.title = @"View Participant";
     
     recordExpressionListViewC = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionListViewC"];
     recordExpressionListViewC.title = @"Record Expression";
     
-    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[recordAllParticipantViewC, recordExpressionListViewC]
+    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[recordExpressionListViewC, recordAllParticipantViewC]
                                                             topBarHeight:0
                                                     parentViewController:self];
     containerVC.delegate = self;
@@ -45,6 +54,43 @@
 
     containerVC.menuIndicatorColor = [UIColor whiteColor];
     [self.viewContainer addSubview:containerVC.view];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryRecord]];
+    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryRecord] isKindOfClass:[NSMutableArray class]]) {
+        self.countryFilter = [dict valueForKey:kselectCountryRecord];
+    }
+    if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *countyArray = [self.countryFilter valueForKey:Kid];
+        countryIDsString = [countyArray componentsJoinedByString:@","];
+    }
+    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeRecord]];
+    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeRecord] isKindOfClass:[NSMutableArray class]]) {
+        self.typeFilter = [dictType valueForKey:kselectTypeRecord];
+    }
+    if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *typeArray = [self.typeFilter valueForKey:@"filterId"];
+        typeIDsString = [typeArray componentsJoinedByString:@","];
+    }
+    
+    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventRecord]];
+    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEventRecord] isKindOfClass:[NSMutableArray class]]) {
+        self.eventFilter = [dictevent valueForKey:kselectEventRecord];
+    } else {
+        [self.eventFilter removeAllObjects];
+    }
+    if (self.eventFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *eventArray = [self.eventFilter valueForKey:Kid];
+        eventIDsString = [eventArray componentsJoinedByString:@","];
+    } else {
+        eventIDsString = @"";
+    }
+    NSLog(@"Country id %@, type id %@ event id %@", countryIDsString, typeIDsString, eventIDsString);
+    if (currentIndex == 0) {
+        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:@"" countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,8 +121,8 @@
 }
 
 - (void)searchInformation:(NSString *)strSearch {
-    if (currentIndex == 1) {
-        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch];
+    if (currentIndex == 0) {
+        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
 }
 
@@ -101,8 +147,8 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (_timer) {
-        if ([_timer isValid]){ [
-                                _timer invalidate];
+        if ([_timer isValid]){
+            [ _timer invalidate];
         }
         _timer = nil;
     }

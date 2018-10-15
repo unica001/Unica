@@ -47,8 +47,10 @@
     
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         [self setContainerMeetingReport];
-    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
-        [self setContainerMySchedule];
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter]) {
+        [self setContainerMyScheduleParticipant];
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        [self setRecordParticipant];
     }
     
     containerVC.delegate = self;
@@ -73,8 +75,12 @@
     [eventTypeFilterView eventList];
 }
 
-- (void)setContainerMySchedule {
+- (void)setContainerMyScheduleParticipant {
     containerVC = [[YSLContainerViewController alloc] initWithControllers:@[countryFilterView, serviceFilterViewController] topBarHeight:0 parentViewController:self];
+}
+
+- (void)setRecordParticipant {
+    containerVC = [[YSLContainerViewController alloc] initWithControllers:@[countryFilterView, serviceFilterViewController, eventTypeFilterView] topBarHeight:0 parentViewController:self];
 }
 
 #pragma mark -- YSLContainerViewControllerDelegate
@@ -83,12 +89,22 @@
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         eventTypeFilterView.title = @"EVENT";
         [eventTypeFilterView eventList];
-    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter]) {
         if (index == 0) {
             countryFilterView.title = kCOUNTRY;
         } else if (index == 1) {
             serviceFilterViewController.title = @"TYPE";
             [serviceFilterViewController searchSeavices];
+        }
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        if (index == 0) {
+            countryFilterView.title = kCOUNTRY;
+        } else if (index == 1) {
+            serviceFilterViewController.title = @"TYPE";
+            [serviceFilterViewController searchSeavices];
+        } else {
+            eventTypeFilterView.title = @"EVENT";
+            [eventTypeFilterView eventList];
         }
     }
     [controller viewWillAppear:YES];
@@ -101,11 +117,20 @@
         [kUserDefault setValue:kfilterscleared forKey:kfilterscleared];
         [kUserDefault setValue:@"Yes" forKey:kIsRemoveAll];
 
-        [kUserDefault removeObjectForKey:kselectCountryParticipant];
-        [kUserDefault removeObjectForKey:kselectCountrySchedule];
+        if ([_incomingViewType isEqualToString:kMeetingFilter]) {
+            [kUserDefault removeObjectForKey:kselectEventMeeting];
+        } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+            [kUserDefault removeObjectForKey:kselectCountrySchedule];
+            [kUserDefault removeObjectForKey:kselectTypeSchedule];
+        } else if ([_incomingViewType isEqualToString:kParticipantFilter]) {
+            [kUserDefault removeObjectForKey:kselectCountryParticipant];
+            [kUserDefault removeObjectForKey:kselectTypeParticipant];
+        } else if([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+            [kUserDefault removeObjectForKey:kselectCountryRecord];
+            [kUserDefault removeObjectForKey:kselectTypeRecord];
+            [kUserDefault removeObjectForKey:kselectEventRecord];
+        }
         
-        [kUserDefault removeObjectForKey:kselecteService];
-        [kUserDefault removeObjectForKey:kselectEvent];
         [kUserDefault synchronize];
         
         if ([self.removeAllFilter respondsToSelector:@selector(removeAllFilter:)]) {

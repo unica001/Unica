@@ -97,7 +97,12 @@
     else{
         [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:Kuserid];
     }    [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-    [self getServiceList:dictionary hud:YES];
+    if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
+        [self getParticipantType];
+    } else {
+        [self getServiceList:dictionary hud:YES];
+    }
+    
 }
 
 #pragma mark - APIS
@@ -220,6 +225,117 @@
     
 }
 
+- (void)getParticipantType {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participant-filters.php"];
+    
+    [[ConnectionManager sharedInstance] sendGETRequestForURL:url params:nil timeoutInterval:kAPIResponseTimeout showSystemError:NO completion:^(NSDictionary *dictionary, NSError *error) {
+        
+        if (!error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                    
+                    // paging
+                    NSDictionary *dict = dictionary[kAPIPayload];
+                    if([[dict valueForKey:@"participantType"] count]<=0)
+                    {
+                        isLoading = false;
+                    }
+                    else
+                    {
+                        int counter = (int)([[dict valueForKey:@"participantType"] count] % 10 );
+                        if(counter>0)
+                        {
+                            isLoading = false;
+                        }
+                    }
+                    if (pageNumber == 1 ) {
+                        if (_serviceArray) {
+                            [_serviceArray removeAllObjects];
+                        }
+                        _serviceArray = [dict valueForKey:@"participantType"];
+                        
+                        if(_serviceArray.count>=10)
+                        {
+                            pageNumber = pageNumber+1;
+                        }
+                    }
+                    else{
+                        NSMutableArray *arr = [dict valueForKey:@"participantType"];
+                        
+                        
+                        if(arr.count > 0){
+                            
+                            [_serviceArray addObjectsFromArray:arr];
+                            NSArray * newArray =
+                            [[NSOrderedSet orderedSetWithArray:_serviceArray] array];
+                            _serviceArray =[[NSMutableArray alloc] initWithArray:newArray];
+                            
+                        }
+                        
+                        /*NSMutableArray *arr = [dictionary valueForKey:kAPIPayload];
+                         
+                         if(arr.count > 0){
+                         [_serviceArray addObjectsFromArray:arr];
+                         }*/
+                        NSLog(@"%lu",(unsigned long)_serviceArray.count);
+                        pageNumber = pageNumber+1 ;
+                    }
+                    
+                    
+                    //_serviceArray = [dictionary valueForKey:kAPIPayload];
+                    
+                    [_serviceTable reloadData];
+                    
+                    // show message if no recoed found
+                    if (_serviceArray.count > 0) {
+                        if (messageLabel) {
+                            messageLabel.text = @"";
+                            [messageLabel removeFromSuperview];
+                        }
+                    }
+                    
+                    else{
+                        messageLabel.hidden = NO;
+                        messageLabel.text = @"No records found";
+                        isLoading = false;
+                        
+                    }
+                    
+                    
+                    
+                }else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [Utility showAlertViewControllerIn:self title:kErrorTitle message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+                            
+                        }];
+                    });
+                }
+                
+            });
+        }
+        else{
+            NSLog(@"%@",error);
+            
+            if([error.domain isEqualToString:kUNKError]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
+                        
+                    }];
+                });
+            }
+            
+        }
+        
+        
+    }];
+    
+}
+
 #pragma  mark - Table delegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -247,7 +363,11 @@
     
     
     if ([_serviceArray count]>0) {
-        serviceLabel.text = [[_serviceArray objectAtIndex:indexPath.row] valueForKey:kservice];
+        if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
+            serviceLabel.text = [[_serviceArray objectAtIndex:indexPath.row] valueForKey:@"filterName"];
+        } else {
+            serviceLabel.text = [[_serviceArray objectAtIndex:indexPath.row] valueForKey:kservice];
+        }
     }
     
     // set check and unchecked selected button
@@ -263,16 +383,21 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  0* NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(isLoading == true)
                 {
-                    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
-                    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
-                    
-                    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
-                        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:Kuserid];
+                    if ([_incomingViewType isEqualToString:kRecordParticpantFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kScheduleFilter]) {
+                        [self getParticipantType];
+                    } else {
+                        NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+                        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
+                        
+                        if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+                            [dictionary setValue:[dictLogin valueForKey:Kid] forKey:Kuserid];
+                        }
+                        else{
+                            [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:Kuserid];
+                        }                [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
+                        [self getServiceList:dictionary hud:NO];
                     }
-                    else{
-                        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:Kuserid];
-                    }                [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-                    [self getServiceList:dictionary hud:NO];
+                    
                 }
             });
         

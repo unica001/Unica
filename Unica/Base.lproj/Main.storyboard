@@ -1358,15 +1358,23 @@
                                             <action selector="tapHideSearch:" destination="O8p-Qa-9bV" eventType="touchUpInside" id="vP0-pu-SlJ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="diY-Vb-MYD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="diY-Vb-MYD">
                                         <rect key="frame" x="60" y="241" width="255" height="45"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="fMl-gP-5EK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="Quick Search">
-                                            <color key="titleColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment>
+                                                    <string key="content">Quick Search(Based on you profile prefrence)</string>
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1377,12 +1385,20 @@
                                             <action selector="tapQuickSearch:" destination="O8p-Qa-9bV" eventType="touchUpInside" id="ajb-AJ-L4q"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZy-An-4Bo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZy-An-4Bo">
                                         <rect key="frame" x="60" y="317" width="255" height="45"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="Detailed Search">
-                                            <color key="titleColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment>
+                                                    <string key="content">Detailed Search(Filter as per your choice)</string>
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -6362,14 +6378,14 @@
     <inferredMetricsTieBreakers>
         <segue reference="bYE-Y6-OVg"/>
         <segue reference="1Tj-l1-4rE"/>
-        <segue reference="b7O-to-F3S"/>
+        <segue reference="TTA-9N-Yba"/>
         <segue reference="Nbo-D3-u7a"/>
         <segue reference="lCY-IW-N1M"/>
         <segue reference="4xI-KN-Mua"/>
         <segue reference="1uo-hB-vI0"/>
         <segue reference="oO5-sa-MOl"/>
         <segue reference="CdN-6S-I9h"/>
-        <segue reference="vz0-oD-vYm"/>
+        <segue reference="Ecu-yD-1D6"/>
         <segue reference="uvi-mJ-elL"/>
         <segue reference="7Lf-D1-ADX"/>
         <segue reference="NAs-3v-a9i"/>

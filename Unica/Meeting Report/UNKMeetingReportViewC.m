@@ -84,8 +84,9 @@
     } else {
         eventIDsString = @"";
     }
-    [self apiCallMeetingReport];
     NSLog(@"event id %@", eventIDsString);
+    [self apiCallMeetingReport];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -218,7 +219,7 @@
                         LoadMoreData = false;
                     }
                     if (pageNumber == 1 ) {
-                        if (arrReport) {
+                        if (arrReport.count > 0) {
                             [arrReport removeAllObjects];
                         }
                         arrReport = [payloadDictionary valueForKey:@"reportList"];

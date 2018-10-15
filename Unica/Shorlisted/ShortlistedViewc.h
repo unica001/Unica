@@ -21,6 +21,8 @@
     NSString *amount;
     UIView  *bgView;
     BOOL isInfoClicked;
+    UILabel *messageLabel;
+
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tblViewShortlisted;

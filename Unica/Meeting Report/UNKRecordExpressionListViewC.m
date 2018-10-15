@@ -22,8 +22,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     pageNumber = 1;
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor blackColor];
+    [self.view addSubview:messageLabel];
     [_tblRecordParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
-    [self recordParticipantList:YES type:@"I" searchText:@""];
+//    [self recordParticipantList:YES type:@"I" searchText:@""];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,7 +100,7 @@
 
 #pragma mark - APIS
 
--(void)recordParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText {
+-(void)recordParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId eventId:(NSString *)eventId {
     
     NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
@@ -108,6 +117,9 @@
         [dictionary setValue:userId forKey:kUser_id];
         
     }
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
     [dictionary setValue:@"I" forKey:@"user_type"];
     [dictionary setValue:@"17" forKey:@"event_id"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
@@ -153,6 +165,7 @@
                         
                         
                     }
+                    [messageLabel setHidden:YES];
                     [_tblRecordParticipant reloadData];
                 }else{
                     
@@ -161,6 +174,8 @@
                         if (pageNumber ==1) {
                             [arrRecord removeAllObjects];
                             [_tblRecordParticipant reloadData];
+                            [messageLabel setHidden:NO];
+                            messageLabel.text = @"No Record Found";
                         }
                         else{
                             LoadMoreData = false;

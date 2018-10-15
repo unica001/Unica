@@ -5,8 +5,9 @@
     NSMutableArray *arrRecord;
     int pageNumber;
     BOOL isLoading;
+    UILabel *messageLabel;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tblRecordParticipant;
--(void)recordParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText;
+-(void)recordParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId eventId:(NSString *)eventId;
 
 @end

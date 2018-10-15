@@ -199,7 +199,24 @@
     
 }
 
-
++(void)showAlertViewContinueControllerIn:(UIViewController*)controller title:(NSString*)title message:(NSString*)message block:(void(^)
+                                                                                                                        (int sum)
+                                                                                                                        
+                                                                                                                        )block{
+    
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert ];
+    
+    UIAlertAction * actionOk=[ UIAlertAction actionWithTitle:@"Continue" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        block(1);
+        
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:actionOk];
+    [controller presentViewController:alert animated:YES completion:nil];
+    
+}
 
 #pragma mark - ALERT CONTROLLER WITH TWO BUTTONS
 

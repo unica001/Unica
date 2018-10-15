@@ -28,7 +28,7 @@
     [self.view endEditing:YES];
     _searchTextField.text = @"";
     filterArray = [[NSMutableArray alloc]init];
-    
+    self.eventCountryFilterArray = [[NSMutableArray alloc]init];
     _searchTextField.placeholder = @"Search country";
     pageNumber = 0;
     if ([_incomingViewType isEqualToString:kselectCountrySchedule]) {
@@ -81,7 +81,7 @@
  * Organisation Name :- Sirez
  * version no :- 1.0
  ****************************/
--(void)getSearchData:(NSMutableDictionary*)dictionary {
+-(void)getSearchData {
     
     NSString *url;
     // show loading indicator
@@ -89,8 +89,27 @@
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     courseFilterTable.tableHeaderView = spinner;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
-    url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"country_search.php"];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        
+        NSString *userId = [dictLogin valueForKey:Kid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+    }
+    else{
+        NSString *userId =[dictLogin valueForKey:Kuserid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+        
+    }
+    [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
+    [dictionary setValue:_searchTextField.text forKey:@"search_country"];
+    
+    url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-event-countries.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:NO showSystemError:NO completion:^(NSDictionary *dictionary, NSError *error) {
         
@@ -115,7 +134,7 @@
 //                    }
 //
 //                    else if ([self.title isEqualToString:KCITY]) {
-                        searchArray = [dictionary valueForKey:kAPIPayload];
+                        searchArray = dictionary[kAPIPayload][@"countries"];
 //                    }
                     isLoading = YES;
                     [courseFilterTable reloadData];
@@ -230,12 +249,15 @@
             }
             [self.eventCountryFilterArray removeAllObjects];
             [self.eventCountryFilterArray addObjectsFromArray:filterArray];
-            if ([_incomingViewType isEqualToString:kselectCountrySchedule]) {
+            if ([_incomingViewType isEqualToString:kScheduleFilter]) {
                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountrySchedule];
                 [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountrySchedule];
-            } else if ([_incomingViewType isEqualToString:kselectCountryParticipant]) {
+            } else if ([_incomingViewType isEqualToString:kParticipantFilter]) {
                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryParticipant];
                 [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryParticipant];
+            } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryRecord];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryRecord];
             }
                 
             [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
@@ -274,13 +296,20 @@
 
 -(void)searchTextFieldValueChanged:(UITextField *)textField{
     
-        searchArray =[[NSMutableArray alloc]initWithArray:[[UtilityPlist getData:KCountryList] valueForKey:@"countries"]];
-        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"name BEGINSWITH[c] %@ ",_searchTextField.text];
-        searchArray = (NSMutableArray*)[searchArray filteredArrayUsingPredicate:predicate];
-        
+//        searchArray =[[NSMutableArray alloc]initWithArray:[[UtilityPlist getData:KCountryList] valueForKey:@"countries"]];
+//        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"name BEGINSWITH[c] %@ ",_searchTextField.text];
+//        searchArray = (NSMutableArray*)[searchArray filteredArrayUsingPredicate:predicate];
+    if ([textField.text  isEqual: @""]) {
+        dataTable.hidden = NO;
+        courseFilterTable.hidden = YES;
+    } else {
         dataTable.hidden = YES;
         courseFilterTable.hidden = NO;
         [courseFilterTable reloadData];
+    }
+    [self getSearchData];
+    
+    
 }
 
 
