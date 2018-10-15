@@ -258,6 +258,7 @@
 		9ADA64C721672818006F659B /* ParticipantsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA64C521672818006F659B /* ParticipantsCell.m */; };
 		9ADA64C821672818006F659B /* ParticipantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ADA64C621672818006F659B /* ParticipantsCell.xib */; };
 		9AF85C6121707BE700B67E43 /* UNKRecordExpressionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */; };
+		9AF85C652174562900B67E43 /* RecordExpressionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF85C642174562900B67E43 /* RecordExpressionCell.m */; };
 		9B680A491E90E09F00547503 /* UNKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B680A481E90E09F00547503 /* UNKEventDetailsViewController.m */; };
 		9B680A4E1E90E2EB00547503 /* EventDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B680A4C1E90E2EB00547503 /* EventDetailCell.m */; };
 		9B680A4F1E90E2EB00547503 /* EventDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B680A4D1E90E2EB00547503 /* EventDetailCell.xib */; };
@@ -768,6 +769,8 @@
 		9ADA64C621672818006F659B /* ParticipantsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantsCell.xib; sourceTree = "<group>"; };
 		9AF85C5F21707BE700B67E43 /* UNKRecordExpressionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNKRecordExpressionController.h; sourceTree = "<group>"; };
 		9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNKRecordExpressionController.m; sourceTree = "<group>"; };
+		9AF85C632174562900B67E43 /* RecordExpressionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordExpressionCell.h; sourceTree = "<group>"; };
+		9AF85C642174562900B67E43 /* RecordExpressionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordExpressionCell.m; sourceTree = "<group>"; };
 		9B680A471E90E09F00547503 /* UNKEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKEventDetailsViewController.h; path = ViewControllers/UNKEventDetailsViewController.h; sourceTree = "<group>"; };
 		9B680A481E90E09F00547503 /* UNKEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKEventDetailsViewController.m; path = ViewControllers/UNKEventDetailsViewController.m; sourceTree = "<group>"; };
 		9B680A4B1E90E2EB00547503 /* EventDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventDetailCell.h; path = Model/EventDetailCell.h; sourceTree = "<group>"; };
@@ -1442,6 +1445,7 @@
 		8891000B1E66938300233A3F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9AF85C62217455F900B67E43 /* RecordExpressionCell */,
 				9A483591216E24BC00127D52 /* MySchedule */,
 				9A483585216CCA0000127D52 /* SlotCell */,
 				9ADA64C3216727FA006F659B /* ParticipantsCell */,
@@ -1974,6 +1978,15 @@
 				9ADA64C621672818006F659B /* ParticipantsCell.xib */,
 			);
 			name = ParticipantsCell;
+			sourceTree = "<group>";
+		};
+		9AF85C62217455F900B67E43 /* RecordExpressionCell */ = {
+			isa = PBXGroup;
+			children = (
+				9AF85C632174562900B67E43 /* RecordExpressionCell.h */,
+				9AF85C642174562900B67E43 /* RecordExpressionCell.m */,
+			);
+			name = RecordExpressionCell;
 			sourceTree = "<group>";
 		};
 		9B680A4A1E90E2C900547503 /* EventDetails */ = {
@@ -2630,6 +2643,7 @@
 				889100221E6696C400233A3F /* ConnectionManager.m in Sources */,
 				88694F581E6826FF0036EB54 /* TPKeyboardAvoidingTableView.m in Sources */,
 				88694F631E6855C70036EB54 /* UNKOTPViewController.m in Sources */,
+				9AF85C652174562900B67E43 /* RecordExpressionCell.m in Sources */,
 				88D136F91E8134890034E15D /* UNKAgentLocationFilterViewController.m in Sources */,
 				10D04C301F34448100389D8D /* FailViewController.m in Sources */,
 				88F162071E69842200FA1397 /* GKActionSheetPicker.m in Sources */,
