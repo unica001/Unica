@@ -9,6 +9,8 @@
     BOOL isFromFilter;
     NSString *countryIDsString;
     NSString *typeIDsString;
+    NSTimer *_timer;
+
 }
 
 @end
@@ -38,6 +40,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _isFilterApply = @"1";
     NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryParticipant]];
     if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryParticipant] isKindOfClass:[NSMutableArray class]]) {
         self.countryFilter = [dict valueForKey:kselectCountryParticipant];
@@ -109,20 +112,33 @@
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    /*if (_timer) {
-     if ([_timer isValid]){ [
-     _timer invalidate];
-     }
-     _timer = nil;
-     }
-     _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timeAction:) userInfo:nil repeats:NO];*/
+    if (_timer) {
+        if ([_timer isValid]){ [
+                                _timer invalidate];
+        }
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timeAction:) userInfo:nil repeats:NO];
     
+}
+
+-(void)timeAction:(NSString*)text{
+    
+    [_timer invalidate];
+    _timer = nil;
+    
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    
+    [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
     [searchBar resignFirstResponder];
     
-    [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    [participantsViewAll reloadParticipantsData:selectedIndex type  :selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
     
     searchBar.text = @"";
 

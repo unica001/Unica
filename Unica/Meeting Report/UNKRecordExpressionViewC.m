@@ -54,6 +54,7 @@
 
     containerVC.menuIndicatorColor = [UIColor whiteColor];
     [self.viewContainer addSubview:containerVC.view];
+    self.isFilterApply = @"1";
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -11,7 +11,8 @@
     BOOL isLoading;
     BOOL isHude;
     BOOL isFromFilter;
-    
+    NSTimer *_timer;
+
     NSString *countryIDsString;
     NSString *typeIDsString;
 }
@@ -210,6 +211,33 @@
     [self getScheduleList];
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (_timer) {
+        if ([_timer isValid]){ [
+                                _timer invalidate];
+        }
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timeAction:) userInfo:nil repeats:NO];
+    
+}
+
+-(void)timeAction:(NSString*)text{
+    
+    [_timer invalidate];
+    _timer = nil;
+    
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    
+    isHude = true;
+    pageNumber = 1;
+    [tableView setContentOffset:CGPointZero animated:YES];
+    [self getScheduleList];
+}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
                   willDecelerate:(BOOL)decelerate{

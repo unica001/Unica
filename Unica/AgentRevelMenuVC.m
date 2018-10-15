@@ -4,6 +4,7 @@
 #import "userSelectionVC.h"
 #import "UNKMeetingReportViewC.h"
 #import "UNKRecordExpressionController.h"
+#import "UNKRecordExpressionViewC.h"
 
 @interface AgentRevelMenuVC ()
 {
@@ -245,7 +246,11 @@
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
         }
         else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kRecordExpression]) {
-            [self performSegueWithIdentifier:kredordExpressionSegueIdentifier sender:nil];
+            UNKRecordExpressionViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionViewC"];
+            UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+            [navController setViewControllers: @[meetingView] animated: NO ];
+            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+//            [self performSegueWithIdentifier:kredordExpressionSegueIdentifier sender:nil];
         }
     }
     else{

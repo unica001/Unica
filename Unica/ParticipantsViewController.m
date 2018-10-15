@@ -37,7 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
+//    [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
 
 }
 
