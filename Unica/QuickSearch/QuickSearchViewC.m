@@ -10,7 +10,9 @@
 #import "courseFeeCell.h"
 #import "CourseDescriptionCell.h"
 
-@interface QuickSearchViewC ()
+@interface QuickSearchViewC () {
+    AppDelegate *appDelegate;
+}
 
 @end
 
@@ -41,15 +43,16 @@
 #pragma mark: Private Methods
 
 - (void)setUpView {
-    arrQuickCourse = [[NSMutableArray alloc] init];
+    appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     currentCourse = 0;
-    [self apiCallQuickCourse];
+//    [self apiCallQuickCourse];
+    [self setUpCourseData];
 }
 
 - (void)setUpCourseData {
     courseDetailDictioanry = nil;
     courseDetailDictioanry = [[NSMutableDictionary alloc] init];
-    NSDictionary *dictCourse = arrQuickCourse[currentCourse];
+    NSDictionary *dictCourse = appDelegate.arrQuickSearch[currentCourse];
     courseDetailDictioanry = dictCourse[@"course_detail"];
     [self setHeaderViewData];
     [_tblViewQuickSearch reloadData];
@@ -917,7 +920,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if ([[dict valueForKey:kAPICode] integerValue]== 200) {
-                    arrQuickCourse = [dict valueForKey:kAPIPayload];
+                    
+                    appDelegate.arrQuickSearch = [dict valueForKey:kAPIPayload];
                     [self setUpCourseData];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1072,7 +1076,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    if (currentCourse == ([arrQuickCourse count] - 1)) {
+                    if (currentCourse == ([appDelegate.arrQuickSearch count] - 1)) {
                         [self apiCallQuickCourse];
                     } else {
                         currentCourse = currentCourse + 1;

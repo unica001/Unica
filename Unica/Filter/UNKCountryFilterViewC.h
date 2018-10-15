@@ -41,7 +41,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *applyBtnFloatConstant;
 @property (nonatomic,retain) NSMutableArray *eventCountryFilterArray;
 
-
 - (IBAction)applyButton_clicked:(id)sender;
 
 @end

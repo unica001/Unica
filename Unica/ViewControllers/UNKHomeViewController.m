@@ -74,11 +74,7 @@
     badgeLabel.textAlignment = NSTextAlignmentCenter;
     badgeLabel.font = [UIFont systemFontOfSize:12];
     [self.navigationController.navigationBar addSubview:badgeLabel];
-    if (_isQuickShown) {
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
-        QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
-        [self presentViewController:quickSearchViewC animated:false completion:nil];
-    }
+   
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -399,9 +395,13 @@
 #pragma mark - Button _Clicked
 
 - (IBAction)tapQuickSearch:(UIButton *)sender {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
-    QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
-    [self presentViewController:quickSearchViewC animated:false completion:nil];
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.arrQuickSearch.count > 0) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
+        QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
+        [self presentViewController:quickSearchViewC animated:false completion:nil];
+        
+    }
     [viewSearchOption setHidden:true];
 }
 
@@ -652,5 +652,57 @@
 - (IBAction)notificationButton_click:(id)sender {
     [self performSegueWithIdentifier:knotificationSegueIdentifier sender:kNotifications];
 
+}
+
+- (void)apiCallQuickCourse {
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
+    
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:kUser_id];
+    }
+    else{
+        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:kUser_id];
+    }
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"quick_find_course.php"];
+    
+    
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dict, NSError *error) {
+        
+        if (!error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([[dict valueForKey:kAPICode] integerValue]== 200) {
+                    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                    appDelegate.arrQuickSearch = [dict valueForKey:kAPIPayload];
+//                    [self setUpCourseData];
+                    if (_isQuickShown) {
+                        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
+                        QuickSearchViewC *quickSearchViewC = [storyBoard instantiateViewControllerWithIdentifier:@"QuickSearchViewC"];
+                        [self presentViewController:quickSearchViewC animated:false completion:nil];
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([[dict valueForKey:@"Message"] isEqualToString:@"No Records found"]) {
+//                            [self dismissViewControllerAnimated:true completion:nil];
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            NSLog(@"%@",error);
+            if([error.domain isEqualToString:kUNKError]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
+                        
+                    }];
+                });
+            }
+        }
+        
+    }];
 }
 @end

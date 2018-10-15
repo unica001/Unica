@@ -72,9 +72,9 @@
 //        typeIDsString = [typeArray componentsJoinedByString:@","];
 //    }
     
-    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEvent]];
-    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEvent] isKindOfClass:[NSMutableArray class]]) {
-        self.eventFilter = [dictevent valueForKey:kselectEvent];
+    NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventMeeting]];
+    if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEventMeeting] isKindOfClass:[NSMutableArray class]]) {
+        self.eventFilter = [dictevent valueForKey:kselectEventMeeting];
     } else {
         [self.eventFilter removeAllObjects];
     }
@@ -111,7 +111,7 @@
 - (IBAction)tapFilter:(UIBarButtonItem *)sender {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
-    filterViewC.incomingViewType = kMeetingReport;
+    filterViewC.incomingViewType = kMeetingFilter;
     filterViewC.removeAllFilter = self;
 //    filterViewC.applyButtonDelegate = self;
 //    filterViewC.agentService = self;

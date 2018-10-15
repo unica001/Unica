@@ -29,20 +29,23 @@
     // country
     countryFilterView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKCountryFilterViewC"];
     countryFilterView.title = kCOUNTRY;
+    countryFilterView.incomingViewType = _incomingViewType;
     countryFilterView.applyButtonDelegate = self.applyButtonDelegate;
     
     eventTypeFilterView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKEventFilterViewC"];
     eventTypeFilterView.title = kEVENT;
+    eventTypeFilterView.incomingViewType = _incomingViewType;
     eventTypeFilterView.eventDelegate = self.eventFilterDelegate;
     
     
     // service filter
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     serviceFilterViewController = [sb instantiateViewControllerWithIdentifier:kAgentServiceSegueIdentifier];
+    serviceFilterViewController.incomingViewType = _incomingViewType;
     serviceFilterViewController.agentService = self.agentService;
     serviceFilterViewController.title = kTYPE;
     
-    if ([_incomingViewType isEqualToString:kMeetingReport]) {
+    if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         [self setContainerMeetingReport];
     } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
         [self setContainerMySchedule];
@@ -71,13 +74,13 @@
 }
 
 - (void)setContainerMySchedule {
-    containerVC = [[YSLContainerViewController alloc] initWithControllers:@[countryFilterView, serviceFilterViewController, eventTypeFilterView] topBarHeight:0 parentViewController:self];
+    containerVC = [[YSLContainerViewController alloc] initWithControllers:@[countryFilterView, serviceFilterViewController] topBarHeight:0 parentViewController:self];
 }
 
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
-    if ([_incomingViewType isEqualToString:kMeetingReport]) {
+    if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         eventTypeFilterView.title = @"EVENT";
         [eventTypeFilterView eventList];
     } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
@@ -86,9 +89,6 @@
         } else if (index == 1) {
             serviceFilterViewController.title = @"TYPE";
             [serviceFilterViewController searchSeavices];
-        } else if (index == 2) {
-            eventTypeFilterView.title = @"EVENT";
-            [eventTypeFilterView eventList];
         }
     }
     [controller viewWillAppear:YES];
@@ -101,7 +101,9 @@
         [kUserDefault setValue:kfilterscleared forKey:kfilterscleared];
         [kUserDefault setValue:@"Yes" forKey:kIsRemoveAll];
 
-        [kUserDefault removeObjectForKey:kselectCountry];
+        [kUserDefault removeObjectForKey:kselectCountryParticipant];
+        [kUserDefault removeObjectForKey:kselectCountrySchedule];
+        
         [kUserDefault removeObjectForKey:kselecteService];
         [kUserDefault removeObjectForKey:kselectEvent];
         [kUserDefault synchronize];
