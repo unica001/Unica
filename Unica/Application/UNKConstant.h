@@ -443,7 +443,7 @@
 #define kAgentMessageStoryBoardID @"AgentMessageStoryBoardID"
 #define kcourseFilterStoryBoardID @"courseFilterStoryBoardID"
 #define kchangePasswordSegueIdentifier @"changePasswordSegueIdentifier"
-
+#define kredordExpressionSegueIdentifier @"redordExpressionSegueIdentifier"
 #define kreferFriendSegueIdentifier @"referFriendSegueIdentifier"
 // about course
 

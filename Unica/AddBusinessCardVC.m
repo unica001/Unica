@@ -1306,15 +1306,12 @@
     {
         switch ([error code]){
             case kCLErrorDenied:
-                
                 break;
-                
             default:
                 message=@"No GPS coordinates are available. Please take the device outside to an open area.";
                 break;
         }
     }
-    
     [self CurrentLocationIdentifier];
     
     

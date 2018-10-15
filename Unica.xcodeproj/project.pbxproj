@@ -257,6 +257,7 @@
 		9A62DAE42166265F00FFCCF7 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A62DAE32166265F00FFCCF7 /* ParticipantsViewController.m */; };
 		9ADA64C721672818006F659B /* ParticipantsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA64C521672818006F659B /* ParticipantsCell.m */; };
 		9ADA64C821672818006F659B /* ParticipantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ADA64C621672818006F659B /* ParticipantsCell.xib */; };
+		9AF85C6121707BE700B67E43 /* UNKRecordExpressionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */; };
 		9B680A491E90E09F00547503 /* UNKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B680A481E90E09F00547503 /* UNKEventDetailsViewController.m */; };
 		9B680A4E1E90E2EB00547503 /* EventDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B680A4C1E90E2EB00547503 /* EventDetailCell.m */; };
 		9B680A4F1E90E2EB00547503 /* EventDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B680A4D1E90E2EB00547503 /* EventDetailCell.xib */; };
@@ -765,6 +766,8 @@
 		9ADA64C421672818006F659B /* ParticipantsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticipantsCell.h; sourceTree = "<group>"; };
 		9ADA64C521672818006F659B /* ParticipantsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParticipantsCell.m; sourceTree = "<group>"; };
 		9ADA64C621672818006F659B /* ParticipantsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantsCell.xib; sourceTree = "<group>"; };
+		9AF85C5F21707BE700B67E43 /* UNKRecordExpressionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNKRecordExpressionController.h; sourceTree = "<group>"; };
+		9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNKRecordExpressionController.m; sourceTree = "<group>"; };
 		9B680A471E90E09F00547503 /* UNKEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UNKEventDetailsViewController.h; path = ViewControllers/UNKEventDetailsViewController.h; sourceTree = "<group>"; };
 		9B680A481E90E09F00547503 /* UNKEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UNKEventDetailsViewController.m; path = ViewControllers/UNKEventDetailsViewController.m; sourceTree = "<group>"; };
 		9B680A4B1E90E2EB00547503 /* EventDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventDetailCell.h; path = Model/EventDetailCell.h; sourceTree = "<group>"; };
@@ -950,6 +953,8 @@
 				9A483583216CB1A100127D52 /* TimeSlotViewController.m */,
 				9A483589216E215900127D52 /* MyScheduleViewController.h */,
 				9A48358A216E215900127D52 /* MyScheduleViewController.m */,
+				9AF85C5F21707BE700B67E43 /* UNKRecordExpressionController.h */,
+				9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */,
 			);
 			name = Agent;
 			sourceTree = "<group>";
@@ -2557,6 +2562,7 @@
 				88ADDC331E8BC39B007114FA /* UNKCourseDetailsViewController.m in Sources */,
 				BA1609C220AEDB61007B7E8E /* BusinessFilterPopUP.m in Sources */,
 				9A4835A7216F75B400127D52 /* UNKMeetingParticipantViewC.m in Sources */,
+				9AF85C6121707BE700B67E43 /* UNKRecordExpressionController.m in Sources */,
 				0EA40FC9207773820021B1E8 /* BusinessCardListVC.m in Sources */,
 				0EA40FBD207771EB0021B1E8 /* AgentHomeVC.m in Sources */,
 				BAF475BA207BE850000BB312 /* PNCircleChart.m in Sources */,

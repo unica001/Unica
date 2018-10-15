@@ -1,15 +1,10 @@
-//
-//  AgentRevelMenuVC.m
-//  Unica
-//
-//  Created by Meenkashi on 4/6/18.
-//  Copyright © 2018 Ramniwas Patidar. All rights reserved.
-//
 
 #import "AgentRevelMenuVC.h"
 #import "MenuCell.h"
 #import "userSelectionVC.h"
 #import "UNKMeetingReportViewC.h"
+#import "UNKRecordExpressionController.h"
+
 @interface AgentRevelMenuVC ()
 {
     NSMutableArray *menuImagesArray;
@@ -37,26 +32,21 @@
     
     menuLabelArray=[NSMutableArray arrayWithObjects:@"Home",@"View Business Cards", @"View Interested Students", @"Events",@"Tutorials", @"Login to UNICA Web Account", @"About UNICA",@"Logout", nil];
     
-     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [menuTable selectRowAtIndexPath:indexPath
-                                animated:YES
-                          scrollPosition:UITableViewScrollPositionNone];
-   // [self tableView:menuTable didSelectRowAtIndexPath:indexPath];
-    
+                           animated:YES
+                     scrollPosition:UITableViewScrollPositionNone];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
-    
     [self setupInitialLayout];
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
-    
 }
 
 -(void)setupInitialLayout{
@@ -68,13 +58,12 @@
     
     NSLog(@"%@",[Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]]);
     
-    
     if (![[kUserDefault valueForKey:kLoginInfo] isKindOfClass:[NSNull class]]) {
         loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
         
         NSLog(@"%@",loginDictionary);
         
-      
+        
         
         userNameLabel.text = [NSString stringWithFormat:@"%@",[loginDictionary valueForKey:@"name"]];
         
@@ -146,7 +135,7 @@
     else{
         headerView.backgroundColor = kDefaultBlueColor;
     }
-   
+    
     return headerView;
     
 }
@@ -173,7 +162,7 @@
     
     cell.backgroundColor = kDefaultBlueColor;
     
-//    cell.menuImage.image = [UIImage imageNamed:[menuImagesArray objectAtIndex:indexPath.section]];
+    //    cell.menuImage.image = [UIImage imageNamed:[menuImagesArray objectAtIndex:indexPath.section]];
     cell.menuLabel.text= appDelegate.menuArray[indexPath.row][@"name"];
     
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
@@ -225,7 +214,7 @@
                 self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-             
+                
                 userSelectionVC *userSelectionVC = [storyboard instantiateViewControllerWithIdentifier:@"userSelectionVC"];
                 UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:userSelectionVC];
                 self.window.rootViewController = nav;
@@ -235,9 +224,11 @@
         }];
     }
     [menuTable reloadData];
-
+    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     
     if ([appDelegate.menuArray[indexPath.row][@"type"] isEqualToString:@"A"]) {
         
@@ -248,28 +239,13 @@
             [self performSegueWithIdentifier:kmyScheduleSegueIdentifier sender:nil];
         }
         else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kMeetingreport]) {
-            
-            UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
-            
             UNKMeetingReportViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKMeetingReportViewC"];
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
-        [navController setViewControllers: @[meetingView] animated: NO ];
+            [navController setViewControllers: @[meetingView] animated: NO ];
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-            
-
-//            if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
-//            {
-//                SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
-//
-//                swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
-//
-//                    UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
-//
-//                    [navController setViewControllers: @[dvc] animated: NO ];
-//                    [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-//                };
-//            }
-
+        }
+        else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kRecordExpression]) {
+            [self performSegueWithIdentifier:kredordExpressionSegueIdentifier sender:nil];
         }
     }
     else{
@@ -306,7 +282,9 @@
     else if ([sender isEqualToString:kmyScheduleSegueIdentifier]) {
         destViewController.title = @"My Schedule";
     }
-    
+    else if ([sender isEqualToString:kredordExpressionSegueIdentifier]) {
+        destViewController.title = @"Record Espression";
+    }
     if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
     {
         SWRevealViewControllerSegue *swSegue = (SWRevealViewControllerSegue*) segue;
@@ -319,69 +297,7 @@
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
         };
     }
-    
 }
-
-#pragma mark - API call
-
-/****************************
- * Function Name : - signout
- * Create on : - 16 Feb 2017
- * Developed By : - Ramniwas Patidar
- * Description : - This Function is used for signout user
- * Organisation Name :- Sirez
- * version no :- 1.0
- ****************************/
--(void)signout{
-    
-    /*  NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-     [dictionary setValue:[loginDictionary valueForKey:kUserId] forKey:kUserId];
-     [dictionary setValue:[kUserDefault valueForKey:kDeviceid] forKey:kDeviceid];
-     [dictionary setValue:@"ios" forKey:kPlatform];
-     
-     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"userLogout"];
-     
-     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url params:(NSMutableDictionary *)dictionary timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
-     
-     if (!error) {
-     
-     dispatch_async(dispatch_get_main_queue(), ^{
-     
-     
-     if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-     
-     [self signOutFuntionality];
-     
-     
-     }else{
-     
-     dispatch_async(dispatch_get_main_queue(), ^{
-     [Utility showAlertViewControllerIn:self title:kErrorTitle message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-     
-     }];
-     });
-     }
-     
-     });
-     }
-     else{
-     NSLog(@"%@",error);
-     
-     if([error.domain isEqualToString:kTRLError]){
-     dispatch_async(dispatch_get_main_queue(), ^{
-     [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
-     
-     }];
-     });
-     }
-     }
-     
-     }];*/
-    
-}
-
-
-
 
 @end
 
