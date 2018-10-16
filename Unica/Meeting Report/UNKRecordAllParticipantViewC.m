@@ -8,6 +8,9 @@
 
 #import "UNKRecordAllParticipantViewC.h"
 #import "MeetingReportParticipantCell.h"
+#import "TPKeyboardAvoidingScrollView.h"
+#import "AddEventPopUp.h"
+#import "GKActionSheetPicker.h"
 
 @interface UNKRecordAllParticipantViewC () {
     BOOL LoadMoreData;
@@ -15,6 +18,19 @@
     NSString *strTypeId;
     NSString *strEventId;
     NSString *strSearch;
+    NSString *strMsg;
+    NSString *strParticipantId;
+    
+    TPKeyboardAvoidingScrollView *overlayView;
+    AddEventPopUp *popView;
+    GKActionSheetPicker *picker;
+    NSString *strEndDate;
+    UITextField *txtFieldEndDate;
+    
+    NSDictionary *dictTemplate;
+    UITextField *txtFieldTemplate;
+    
+    NSArray *template;
 }
 
 @end
@@ -54,9 +70,148 @@
  */
 
 
+- (void)addEventOverlay {
+    overlayView =[[TPKeyboardAvoidingScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    overlayView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.6];
+    overlayView.layer.cornerRadius = 5;
+    
+    NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"AddEventPopUp" owner:self options:nil];
+    
+    popView = [nibArray objectAtIndex:0];
+    popView.frame = CGRectMake(10, (kiPhoneHeight/2)-90,kiPhoneWidth-20, 160);
+    popView.layer.cornerRadius = 5;
+    popView.clipsToBounds = YES;
+    popView.viewEndDate.layer.cornerRadius = 3;
+    popView.viewEndDate.layer.borderWidth = 1;
+    popView.viewEndDate.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    popView.viewEvent.layer.cornerRadius = 3;
+    popView.viewEvent.layer.borderWidth = 1;
+    popView.viewEvent.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    popView.txtFieldEvent.placeholder = @"";
+    
+    
+    CGRect frame2 = CGRectMake(kiPhoneWidth/2 + 5, 40, kiPhoneWidth/2-48, 40);
+    NSMutableDictionary *optionDictionary = [NSMutableDictionary dictionary];
+    [optionDictionary setValue:[NSNumber numberWithInt:UIKeyboardTypeAlphabet] forKey:kTextFeildOptionKeyboardType];
+    [optionDictionary setValue:[NSNumber numberWithInt:UIReturnKeyNext] forKey:kTextFeildOptionReturnType];
+    [optionDictionary setValue:[NSNumber numberWithInt:UITextAutocorrectionTypeNo] forKey:kTextFeildOptionAutocorrectionType];
+    [optionDictionary setValue:[NSNumber numberWithInt:UITextAutocapitalizationTypeNone] forKey:kTextFeildOptionAutocapitalizationType];
+    txtFieldEndDate = [Control newTextFieldWithOptions:optionDictionary frame:frame2 delgate:self];
+    txtFieldEndDate.placeholder = @"Schedule Date";
+    txtFieldEndDate.textAlignment = NSTextAlignmentLeft;
+    txtFieldEndDate.textColor = [UIColor darkGrayColor];
+    txtFieldEndDate.userInteractionEnabled = false;
+    txtFieldEndDate.font = kDefaultFontForTextField;
+    
+    CGRect frame = CGRectMake(15, 40, kiPhoneWidth/2-48, 40);
+    txtFieldTemplate = [Control newTextFieldWithOptions:optionDictionary frame:frame delgate:self];
+    txtFieldTemplate.placeholder = @"Select Template";
+    txtFieldTemplate.textAlignment = NSTextAlignmentLeft;
+    txtFieldTemplate.textColor = [UIColor darkGrayColor];
+    txtFieldTemplate.userInteractionEnabled = false;
+    txtFieldTemplate.font = kDefaultFontForTextField;
+    
+    
+    [popView addSubview:txtFieldEndDate];
+    [popView addSubview:txtFieldTemplate];
+    [popView.btnCalender addTarget:self action:@selector(calenderAction:) forControlEvents:UIControlEventTouchUpInside];
+    [popView.btnTemplate addTarget:self action:@selector(templateAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [popView.btnCancel addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
+    [popView.btnOk addTarget:self action:@selector(submitAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [overlayView addSubview:popView];
+    
+    self.window = (UIWindow *)[[UIApplication sharedApplication].windows firstObject];
+    [self.window addSubview:overlayView];
+}
+
+-(BOOL)Validation{
+    if (![Utility validateField:txtFieldTemplate.text]) {
+        strMsg = @"Please select template";
+        return false;
+    } else if (![Utility validateField:txtFieldEndDate.text]) {
+        strMsg = @"Please select schedule date";
+        return false;
+    } else if(![Utility connectedToInternet]) {
+        strMsg = @"Please check internet connection";
+        return false;
+    }
+    return true;
+}
+
+-(IBAction)calenderAction:(id)sender{
+    [popView.txtFieldEvent resignFirstResponder];
+    picker = [GKActionSheetPicker datePickerWithMode:UIDatePickerModeDate from:[NSDate dateWithTimeIntervalSinceNow:(365*24*60*60)] to:[NSDate dateWithTimeIntervalSinceNow:0] interval:5
+                                      selectCallback:^(id selected) {
+                                          NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                          [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+                                          // [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+                                          NSString *selectedDate = [dateFormatter stringFromDate:selected];
+                                          
+                                          txtFieldEndDate.text = [NSString stringWithFormat:@"%@", selectedDate];
+                                          
+                                          NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+                                          [dateFormatter2 setDateFormat:@"yyyy-MM-dd"];
+                                          strEndDate = [dateFormatter2 stringFromDate:selected];
+                                          
+                                      } cancelCallback:^{
+                                      }];
+    
+    picker.title = @"Schedule Date";
+    [picker presentPickerOnView:self.view];
+}
+
+- (void)templateAction:(UIButton *)sender {
+    NSArray *items = [template valueForKey:@"title"];
+    
+    picker = [GKActionSheetPicker stringPickerWithItems:items selectCallback:^(id selected) {
+        
+        NSPredicate *predicate =[NSPredicate predicateWithFormat:@"title == %@",selected];
+        
+        NSArray *filtredArray = [template filteredArrayUsingPredicate:predicate];
+        if(filtredArray.count>0)
+        {
+            txtFieldTemplate.text = [NSString stringWithFormat:@"%@", selected];
+            dictTemplate = [filtredArray objectAtIndex:0];
+        }
+        
+    } cancelCallback:nil];
+    
+    [picker presentPickerOnView:self.view];
+    picker.title = @"Select Template";
+    [picker selectValue:txtFieldTemplate.text];
+}
+
+-(IBAction)submitAction:(id)sender{
+    [self.view endEditing:true];
+    
+    if([self Validation]) {
+        [overlayView removeFromSuperview];
+        
+        NSLog(@"Template %@, Schedule date %@", dictTemplate, strEndDate);
+        [self sendMailTemplate];
+//        if (dictEventDetail == nil) {
+//            dictEventDetail = [[NSMutableDictionary alloc] init];
+//        }
+//        dictEventDetail[@"name"] = popView.txtFieldEvent.text;
+//        dictEventDetail[@"end_date"] = strEndDate;
+//
+//        [self apiCallToAddUpdateEvent];
+    } else {
+        popView.lblMsg.text = strMsg;
+    }
+}
+
+-(IBAction)cancelAction:(id)sender {
+    [overlayView removeFromSuperview];
+}
 
 - (void) tapSendMail:(UIButton *)sender {
-    
+    NSDictionary *dict = arrRecord[sender.tag];
+    strParticipantId = dict[@"participantId"];
+    [self getTemplateList];
 }
 
 #pragma mark UITableView Delegate
@@ -237,4 +392,115 @@
     }];
 }
 
+-(void)getTemplateList{
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        
+        NSString *userId = [dictLogin valueForKey:Kid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+    }
+    else{
+        NSString *userId =[dictLogin valueForKey:Kuserid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+        
+    }
+    [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"template-lists.php"];
+    
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dictionary  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+        
+        if (!error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                    NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
+                    template = [payloadDictionary valueForKey:@"template_lists"];
+                    [self addEventOverlay];
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                    });
+                }
+                
+            });
+        }
+        else{
+            NSLog(@"%@",error);
+            
+            if([error.domain isEqualToString:kUNKError]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
+                        
+                    }];
+                });
+            }
+            
+        }
+        
+        
+    }];
+    
+}
+
+-(void)sendMailTemplate{
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        
+        NSString *userId = [dictLogin valueForKey:Kid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+    }
+    else{
+        NSString *userId =[dictLogin valueForKey:Kuserid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
+        
+    }
+    [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    [dictionary setValue:strParticipantId forKey:@"participantId"];
+    [dictionary setValue:dictTemplate[@"id"] forKey:@"email_template"];
+    [dictionary setValue:strEndDate forKey:@"mail_scheduled_date"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-send-mail.php"];
+    
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dictionary  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+        
+        if (!error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                    [self recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
+//                    [overlayView removeFromSuperview];
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                    });
+                }
+                
+            });
+        }
+        else{
+            NSLog(@"%@",error);
+            
+            if([error.domain isEqualToString:kUNKError]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
+                        
+                    }];
+                });
+            }
+            
+        }
+        
+        
+    }];
+    
+}
 @end

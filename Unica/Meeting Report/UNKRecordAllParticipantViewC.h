@@ -13,6 +13,7 @@
     UILabel *messageLabel;
 }
 @property (assign, nonatomic) NSInteger pageNumber;
+@property (strong, nonatomic) UIWindow *window;
 
 @property (weak, nonatomic) IBOutlet UITableView *tblRecordAllParticipant;
 -(void)recordAllParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId eventId:(NSString *)eventId;

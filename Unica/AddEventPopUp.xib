@@ -36,22 +36,26 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fkh-6H-7Jw">
+                            <rect key="frame" x="0.0" y="0.0" width="175" height="45"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="54n-8F-rSe"/>
                         <constraint firstItem="5RE-Wx-7rW" firstAttribute="top" secondItem="m7U-aW-GNl" secondAttribute="top" constant="4" id="9ph-m0-4oe"/>
                         <constraint firstAttribute="trailing" secondItem="5RE-Wx-7rW" secondAttribute="trailing" id="Bba-cC-C7s"/>
+                        <constraint firstItem="Fkh-6H-7Jw" firstAttribute="leading" secondItem="m7U-aW-GNl" secondAttribute="leading" id="OZF-ZR-LcJ"/>
+                        <constraint firstAttribute="trailing" secondItem="Fkh-6H-7Jw" secondAttribute="trailing" id="hoq-4c-N2a"/>
+                        <constraint firstItem="Fkh-6H-7Jw" firstAttribute="top" secondItem="m7U-aW-GNl" secondAttribute="top" id="jFo-KJ-kqS"/>
                         <constraint firstItem="5RE-Wx-7rW" firstAttribute="leading" secondItem="m7U-aW-GNl" secondAttribute="leading" constant="8" id="lpD-CF-M54"/>
+                        <constraint firstAttribute="bottom" secondItem="Fkh-6H-7Jw" secondAttribute="bottom" id="w1K-Cj-i1f"/>
                         <constraint firstAttribute="bottom" secondItem="5RE-Wx-7rW" secondAttribute="bottom" constant="4" id="x0p-bb-gBR"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xd8-ts-P2M">
                     <rect key="frame" x="195" y="35" width="170" height="45"/>
                     <subviews>
-                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gr0-fm-ZpB">
-                            <rect key="frame" x="0.0" y="0.0" width="170" height="45"/>
-                        </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Calendar" translatesAutoresizingMaskIntoConstraints="NO" id="8tc-qb-30y">
                             <rect key="frame" x="145" y="12.5" width="20" height="20"/>
                             <constraints>
@@ -65,6 +69,10 @@
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gr0-fm-ZpB">
+                            <rect key="frame" x="0.0" y="0.0" width="170" height="45"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -138,6 +146,7 @@
                 <outlet property="btnCalender" destination="gr0-fm-ZpB" id="1lR-bg-X3h"/>
                 <outlet property="btnCancel" destination="fnO-EG-54V" id="bZI-dP-dyf"/>
                 <outlet property="btnOk" destination="bLa-3l-w7u" id="hev-t5-xku"/>
+                <outlet property="btnTemplate" destination="Fkh-6H-7Jw" id="17s-YD-yPl"/>
                 <outlet property="lblMsg" destination="ziG-RW-F07" id="lka-vu-gKn"/>
                 <outlet property="txtFieldEndDate" destination="Gev-rY-7Bz" id="0jh-jo-38g"/>
                 <outlet property="txtFieldEvent" destination="5RE-Wx-7rW" id="bW4-Mn-hG6"/>
