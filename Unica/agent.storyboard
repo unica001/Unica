@@ -1042,7 +1042,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan QR Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3C-fz-Cue">
-                                        <rect key="frame" x="94" y="100" width="102.5" height="30"/>
+                                        <rect key="frame" x="94.5" y="100" width="102.5" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="vX2-nN-u5J"/>
                                         </constraints>
@@ -2559,7 +2559,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Business Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TsQ-Ae-FL7">
-                                                    <rect key="frame" x="82" y="81" width="136" height="21"/>
+                                                    <rect key="frame" x="78" y="81" width="144" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cI3-FB-iiK"/>
                                                     </constraints>

@@ -46,18 +46,6 @@
     
     selectedParticipant = [[NSMutableArray alloc]init];
     
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {  SWRevealViewController *revealViewController = self.revealViewController;
-        if ( revealViewController )
-        {
-            [menuButton setTarget: self.revealViewController];
-            [menuButton setAction: @selector( revealToggle: )];
-            [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        }
-    }
-    self.revealViewController.delegate = self;
-    
     appdelegate  = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [self setupInitialLayout];
     [self GetTemplateList];

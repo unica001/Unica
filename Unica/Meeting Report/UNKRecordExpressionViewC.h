@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UNKRecordExpressionViewC : UIViewController {
+@interface UNKRecordExpressionViewC : UIViewController<SWRevealViewControllerDelegate> {
     
+    __weak IBOutlet UIBarButtonItem *menuButton;
 }
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

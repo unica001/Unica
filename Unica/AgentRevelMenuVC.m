@@ -6,6 +6,14 @@
 #import "UNKRecordExpressionController.h"
 #import "UNKRecordExpressionViewC.h"
 
+typedef enum
+{
+    viewParticipant = 1,
+    mySchedule,
+    meetingReport,
+    participantAll
+} eventMenuType;
+
 @interface AgentRevelMenuVC ()
 {
     NSMutableArray *menuImagesArray;
@@ -231,21 +239,23 @@
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     
+    NSLog(@"%ld",(long)indexPath.row);
+    
     if ([appDelegate.menuArray[indexPath.row][@"type"] isEqualToString:@"A"]) {
         
-        if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kViewParticipants]) {
+        if ([appDelegate.menuArray[indexPath.row][@"action"]integerValue] == viewParticipant) {
             [self performSegueWithIdentifier:kviewParticipantsSegueIdentifier sender:nil];
         }
-        else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kMySchedule]) {
+       else if ([appDelegate.menuArray[indexPath.row][@"action"]integerValue] == mySchedule) {
             [self performSegueWithIdentifier:kmyScheduleSegueIdentifier sender:nil];
         }
-        else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kMeetingreport]) {
+       else if ([appDelegate.menuArray[indexPath.row][@"action"]integerValue] == meetingReport) {
             UNKMeetingReportViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKMeetingReportViewC"];
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
             [navController setViewControllers: @[meetingView] animated: NO ];
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
         }
-        else if ([appDelegate.menuArray[indexPath.row][kName] isEqualToString:kRecordExpression]) {
+        else if ([appDelegate.menuArray[indexPath.row][@"action"]integerValue] == participantAll) {
             UNKRecordExpressionViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionViewC"];
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
             [navController setViewControllers: @[meetingView] animated: NO ];

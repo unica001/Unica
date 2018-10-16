@@ -55,6 +55,19 @@
     containerVC.menuIndicatorColor = [UIColor whiteColor];
     [self.viewContainer addSubview:containerVC.view];
     self.isFilterApply = @"1";
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {  SWRevealViewController *revealViewController = self.revealViewController;
+        if ( revealViewController )
+        {
+            [menuButton setTarget: self.revealViewController];
+            [menuButton setAction: @selector( revealToggle: )];
+            [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        }
+    }
+    self.revealViewController.delegate = self;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

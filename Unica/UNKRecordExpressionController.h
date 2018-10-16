@@ -5,7 +5,7 @@
 #import "RecordExpressionCell.h"
 #import "TOCropViewController.h"
 
-@interface UNKRecordExpressionController : UIViewController<SWRevealViewControllerDelegate,GKActionSheetPickerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TOCropViewControllerDelegate,UITextViewDelegate>{
+@interface UNKRecordExpressionController : UIViewController<GKActionSheetPickerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TOCropViewControllerDelegate,UITextViewDelegate>{
     
     __weak IBOutlet UIBarButtonItem *menuButton;
     __weak IBOutlet UITableView *tableView;
