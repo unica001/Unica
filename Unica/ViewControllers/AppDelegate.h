@@ -48,6 +48,7 @@
 @property (strong, nonatomic) NSString *userEventId;
 @property (strong, nonatomic) NSArray *menuArray;
 @property (strong, nonatomic) NSMutableArray *arrQuickSearch;
+@property(strong, nonatomic) NSString *webLoginUrl;
 
 - (void)saveContext;
 -(void)setTimerForRating;

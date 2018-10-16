@@ -21,6 +21,8 @@ typedef enum
     NSMutableDictionary *loginDictionary;
     UISwitch * notificationSwitch;
     NSString *userType;
+    NSString *userId;
+
     
     NSInteger selectedHeaderIndex;
     BOOL isEventSelected;
@@ -47,6 +49,18 @@ typedef enum
     [menuTable selectRowAtIndexPath:indexPath
                            animated:YES
                      scrollPosition:UITableViewScrollPositionNone];
+    
+    NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
+        userId = [dictLogin valueForKey:Kid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    }
+    else{
+        userId =[dictLogin valueForKey:Kuserid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    }
+    
+    userType = [dictLogin valueForKey:@"user_type"] ;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -207,7 +221,8 @@ typedef enum
     else if (sender.tag == 4) { // Tutorial
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.uniagents.com/unica-tutorials.php"]];
     } else if (sender.tag == 5) { //Login to web account
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.uniagents.com/unica-web-login.php"]];
+      
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: appDelegate.webLoginUrl]];
     } else if (sender.tag == 6) { // About
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.uniagents.com/about-unica.php"]];
     } else if (sender.tag == 7) {
