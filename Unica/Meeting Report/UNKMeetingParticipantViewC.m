@@ -80,7 +80,7 @@
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
     cell.backgroundColor = kDefaultBlueColor;
-    [cell setParticipant:arrParticipant[indexPath.row]];
+    [cell setParticipant:arrParticipant[indexPath.row] isFromRecordExpression:YES];
     
     return  cell;
 }

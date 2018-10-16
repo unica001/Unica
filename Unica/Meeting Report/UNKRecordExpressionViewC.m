@@ -20,7 +20,7 @@
     NSString *countryIDsString;
     NSString *typeIDsString;
     NSString *eventIDsString;
-    
+    NSString *strSearch;
     BOOL isFromFilter;
 }
 
@@ -101,9 +101,12 @@
     } else {
         eventIDsString = @"";
     }
+    strSearch = _searchBar.text;
     NSLog(@"Country id %@, type id %@ event id %@", countryIDsString, typeIDsString, eventIDsString);
     if (currentIndex == 0) {
-        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:@"" countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+    } else {
+        [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
 }
 
@@ -131,12 +134,19 @@
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
     currentIndex = index;
+    if (currentIndex == 0) {
+        [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+    } else {
+        [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+    }
     [controller viewWillAppear:YES];
 }
 
 - (void)searchInformation:(NSString *)strSearch {
     if (currentIndex == 0) {
         [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
+    } else {
+        [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
 }
 
@@ -151,6 +161,7 @@
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    strSearch = _searchBar.text;
     [self searchInformation:_searchBar.text];
 }
 
@@ -180,6 +191,7 @@
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    strSearch = _searchBar.text;
     [self searchInformation:_searchBar.text];
 }
 
