@@ -11,7 +11,10 @@
 
 @interface UNKRecordExpressionListViewC (){
     BOOL LoadMoreData;
-    
+    NSString *strCountryId;
+    NSString *strTypeId;
+    NSString *strEventId;
+    NSString *strSearch;
 }
 
 @end
@@ -22,6 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     pageNumber = 1;
+    LoadMoreData = YES;
     messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
     messageLabel.text = @"No records found";
     messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -49,9 +53,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (IBAction)tapBack:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 #pragma mark UITableView Delegate
 
@@ -87,8 +88,17 @@
     
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
-    [cell setParticipant:arrRecord[indexPath.row]];
-    
+    [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:YES];
+    if([arrRecord objectAtIndex:indexPath.row]==[arrRecord objectAtIndex:arrRecord.count-1])
+    {
+        if(arrRecord.count%10 == 0)
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  0* NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                if(LoadMoreData == true)
+                {
+                    [self recordParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
+                }
+            });
+    }
     return  cell;
     
 }
@@ -101,7 +111,10 @@
 #pragma mark - APIS
 
 -(void)recordParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId eventId:(NSString *)eventId {
-    
+    strSearch = searchText;
+    strCountryId = countryId;
+    strTypeId = typeId;
+    strEventId = eventId;
     NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -120,11 +133,13 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
-    [dictionary setValue:@"I" forKey:@"user_type"];
+//    [dictionary setValue:@"I" forKey:@"user_type"];
     [dictionary setValue:@"17" forKey:@"event_id"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
-    [dictionary setValue:searchText forKey:kkeyword];
+    [dictionary setValue:searchText forKey:@"searchText"];
+    [dictionary setValue:countryId forKey:@"countryId"];
+    [dictionary setValue:typeId forKey:@"filterType"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-record-expression-lists.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showHude showSystemError:false completion:^(NSDictionary *dictionary, NSError *error) {
@@ -137,13 +152,18 @@
                 isLoading = NO;
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    
-                    int counter = (int)([[payloadDictionary valueForKey:@"recordExpressionList"] count] % 10 );
-                    if(counter>0)
+                    if([[payloadDictionary valueForKey:@"recordExpressionList"] count]<=0)
                     {
                         LoadMoreData = false;
                     }
-                    
+                    else
+                    {
+                        int counter = (int)([[payloadDictionary valueForKey:@"recordExpressionList"] count] % 10 );
+                        if(counter>0)
+                        {
+                            LoadMoreData = false;
+                        }
+                    }
                     if (pageNumber == 1 ) {
                         if (arrRecord) {
                             [arrRecord removeAllObjects];

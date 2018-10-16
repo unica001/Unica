@@ -19,5 +19,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordExp;
 
-- (void)setParticipant:(NSDictionary *)dict;
+- (void)setParticipant:(NSDictionary *)dict isFromRecordExpression:(BOOL)isFromRecordExpression;
 @end

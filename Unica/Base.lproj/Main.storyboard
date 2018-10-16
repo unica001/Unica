@@ -1359,15 +1359,16 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="diY-Vb-MYD">
-                                        <rect key="frame" x="60" y="241" width="255" height="45"/>
+                                        <rect key="frame" x="60" y="238" width="255" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="fMl-gP-5EK"/>
+                                            <constraint firstAttribute="height" constant="50" id="fMl-gP-5EK"/>
                                         </constraints>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment>
-                                                    <string key="content">Quick Search(Based on you profile prefrence)</string>
+                                                    <string key="content">QUICK SEARCH
+(Based on you profile prefrence)</string>
                                                     <attributes>
                                                         <color key="NSColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
@@ -1386,12 +1387,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZy-An-4Bo">
-                                        <rect key="frame" x="60" y="317" width="255" height="45"/>
+                                        <rect key="frame" x="60" y="314" width="255" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment>
-                                                    <string key="content">Detailed Search(Filter as per your choice)</string>
+                                                    <string key="content">DETAILED SEARCH
+(Filter as per your choice)</string>
                                                     <attributes>
                                                         <color key="NSColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
@@ -1418,7 +1420,7 @@
                                     <constraint firstItem="diY-Vb-MYD" firstAttribute="centerY" secondItem="fLd-SI-3aS" secondAttribute="centerY" constant="-38" id="CpJ-L1-M51"/>
                                     <constraint firstItem="diY-Vb-MYD" firstAttribute="leading" secondItem="fLd-SI-3aS" secondAttribute="leading" constant="60" id="Ue3-s7-1NL"/>
                                     <constraint firstItem="pZy-An-4Bo" firstAttribute="height" secondItem="diY-Vb-MYD" secondAttribute="height" id="WaN-RL-cRc"/>
-                                    <constraint firstItem="pZy-An-4Bo" firstAttribute="top" secondItem="diY-Vb-MYD" secondAttribute="bottom" constant="31" id="Xe8-aq-a9H"/>
+                                    <constraint firstItem="pZy-An-4Bo" firstAttribute="top" secondItem="diY-Vb-MYD" secondAttribute="bottom" constant="26" id="Xe8-aq-a9H"/>
                                     <constraint firstAttribute="bottom" secondItem="97R-7U-9hv" secondAttribute="bottom" id="jYx-RI-q4x"/>
                                     <constraint firstAttribute="trailing" secondItem="97R-7U-9hv" secondAttribute="trailing" id="nPE-oD-neU"/>
                                     <constraint firstItem="97R-7U-9hv" firstAttribute="top" secondItem="fLd-SI-3aS" secondAttribute="top" id="qHy-7K-697"/>
