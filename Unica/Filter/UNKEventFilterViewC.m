@@ -86,7 +86,7 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
     
     if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
-        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:Kuserid];
+        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:@"user_id"];
     }
     else{
         [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:@"user_id"];
@@ -97,7 +97,7 @@
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
     [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participated-events.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showloader showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -251,10 +251,13 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 40;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [selectedEventArray removeAllObjects];
-    [selectedEventArray addObject:[eventArray objectAtIndex:indexPath.row]];
-    
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([selectedEventArray containsObject:[eventArray objectAtIndex:indexPath.row]]) {
+        [selectedEventArray removeAllObjects];
+    } else{
+        [selectedEventArray removeAllObjects];
+        [selectedEventArray addObject:[eventArray objectAtIndex:indexPath.row]];
+    }
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:selectedEventArray forKey:kselectEventMeeting];
         

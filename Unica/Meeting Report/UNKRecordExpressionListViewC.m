@@ -8,6 +8,7 @@
 
 #import "UNKRecordExpressionListViewC.h"
 #import "MeetingReportParticipantCell.h"
+#import "UNKRecordExpressionController.h"
 
 @interface UNKRecordExpressionListViewC (){
     BOOL LoadMoreData;
@@ -24,8 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    pageNumber = 1;
-    LoadMoreData = YES;
     messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
     messageLabel.text = @"No records found";
     messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -37,6 +36,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _pageNumber = 1;
+    LoadMoreData = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +54,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)tapRecordExpression:(UIButton *)sender {
+    NSDictionary *dict = arrRecord[sender.tag];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Agent" bundle:nil];
+    UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
+    [self.navigationController pushViewController:recordViewC animated:YES];
+}
+
 
 #pragma mark UITableView Delegate
 
@@ -89,6 +97,8 @@
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
     [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:YES];
+    [cell.btnRecordExp addTarget:self action:@selector(tapRecordExpression:) forControlEvents:UIControlEventTouchUpInside];
+    cell.btnRecordExp.tag = indexPath.row;
     if([arrRecord objectAtIndex:indexPath.row]==[arrRecord objectAtIndex:arrRecord.count-1])
     {
         if(arrRecord.count%10 == 0)
@@ -132,11 +142,11 @@
     }
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
-    [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
+    [dictionary setValue:([eventId isEqual: @""] ? appDelegate.userEventId : eventId) forKey:kevent_id];
 //    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
+//    [dictionary setValue:@"17" forKey:@"event_id"];
 //    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
-    [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPage_number];
+    [dictionary setValue:[NSString stringWithFormat:@"%d",_pageNumber] forKey:kPage_number];
     [dictionary setValue:searchText forKey:@"searchText"];
     [dictionary setValue:countryId forKey:@"countryId"];
     [dictionary setValue:typeId forKey:@"filterType"];
@@ -164,12 +174,12 @@
                             LoadMoreData = false;
                         }
                     }
-                    if (pageNumber == 1 ) {
+                    if (_pageNumber == 1 ) {
                         if (arrRecord) {
                             [arrRecord removeAllObjects];
                         }
                         arrRecord = [payloadDictionary valueForKey:@"recordExpressionList"];
-                        pageNumber = 2;
+                        _pageNumber = 2;
                     }
                     else{
                         NSMutableArray *arr = [payloadDictionary valueForKey:@"recordExpressionList"];
@@ -181,7 +191,7 @@
                             arrRecord =[[NSMutableArray alloc] initWithArray:newArray];
                         }
                         NSLog(@"%lu",(unsigned long)arrRecord.count);
-                        pageNumber = pageNumber+1 ;
+                        _pageNumber = _pageNumber+1 ;
                         
                         
                     }
@@ -191,7 +201,7 @@
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        if (pageNumber ==1) {
+                        if (_pageNumber ==1) {
                             [arrRecord removeAllObjects];
                             [_tblRecordParticipant reloadData];
                             [messageLabel setHidden:NO];
@@ -212,7 +222,7 @@
             if([error.domain isEqualToString:kUNKError]){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    if (pageNumber ==1) {
+                    if (_pageNumber ==1) {
                         
                         [arrRecord removeAllObjects];
                         [_tblRecordParticipant reloadData];

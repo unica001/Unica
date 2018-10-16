@@ -8,7 +8,7 @@
 
 #import "UNKRecordExpressionViewC.h"
 
-@interface UNKRecordExpressionViewC ()<YSLContainerViewControllerDelegate> {
+@interface UNKRecordExpressionViewC ()<YSLContainerViewControllerDelegate, delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter> {
     YSLContainerViewController *containerVC;
     
     UNKRecordExpressionListViewC *recordExpressionListViewC;
@@ -75,18 +75,26 @@
     NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryRecord]];
     if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryRecord] isKindOfClass:[NSMutableArray class]]) {
         self.countryFilter = [dict valueForKey:kselectCountryRecord];
+    } else {
+        [self.countryFilter removeAllObjects];
     }
     if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
         NSArray *countyArray = [self.countryFilter valueForKey:Kid];
         countryIDsString = [countyArray componentsJoinedByString:@","];
+    } else {
+        countryIDsString = @"";
     }
     NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeRecord]];
     if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeRecord] isKindOfClass:[NSMutableArray class]]) {
         self.typeFilter = [dictType valueForKey:kselectTypeRecord];
+    } else {
+        [self.typeFilter removeAllObjects];
     }
     if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
         NSArray *typeArray = [self.typeFilter valueForKey:@"filterId"];
         typeIDsString = [typeArray componentsJoinedByString:@","];
+    } else {
+        typeIDsString = @"";
     }
     
     NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventRecord]];
@@ -104,8 +112,10 @@
     strSearch = _searchBar.text;
     NSLog(@"Country id %@, type id %@ event id %@", countryIDsString, typeIDsString, eventIDsString);
     if (currentIndex == 0) {
+        recordExpressionListViewC.pageNumber = 1;
         [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     } else {
+        recordAllParticipantViewC.pageNumber = 1;
         [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
 }
@@ -135,8 +145,10 @@
 {
     currentIndex = index;
     if (currentIndex == 0) {
+        recordExpressionListViewC.pageNumber = 1;
         [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     } else {
+        recordAllParticipantViewC.pageNumber = 1;
         [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
     [controller viewWillAppear:YES];
@@ -144,10 +156,46 @@
 
 - (void)searchInformation:(NSString *)strSearch {
     if (currentIndex == 0) {
+        recordExpressionListViewC.pageNumber = 1;
         [recordExpressionListViewC recordParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     } else {
+        recordAllParticipantViewC.pageNumber = 1;
         [recordAllParticipantViewC recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:countryIDsString typeId:typeIDsString eventId:eventIDsString];
     }
+}
+
+#pragma mark - IBAction Methods
+- (IBAction)filterButtonAction:(id)sender {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+    UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
+    filterViewC.incomingViewType = kRecordParticpantFilter;
+    filterViewC.removeAllFilter = self;
+    filterViewC.applyButtonDelegate = self;
+    filterViewC.agentService = self;
+    [self.navigationController pushViewController:filterViewC animated:YES];
+    // Apply filter
+}
+
+#pragma mark - Filter delegate
+
+-(void)checkApplyButtonAction:(NSInteger)index{
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    isFromFilter = true;
+}
+
+-(void)removeAllFilter:(NSInteger)index{
+    isFromFilter = true;
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+}
+
+-(void)agentServiceMethod:(NSString *)index{
+    self.isFilterApply = index;
+    isFromFilter = true;
+}
+
+- (void)eventMethod:(NSString *)index {
+    self.isFilterApply = index;
+    isFromFilter = true;
 }
 
 #pragma  mark - Search bar delegate

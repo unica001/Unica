@@ -31,17 +31,24 @@
     self.eventCountryFilterArray = [[NSMutableArray alloc]init];
     _searchTextField.placeholder = @"Search country";
     pageNumber = 0;
-    if ([_incomingViewType isEqualToString:kselectCountrySchedule]) {
+    if ([_incomingViewType isEqualToString:kScheduleFilter]) {
         NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountrySchedule]];
         if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountrySchedule] isKindOfClass:[NSMutableArray class]]) {
             self.eventCountryFilterArray = [dict valueForKey:kselectCountrySchedule];
         } else{
             self.eventCountryFilterArray = [[NSMutableArray alloc]init];
         }
-    } else if ([_incomingViewType isEqualToString:kselectCountryParticipant]) {
+    } else if ([_incomingViewType isEqualToString:kParticipantFilter]) {
         NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryParticipant]];
         if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryParticipant] isKindOfClass:[NSMutableArray class]]) {
             self.eventCountryFilterArray = [dict valueForKey:kselectCountryParticipant];
+        } else{
+            self.eventCountryFilterArray = [[NSMutableArray alloc]init];
+        }
+    } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryRecord]];
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryRecord] isKindOfClass:[NSMutableArray class]]) {
+            self.eventCountryFilterArray = [dict valueForKey:kselectCountryRecord];
         } else{
             self.eventCountryFilterArray = [[NSMutableArray alloc]init];
         }
@@ -319,6 +326,21 @@
         if (self.eventCountryFilterArray.count>0) {
             [filterArray removeObjectAtIndex:sender.tag];
             [self.eventCountryFilterArray removeObjectAtIndex:sender.tag];
+            
+            if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountrySchedule];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountrySchedule];
+            } else if ([_incomingViewType isEqualToString:kParticipantFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryParticipant];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryParticipant];
+            } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryRecord];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryRecord];
+            }
+            
+            [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
+            [kUserDefault synchronize];
+            
             [dataTable reloadData];
         }
     }

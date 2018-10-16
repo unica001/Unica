@@ -10,9 +10,10 @@
 
 @interface UNKRecordAllParticipantViewC : UIViewController {
     NSMutableArray *arrRecord;
-    int pageNumber;
     UILabel *messageLabel;
 }
+@property (assign, nonatomic) NSInteger pageNumber;
+
 @property (weak, nonatomic) IBOutlet UITableView *tblRecordAllParticipant;
 -(void)recordAllParticipantList:(BOOL)showHude type:(NSString*)type searchText:(NSString*)searchText countryId:(NSString *)countryId typeId:(NSString *)typeId eventId:(NSString *)eventId;
 @end

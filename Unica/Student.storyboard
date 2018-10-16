@@ -839,7 +839,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Filter" id="0hN-v5-msL">
                             <connections>
-                                <action selector="tapBack:" destination="qaI-fR-PeB" id="53U-ek-mRM"/>
+                                <action selector="filterButtonAction:" destination="qaI-fR-PeB" id="lVF-PA-O34"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
