@@ -200,7 +200,7 @@
     }
     [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
     [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
+    [dictionary setValue:@"32" forKey:@"event_id"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];

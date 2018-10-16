@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MyScheduleCell.h"
-
+#import "ParticipantsSegmentViewController.h"
 @interface MyScheduleViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SWRevealViewControllerDelegate>{
     
     __weak IBOutlet UISearchBar *searchBar;
