@@ -778,7 +778,6 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     app.userEventId =  dictionary[kAPIPayload][kevent_id];
-                    app.userEventId =  @"17";
                     app.menuArray = dictionary[kAPIPayload][@"menus"];
                     app.webLoginUrl = dictionary[@"login_url"];
                 }

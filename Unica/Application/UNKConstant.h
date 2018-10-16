@@ -464,6 +464,7 @@
 #define kparticipantsSegueIdentifier @"participantsSegueIdentifier"
 #define kparticipantsStoryboardID @"participantsStoryboardID"
 #define kmyScheduleSegueIdentifier @"myScheduleSegueIdentifier"
+#define kavailabelParticipantSegueIdentifier @"availabelParticipantSegueIdentifier"
 
 #define kfilterscleared @"filterscleared"
 #define kIsRemoveAll @"removeAll"

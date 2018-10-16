@@ -257,6 +257,7 @@
 		9A62DAE42166265F00FFCCF7 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A62DAE32166265F00FFCCF7 /* ParticipantsViewController.m */; };
 		9ADA64C721672818006F659B /* ParticipantsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA64C521672818006F659B /* ParticipantsCell.m */; };
 		9ADA64C821672818006F659B /* ParticipantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ADA64C621672818006F659B /* ParticipantsCell.xib */; };
+		9AE3DB602175F12500269749 /* UNKSearchAvailableParticipantCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE3DB5F2175F12500269749 /* UNKSearchAvailableParticipantCtrl.m */; };
 		9AF85C6121707BE700B67E43 /* UNKRecordExpressionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */; };
 		9AF85C652174562900B67E43 /* RecordExpressionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF85C642174562900B67E43 /* RecordExpressionCell.m */; };
 		9B680A491E90E09F00547503 /* UNKEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B680A481E90E09F00547503 /* UNKEventDetailsViewController.m */; };
@@ -767,6 +768,8 @@
 		9ADA64C421672818006F659B /* ParticipantsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticipantsCell.h; sourceTree = "<group>"; };
 		9ADA64C521672818006F659B /* ParticipantsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParticipantsCell.m; sourceTree = "<group>"; };
 		9ADA64C621672818006F659B /* ParticipantsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantsCell.xib; sourceTree = "<group>"; };
+		9AE3DB5E2175F12500269749 /* UNKSearchAvailableParticipantCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNKSearchAvailableParticipantCtrl.h; sourceTree = "<group>"; };
+		9AE3DB5F2175F12500269749 /* UNKSearchAvailableParticipantCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNKSearchAvailableParticipantCtrl.m; sourceTree = "<group>"; };
 		9AF85C5F21707BE700B67E43 /* UNKRecordExpressionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNKRecordExpressionController.h; sourceTree = "<group>"; };
 		9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNKRecordExpressionController.m; sourceTree = "<group>"; };
 		9AF85C632174562900B67E43 /* RecordExpressionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordExpressionCell.h; sourceTree = "<group>"; };
@@ -958,6 +961,8 @@
 				9A48358A216E215900127D52 /* MyScheduleViewController.m */,
 				9AF85C5F21707BE700B67E43 /* UNKRecordExpressionController.h */,
 				9AF85C6021707BE700B67E43 /* UNKRecordExpressionController.m */,
+				9AE3DB5E2175F12500269749 /* UNKSearchAvailableParticipantCtrl.h */,
+				9AE3DB5F2175F12500269749 /* UNKSearchAvailableParticipantCtrl.m */,
 			);
 			name = Agent;
 			sourceTree = "<group>";
@@ -2529,6 +2534,7 @@
 			files = (
 				BA674F4620AEB7DD00347E5F /* AddEventPopUp.m in Sources */,
 				9A483584216CB1A100127D52 /* TimeSlotViewController.m in Sources */,
+				9AE3DB602175F12500269749 /* UNKSearchAvailableParticipantCtrl.m in Sources */,
 				888D098B1E99F43800F6D103 /* ContactUsViewController.m in Sources */,
 				88FF93961E6EB5C700D0652C /* UNKWelcomeViewController.m in Sources */,
 				0EA40FB7207771930021B1E8 /* AgentLoginVC.m in Sources */,
