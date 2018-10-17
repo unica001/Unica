@@ -24,6 +24,8 @@
 - (IBAction)myTableButtonAction:(id)sender;
 - (IBAction)submitButtonAction:(id)sender;
 - (IBAction)yourTableButtonAction:(id)sender;
+
+@property(nonatomic,retain) NSDictionary *dictDetail;
 @property(nonatomic,retain) NSString *participantID;
 @property(nonatomic,retain) NSString *eventID;
 @end

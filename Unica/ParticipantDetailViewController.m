@@ -10,6 +10,7 @@
 #import "TimeSlotViewController.h"
 @interface ParticipantDetailViewController (){
     NSString *selectedTap;
+    NSString *eventID;
 }
 
 @end
@@ -20,6 +21,7 @@
     [super viewDidLoad];
     _viewBg.layer.cornerRadius = 5;
     _viewBg.layer.masksToBounds = true;
+    eventID = self.participantDict[kevent_id];
     [self getParticipantDetails];
 }
 
@@ -95,7 +97,7 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:self.participantDict[@"participantId"] forKey:@"participantId"];
-    [dic setValue:self.participantDict[kevent_id] forKey:kevent_id];
+    [dic setValue:eventID forKey:kevent_id];
     [dic setValue:self.participantDict[@"buttons"][0][@"type"] forKey:@"prticipantType"];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events-participants-data.php"];
@@ -122,7 +124,7 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:participantId forKey:@"participantId"];
-    [dic setValue:self.participantDict[kevent_id] forKey:kevent_id];
+    [dic setValue:eventID forKey:kevent_id];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-send-request.php"];
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -132,6 +134,8 @@
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
                         
+                        self.participantDict = dictionary[kAPIPayload][@"participant"][0];
+                        [self getParticipantDetails];
                     }];
                 }
             });
@@ -150,7 +154,7 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:participantId forKey:@"participantId"];
-    [dic setValue:self.participantDict[kevent_id] forKey:kevent_id];
+    [dic setValue:eventID forKey:kevent_id];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-cancel-request.php"];
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -159,8 +163,8 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                       
-                        
+                        self.participantDict = dictionary[kAPIPayload][@"participant"][0];
+                        [self getParticipantDetails];
                     }];
                 }
             });

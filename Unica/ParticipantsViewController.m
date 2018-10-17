@@ -11,6 +11,8 @@
     NSString *countryId;
     NSString *typeId;
     AppDelegate *appDelegate;
+    
+    NSInteger selectedRowID;
 
 }
 
@@ -36,9 +38,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-//    [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
-
 }
 
 -(void)reloadParticipantsData:(NSInteger)index type:(NSString *)type searchText:(NSString*)searchText fromSearch:(BOOL)fromSearch countryId:(NSString *)countryId typeId:(NSString *)typeId {
@@ -49,10 +48,7 @@
     searchtext = searchText;
     countryId = countryId;
     typeId = typeId;
-//    if (fromSearch == true){
-//        pageNumber = 1;
-//        [tableView setContentOffset:CGPointZero animated:YES];
-//    }
+
     [self participantsList:false type:type searchText:searchText countryId:countryId typeId:typeId];
 }
 
@@ -158,21 +154,24 @@
 // MARK Button Action
 
 -(void)sendRequestButtonAction:(UIButton*)sender{
+    selectedRowID = sender.tag;
     NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
     [self sendParticipantRequest:dict[@"participantId"]];
     
 }
 -(void)acceptRequestButtonAction:(UIButton*)sender{
-    
+    selectedRowID = sender.tag;
     NSDictionary *dict = participantArray[sender.tag];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     TimeSlotViewController *eventList = [storyboard instantiateViewControllerWithIdentifier:@"TimeSlotViewController"];
     eventList.participantID = dict[@"participantId"];
     eventList.eventID = appDelegate.userEventId;
+    eventList.dictDetail = dict;
     [self.navigationController pushViewController:eventList animated:true];
     
 }
 -(void)rejectequestButtonAction:(UIButton*)sender{
+    selectedRowID = sender.tag;
     NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
     [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];
     
@@ -215,16 +214,6 @@
     [dictionary setValue:searchText forKey:ksearchText];
 
 
-    NSString *message =@"Finding Best Match Courses For You ";
-    
-    if(pageNumber==1)
-    {
-        message =@"Finding Best Match Courses For You ";
-    }
-    else
-    {
-        message =@"Finding more courses as per your Profile Filters";
-    }
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events-participants.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showHude showSystemError:false completion:^(NSDictionary *dictionary, NSError *error) {
@@ -264,8 +253,6 @@
                         }
                         NSLog(@"%lu",(unsigned long)participantArray.count);
                         pageNumber = pageNumber+1 ;
-                        
-                   
                     }
                     [tableView reloadData];
                     messageLabel.text = @"";
@@ -342,11 +329,7 @@
                         
                         [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
                             
-                            if (selectedArray.count> 0) {
-                                [selectedArray removeAllObjects];
-                            }
-                            [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false countryId:countryId typeId:typeId];
-                            
+                           [self reloadTbleViewCell:dictionary[kAPIPayload]];
                         }];
                     }
                 });
@@ -374,16 +357,25 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                        
-                        if (selectedArray.count> 0) {
-                            [selectedArray removeAllObjects];
-                        }
-                        [self reloadParticipantsData:selectedIndex-1 type:viewType searchText:searchtext fromSearch:false countryId:countryId typeId:typeId];
+                        [self reloadTbleViewCell:dictionary[kAPIPayload]];
                     }];
                 }
             });
         }
     }];
+}
+
+-(void)reloadTbleViewCell:(NSDictionary *)dictionary{
+    
+    if (selectedArray.count> 0) {
+        [selectedArray removeAllObjects];
+    }
+    
+    [participantArray removeObjectAtIndex:selectedRowID];
+    [participantArray insertObject:dictionary[@"participant"][0] atIndex:selectedRowID];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedRowID inSection:0];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Scrol view delegate
@@ -399,19 +391,15 @@
         float y = offset.y + bounds.size.height - inset.bottom;
         float h = size.height;
         
-        float reload_distance = 10;
+        float reload_distance = 0;
         if(y > h + reload_distance) {
-            NSLog(@"End Scroll %f",y);
             if (pageNumber != totalRecord) {
-                NSLog(@"Call API for pagging from %d for total pages %d",pageNumber,totalRecord);
                 isLoading = YES;
-                UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                [spinner startAnimating];
-                spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+                isHude=false;
+                [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
             }
         }
-    }
-    else{
+    } else{
         tableView.tableFooterView = nil;
     }
 }

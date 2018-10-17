@@ -150,6 +150,7 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+                        self.dictDetail = dictionary[kAPIPayload][@"participant"][0];
                         [self.navigationController popViewControllerAnimated:true];
                     }];
                 }

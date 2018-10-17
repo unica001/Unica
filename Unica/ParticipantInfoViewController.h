@@ -11,7 +11,10 @@
 
 @interface ParticipantInfoViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     __weak IBOutlet UITableView *tableView;
+    __weak IBOutlet UILabel *performanceStatusLabel;
+    __weak IBOutlet UIView *bottomView;
     
 }
+- (IBAction)performanceStatusButtonAction:(id)sender;
 @property(nonatomic,retain) NSDictionary *infoDictionary;
 @end

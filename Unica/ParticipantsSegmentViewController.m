@@ -139,9 +139,6 @@
     [searchBar resignFirstResponder];
     
     [participantsViewAll reloadParticipantsData:selectedIndex type  :selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
-    
-    searchBar.text = @"";
-
 }
 
 #pragma mark -- YSLContainerViewControllerDelegate
