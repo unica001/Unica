@@ -452,6 +452,7 @@
     popView.viewEvent.layer.borderWidth = 1;
     popView.viewEvent.layer.borderColor = [UIColor lightGrayColor].CGColor;
     popView.txtFieldEvent.delegate = self;
+    [popView.btnTemplate setHidden:YES];
     
     CGRect frame2 = CGRectMake(kiPhoneWidth/2 + 5, 40, kiPhoneWidth/2-48, 40);
     NSMutableDictionary *optionDictionary = [NSMutableDictionary dictionary];

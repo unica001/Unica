@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *viewEndDate;
 @property (weak, nonatomic) IBOutlet UIView *viewEvent;
 @property (weak, nonatomic) IBOutlet UILabel *lblMsg;
+@property (weak, nonatomic) IBOutlet UIButton *btnTemplate;
 
 @end
