@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Unica/ParticipantsSegmentViewController.m"
-            timestampString = "561298423.538362"
+            filePath = "Unica/Meeting Report/UNKMeetingReportViewC.m"
+            timestampString = "561461961.144655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Unica/ParticipantsSegmentViewController.m"
-            timestampString = "561298423.538421"
+            filePath = "Unica/Meeting Report/UNKRecordAllParticipantViewC.m"
+            timestampString = "561461961.144725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-containerViewItemIndex:currentController:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Unica/ParticipantsSegmentViewController.m"
-            timestampString = "561298423.538463"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "-recordAllParticipantList:type:searchText:countryId:typeId:eventId:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

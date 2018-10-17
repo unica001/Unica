@@ -217,8 +217,6 @@
     
     [_timer invalidate];
     _timer = nil;
-    
-    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
@@ -242,7 +240,7 @@
         
         float reload_distance = 0;
         if(y > h + reload_distance) {
-            if (pageNumber != totalRecord) {
+            if ([myScheduleArray count] % 10 == 0) {
                 isLoading = YES;
                 isHude=false;
                 [self getScheduleList];
@@ -266,6 +264,9 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:appDelegate.userEventId forKey:kevent_id];
+    [dic setValue:countryIDsString forKey:@"countryId"];
+    [dic setValue:typeIDsString forKey:@"filterType"];
+    [dic setValue:searchBar.text forKey:@"searchText"];
     [dic setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-schedule-lists.php"];
@@ -361,38 +362,6 @@
         }
     }];
 }
-
--(void)searchAvailabelPeople:(NSDictionary*)maindict index:(NSInteger)index{
-    
-    NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
-    
-    NSString *userId = [loginDictionary valueForKey:@"id"];
-    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:userId forKey:@"user_id"];
-    [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
-    [dic setValue:maindict[kslotId] forKey:kslotId];
-    [dic setValue:appDelegate.userEventId forKey:kevent_id];
-    [dic setValue:searchBar.text forKey:@"searchText"];
-
-    
-    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-available-participants.php"];
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
-        if (!error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-//                    [self performSegueWithIdentifier:kviewParticipantsSegueIdentifier sender:nil];
-                }
-                else {
-                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                    }];
-                }
-            });
-        }
-    }];
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSString*)sender {
     UNKSearchAvailableParticipantCtrl * viewController = segue.destinationViewController;

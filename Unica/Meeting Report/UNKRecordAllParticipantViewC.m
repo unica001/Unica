@@ -251,17 +251,6 @@
     [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:NO];
     [cell.btnRecordExp addTarget:self action:@selector(tapSendMail:) forControlEvents:UIControlEventTouchUpInside];
     cell.btnRecordExp.tag = indexPath.row;
-    if([arrRecord objectAtIndex:indexPath.row]==[arrRecord objectAtIndex:arrRecord.count-1])
-    {
-        if(arrRecord.count%10 == 0)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2* NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                if(LoadMoreData == true)
-                {
-                    [self recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
-                }
-            });
-    }
-
     return  cell;
     
 }
@@ -270,6 +259,30 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
+#pragma mark - Scrol view delegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([arrRecord count] % 10 == 0) {
+                isLoading = YES;
+                [self recordAllParticipantList:true type:@"" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
+            }
+        }
+    } else{
+        _tblRecordAllParticipant.tableFooterView = nil;
+    }
+}
 
 #pragma mark - APIS
 
@@ -306,15 +319,13 @@
     [dictionary setValue:typeId forKey:@"filterType"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events-participants-all.php"];
     
-    
-    
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showHude showSystemError:false completion:^(NSDictionary *dictionary, NSError *error) {
         
         if (!error) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
-                
+                isLoading = NO;
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     if([[payloadDictionary valueForKey:@"participant"] count]<=0)
                     {
@@ -367,6 +378,7 @@
                     });
                 }
             });
+            isLoading = NO;
         }
         else{
             NSLog(@"%@",error);
@@ -476,7 +488,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    [self recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
+//                    [self recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
 //                    [overlayView removeFromSuperview];
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{

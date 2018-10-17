@@ -2710,8 +2710,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Record Expression" id="Qut-Xf-sGd">
-                        <barButtonItem key="leftBarButtonItem" image="menuicon" id="TXt-MF-L2k">
+                        <barButtonItem key="leftBarButtonItem" image="BackButton" id="TXt-MF-L2k">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="tapBack:" destination="Xwa-nZ-ydn" id="syc-H4-ZIO"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

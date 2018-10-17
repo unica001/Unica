@@ -97,7 +97,7 @@
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
     [dictionary setValue:@"I" forKey:@"user_type"];
-//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participated-events.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showloader showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {

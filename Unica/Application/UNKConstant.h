@@ -680,10 +680,12 @@
 #define kselectCountrySchedule @"selectCountrySchedule"
 #define kselectCountryParticipant @"selectCountryParticipant"
 #define kselectCountryRecord @"selectCountryRecord"
+#define kselectCountryAvailable @"selectCountryAvailable"
 
 #define kselectTypeParticipant @"selectTypeParticipant"
 #define kselectTypeSchedule @"selectTypeSchedule"
 #define kselectTypeRecord @"selectTypeRecord"
+#define kselectTypeAvailable @"selectTypeAvailable"
 
 #define kselectEventMeeting @"selectEventMeeting"
 #define kselectEventRecord @"selectEventRecord"
@@ -692,6 +694,7 @@
 #define kMeetingFilter @"meetingFilter"
 #define kParticipantFilter @"participantFilter"
 #define kRecordParticpantFilter @"RecordParticipantFilter"
+#define kSearchAvailableFilter @"SearchAvailableFilter"
 
 typedef enum _UNKWebViewMode {
     UNKScholarShip = 101,

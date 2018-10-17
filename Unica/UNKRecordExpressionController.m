@@ -58,6 +58,11 @@
     headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category",@"Remarks",@"Template",@"Date", nil];
 }
 
+- (IBAction)tapBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 #pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

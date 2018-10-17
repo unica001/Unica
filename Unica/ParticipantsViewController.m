@@ -393,7 +393,7 @@
         
         float reload_distance = 0;
         if(y > h + reload_distance) {
-            if (pageNumber != totalRecord) {
+            if ([participantArray count] % 10 == 0) {
                 isLoading = YES;
                 isHude=false;
                 [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];

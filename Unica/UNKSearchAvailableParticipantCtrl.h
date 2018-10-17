@@ -14,5 +14,7 @@
 @property(nonatomic,retain) NSString *selectedSlotID;
 - (IBAction)filterButtonAction:(id)sender;
 - (IBAction)backButtonAction:(id)sender;
-
+@property (nonatomic,retain) NSString *isFilterApply;
+@property (nonatomic,retain) NSMutableArray *countryFilter;
+@property (nonatomic,retain) NSMutableArray *typeFilter;
 @end

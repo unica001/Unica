@@ -52,6 +52,13 @@
         } else{
             self.eventCountryFilterArray = [[NSMutableArray alloc]init];
         }
+    } else if ([_incomingViewType isEqualToString:kSearchAvailableFilter]) {
+        NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryAvailable]];
+        if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryAvailable] isKindOfClass:[NSMutableArray class]]) {
+            self.eventCountryFilterArray = [dict valueForKey:kselectCountryAvailable];
+        } else{
+            self.eventCountryFilterArray = [[NSMutableArray alloc]init];
+        }
     }
     
     
@@ -131,18 +138,7 @@
                     if (searchArray) {
                         [searchArray removeAllObjects];
                     }
-                    
-//                    if ([self.title isEqualToString:kINSTITUTION]) {
-//                        searchArray = [[dictionary valueForKey:kAPIPayload] valueForKey:@"institute"];
-//
-//                        dataTable.hidden = YES;
-//                        courseFilterTable.hidden = NO;
-//                        [courseFilterTable reloadData];
-//                    }
-//
-//                    else if ([self.title isEqualToString:KCITY]) {
-                        searchArray = dictionary[kAPIPayload][@"countries"];
-//                    }
+                    searchArray = dictionary[kAPIPayload][@"countries"];
                     isLoading = YES;
                     [courseFilterTable reloadData];
                     
@@ -265,6 +261,9 @@
             } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryRecord];
                 [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryRecord];
+            } else if ([_incomingViewType isEqualToString:kSearchAvailableFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryAvailable];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryAvailable];
             }
                 
             [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
@@ -302,10 +301,6 @@
 }
 
 -(void)searchTextFieldValueChanged:(UITextField *)textField{
-    
-//        searchArray =[[NSMutableArray alloc]initWithArray:[[UtilityPlist getData:KCountryList] valueForKey:@"countries"]];
-//        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"name BEGINSWITH[c] %@ ",_searchTextField.text];
-//        searchArray = (NSMutableArray*)[searchArray filteredArrayUsingPredicate:predicate];
     if ([textField.text  isEqual: @""]) {
         dataTable.hidden = NO;
         courseFilterTable.hidden = YES;
@@ -336,6 +331,9 @@
             } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryRecord];
                 [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryRecord];
+            } else if ([_incomingViewType isEqualToString:kSearchAvailableFilter]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.eventCountryFilterArray forKey:kselectCountryAvailable];
+                [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectCountryAvailable];
             }
             
             [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
