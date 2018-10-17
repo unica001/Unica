@@ -80,9 +80,12 @@
     else if (indexPath.row == 4){
         cell._descriptionLabel.text = self.infoDictionary[@"country"];
         
-    }
-    else if (indexPath.row == 5){
-        cell._descriptionLabel.text = [Utility replaceNULL:self.infoDictionary[@"certification"] value:@""];
+    } else if (indexPath.row == 5){
+        NSString *strCertificate = [Utility replaceNULL:self.infoDictionary[@"certification"] value:@""];
+//        if (![strCertificate  isEqual: @""]) {
+            cell._descriptionLabel.text = [Utility replaceNULL:self.infoDictionary[@"certification_text"] value:@""];
+//        }
+        
     }
     return  cell;
 }
