@@ -61,7 +61,7 @@
 
     _textArray = [NSMutableArray arrayWithObjects:@"SEARCH\nAGENTS",@"SEARCH\nCOURSES",@"SEARCH\nEVENTS",@"MY UNICA CODE",@"FAVOURITES", @"SHORTLISTED COURSES",@"SCHOLARSHIP",@"GLOBAL\n APPLICATION",@"MY\nAPPLICATIONS",@"REFER\nA FRIEND",@"IMPORTANT\nLINKS",@"NOTIFICATIONS",nil];
     //@"FEATURED\nDESTINATIONS"@"HomeFeaturedDestinations"
-    _imagesArray = [NSMutableArray arrayWithObjects:@"HomeSearchAgents",@"HomeSearchCourses",@"HomeSearchEvents",@"HomeMyUnicaCode",@"HomeFavorites", @"", @"HomeScholarship",  @"HomeGlobalApplicationForm", @"HomeMYApplication",@"HomeReferAFriend",@"HomeImportantLinks",@"NotificationHome",nil];
+    _imagesArray = [NSMutableArray arrayWithObjects:@"HomeSearchAgents",@"HomeSearchCourses",@"HomeSearchEvents",@"HomeMyUnicaCode",@"HomeFavorites", @"short_listedcourse", @"HomeScholarship",  @"HomeGlobalApplicationForm", @"HomeMYApplication",@"HomeReferAFriend",@"HomeImportantLinks",@"NotificationHome",nil];
     
     
     // bucket product count label

@@ -21,7 +21,8 @@
     [super viewDidLoad];
     _viewBg.layer.cornerRadius = 5;
     _viewBg.layer.masksToBounds = true;
-    eventID = self.participantDict[kevent_id];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    eventID = appDelegate.userEventId;
     [self getParticipantDetails];
 }
 
@@ -39,7 +40,7 @@
         self.viewReceived.hidden = false;
         
     
-        NSArray *buttons = self.participantDict[@"buttons"];
+        NSArray *buttons = detailsDict[@"buttons"];
         
         if (buttons.count == 1) {
             _viewReceived.hidden = true;
@@ -96,9 +97,9 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
-    [dic setValue:self.participantDict[@"participantId"] forKey:@"participantId"];
+    [dic setValue:_strParticipantId forKey:@"participantId"];
     [dic setValue:eventID forKey:kevent_id];
-    [dic setValue:self.participantDict[@"buttons"][0][@"type"] forKey:@"prticipantType"];
+//    [dic setValue:self.participantDict[@"buttons"][0][@"type"] forKey:@"prticipantType"];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events-participants-data.php"];
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -134,7 +135,7 @@
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
                         
-                        self.participantDict = dictionary[kAPIPayload][@"participant"][0];
+//                        self.participantDict = dictionary[kAPIPayload][@"participant"][0];
                         [self getParticipantDetails];
                     }];
                 }
@@ -183,7 +184,8 @@
     // participantsView All
     aboutView = [storyBoard instantiateViewControllerWithIdentifier:@"ParticipantAboutViewController"];
     aboutView.title = @"ABOUT";
-    aboutView.aboutString = [NSString stringWithFormat:@"%@",detailDictioanry[@"about"]];
+    aboutView.aboutString = [Utility replaceNULL:detailDictioanry[@"about"] value:@""];
+//    [NSString stringWithFormat:@"%@",detailDictioanry[@"about"]];
     
     infoView = [storyBoard instantiateViewControllerWithIdentifier:@"ParticipantInfoViewController"];
     infoView.title = @"INFO";
@@ -226,7 +228,7 @@
 }
 
 - (IBAction)rejectButtonAction:(id)sender {
-    [self participantRejectRequest:self.participantDict[@"participantId"] request_type:@"2"];
+    [self participantRejectRequest:_strParticipantId request_type:@"2"];
 }
 
 - (IBAction)nameButtonAction:(id)sender {
@@ -236,14 +238,14 @@
 }
 
 - (IBAction)sendRequestButtonAction:(id)sender {
-    [self sendParticipantRequest:self.participantDict[@"participantId"]];
+    [self sendParticipantRequest:_strParticipantId];
 }
 
 - (IBAction)accepButtonAction:(id)sender {
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     TimeSlotViewController *eventList = [storyboard instantiateViewControllerWithIdentifier:@"TimeSlotViewController"];
-    eventList.participantID = self.participantDict[@"participantId"];
+    eventList.participantID = _strParticipantId;
     [self.navigationController pushViewController:eventList animated:true];
 }
 @end

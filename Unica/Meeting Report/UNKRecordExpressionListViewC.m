@@ -28,7 +28,7 @@
     messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
     messageLabel.text = @"No records found";
     messageLabel.textAlignment = NSTextAlignmentCenter;
-    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
     [_tblRecordParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
 //    [self recordParticipantList:YES type:@"I" searchText:@""];
@@ -58,6 +58,7 @@
     NSDictionary *dict = arrRecord[sender.tag];
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
+    recordViewC.participantId = dict[@"participantId"];
     [self.navigationController pushViewController:recordViewC animated:YES];
 }
 
@@ -157,6 +158,7 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:([eventId isEqual: @""] ? appDelegate.userEventId : eventId) forKey:kevent_id];
+    //Static Data
     [dictionary setValue:@"I" forKey:@"user_type"];
     [dictionary setValue:@"17" forKey:@"event_id"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];

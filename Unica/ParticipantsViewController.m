@@ -110,10 +110,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
     
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithDictionary:participantArray[indexPath.row]];
-    [dict setValue:viewType forKey:@"prticipantType"];
-    [dict setValue:appDelegate.userEventId forKey:kevent_id];
-    detailView.participantDict = dict;
+    NSDictionary *dict = [[NSMutableDictionary alloc]initWithDictionary:participantArray[indexPath.row]];
+    detailView.strParticipantId = dict[@"participantId"];
+//    detailView.participantDict = dict;
     [self.navigationController pushViewController:detailView animated:true];
     
 }

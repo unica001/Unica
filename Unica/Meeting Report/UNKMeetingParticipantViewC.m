@@ -13,6 +13,7 @@
     BOOL LoadMoreData;
     AppDelegate *appDelegate;
     NSTimer *_timer;
+    UILabel *messageLabel;
 }
 
 @end
@@ -21,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:messageLabel];
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITextField *searchfield = [searchBar valueForKey:@"_searchField"];
     searchfield.textColor = [UIColor whiteColor];
@@ -155,6 +161,7 @@
         
     }
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    //Static Data
     [dictionary setValue:@"17" forKey:kevent_id];
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     [dictionary setValue:self.meetingReportDict[@"reportStatus"] forKey:kLeadType];
@@ -198,6 +205,7 @@
                         NSLog(@"%lu",(unsigned long)arrParticipant.count);
                         pageNumber = pageNumber+1 ;
                     }
+                    messageLabel.hidden = YES;
                     [_tblParticipant reloadData];
 
                 }else{
@@ -206,11 +214,14 @@
                         if (pageNumber ==1) {
                             [arrParticipant removeAllObjects];
                             [_tblParticipant reloadData];
-
+                            messageLabel.text = @"No records found";
+                            messageLabel.hidden = NO;
                             
                         }
                         else{
                             LoadMoreData = false;
+                            messageLabel.text = @"";
+                            messageLabel.hidden = YES;
                         }
                     });
                 }
@@ -229,12 +240,12 @@
                         [arrParticipant removeAllObjects];
                         [_tblParticipant reloadData];
                         
-//                        messageLabel.text = @"No records found";
-//                        messageLabel.hidden = NO;
+                        messageLabel.text = @"No records found";
+                        messageLabel.hidden = NO;
                     }
                     else{
-//                        messageLabel.text = @"";
-//                        messageLabel.hidden = YES;
+                        messageLabel.text = @"";
+                        messageLabel.hidden = YES;
                         
                     }
                     

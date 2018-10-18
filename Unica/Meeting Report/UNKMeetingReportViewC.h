@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UNKMeetingReportViewC : UIViewController < delegateForRemoveAllFilter,SWRevealViewControllerDelegate>{
-
+    UILabel *messageLabel;
     NSMutableArray *arrReport;
     int pageNumber;
     __weak IBOutlet UIBarButtonItem *menuButton;

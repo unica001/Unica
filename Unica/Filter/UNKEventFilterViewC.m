@@ -96,6 +96,7 @@
     if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
+    //Static Data
     [dictionary setValue:@"I" forKey:@"user_type"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participated-events.php"];
@@ -163,12 +164,13 @@
                     
                     
                 }else{
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [Utility showAlertViewControllerIn:self title:kErrorTitle message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                            
-                        }];
-                    });
+                    messageLabel.hidden = NO;
+                    messageLabel.text = @"No records found";
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [Utility showAlertViewControllerIn:self title:kErrorTitle message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+//
+//                        }];
+//                    });
                 }
                 
             });

@@ -364,6 +364,9 @@
             [self addEventOverlay];
         }
         else {
+            if (dictEventDetail == nil) {
+                dictEventDetail = [[NSMutableDictionary alloc] init];
+            }
             dictEventDetail[@"name"] = selectedEventArray[0][@"event_name"];
             dictEventDetail[@"end_date"] =  selectedEventArray[0][@"scheduled_date"];
             dictEventDetail[@"event_id"] = selectedEventArray[0][@"event_id"];
@@ -800,6 +803,9 @@
                     NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                     NSArray *arrEvents = [payloadDictionary valueForKey:@"event"];
                     if (arrEvents.count > 0) {
+                        if (dictEventDetail == nil) {
+                            dictEventDetail = [[NSMutableDictionary alloc] init];
+                        }
                         dictEventDetail = arrEvents[0];
                         
                         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];

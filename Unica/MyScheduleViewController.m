@@ -2,6 +2,7 @@
 
 #import "MyScheduleViewController.h"
 #import "UNKSearchAvailableParticipantCtrl.h"
+#import "UNKRecordExpressionController.h"
 
 @interface MyScheduleViewController() <delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter>{
     
@@ -153,6 +154,12 @@
     }
 }
 -(void)button2Action:(UIButton *)sender{
+    //Record expression
+    NSDictionary *dict = myScheduleArray[sender.tag];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
+    recordViewC.participantId = dict[@"participantId"];
+    [self.navigationController pushViewController:recordViewC animated:YES];
     
 }
 - (IBAction)filterButtonAction:(id)sender {

@@ -26,6 +26,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:messageLabel];
+    
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {  SWRevealViewController *revealViewController = self.revealViewController;
@@ -163,6 +169,7 @@
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
     [dictionary setValue:(([eventIDsString  isEqual: @""]) ? appDelegate.userEventId : eventIDsString) forKey:kevent_id];
+    //Static Data
     [dictionary setValue:@"I" forKey:@"user_type"];
     [dictionary setValue:@"17" forKey:@"event_id"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
@@ -198,15 +205,18 @@
                         }
                         pageNumber = pageNumber+1 ;
                     }
-                    
+                    [messageLabel setHidden:YES];
                     [_tblReport reloadData];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (pageNumber ==1) {
                             [arrReport removeAllObjects];
                             [_tblReport reloadData];
+                            [messageLabel setHidden:NO];
+                            messageLabel.text = @"No Records found";
                         } else{
                             LoadMoreData = false;
+                            [messageLabel setHidden:YES];
                         }
                     });
                 }
