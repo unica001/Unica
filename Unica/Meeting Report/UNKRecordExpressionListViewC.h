@@ -5,6 +5,7 @@
     NSMutableArray *arrRecord;
     BOOL isLoading;
     UILabel *messageLabel;
+
 }
 @property (assign, nonatomic) NSInteger pageNumber;
 @property (weak, nonatomic) IBOutlet UITableView *tblRecordParticipant;

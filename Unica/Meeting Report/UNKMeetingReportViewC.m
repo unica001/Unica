@@ -14,10 +14,9 @@
 @interface UNKMeetingReportViewC ()<delegateForRemoveAllFilter,delegateEvent> {
     BOOL LoadMoreData;
     BOOL isFromFilter;
+    BOOL isHude;
     AppDelegate *appDelegate;
 
-//    NSString *countryIDsString;
-//    NSString *typeIDsString;
     NSString *eventIDsString;
 }
 
@@ -27,7 +26,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:messageLabel];
     
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -43,34 +46,14 @@
     
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [_tblReport registerNib:[UINib nibWithNibName:@"MeetingReportCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportCell"];
-//    _countryFilter = [[NSMutableArray alloc] init];
-//    _typeFilter = [[NSMutableArray alloc] init];
     _eventFilter = [[NSMutableArray alloc] init];
      self.isFilterApply = @"1";
-//    pageNumber = 1;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     pageNumber = 1;
-//    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountry]];
-//    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountry] isKindOfClass:[NSMutableArray class]]) {
-//        self.countryFilter = [dict valueForKey:kselectCountry];
-//    }
-//    if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
-//        NSArray *countyArray = [self.countryFilter valueForKey:Kid];
-//        countryIDsString = [countyArray componentsJoinedByString:@","];
-//    }
-//    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselecteService]];
-//    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselecteService] isKindOfClass:[NSMutableArray class]]) {
-//        self.typeFilter = [dictType valueForKey:kselecteService];
-//    }
-//    if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
-//        NSArray *typeArray = [self.typeFilter valueForKey:Kid];
-//        typeIDsString = [typeArray componentsJoinedByString:@","];
-//    }
-    
+    isHude = YES;
     NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventMeeting]];
     if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEventMeeting] isKindOfClass:[NSMutableArray class]]) {
         self.eventFilter = [dictevent valueForKey:kselectEventMeeting];
@@ -113,8 +96,6 @@
     UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
     filterViewC.incomingViewType = kMeetingFilter;
     filterViewC.removeAllFilter = self;
-//    filterViewC.applyButtonDelegate = self;
-//    filterViewC.agentService = self;
     filterViewC.eventFilterDelegate = self;
     [self.navigationController pushViewController:filterViewC animated:YES];
 }
@@ -161,21 +142,10 @@
 }
 
 #pragma mark - Filter delegate
-
-//-(void)checkApplyButtonAction:(NSInteger)index{
-//    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
-//    isFromFilter = true;
-//}
-//
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
 }
-//
-//-(void)agentServiceMethod:(NSString *)index{
-//    self.isFilterApply = index;
-//    isFromFilter = true;
-//}
 
 - (void)eventMethod:(NSString *)index {
     self.isFilterApply = index;
@@ -198,15 +168,16 @@
     if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
-    [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
-//    [dictionary setValue:@"I" forKey:@"user_type"];
-//    [dictionary setValue:@"32" forKey:@"event_id"];
+    [dictionary setValue:(([eventIDsString  isEqual: @""]) ? appDelegate.userEventId : eventIDsString) forKey:kevent_id];
+    //Static Data
+    [dictionary setValue:@"I" forKey:@"user_type"];
+    [dictionary setValue:@"17" forKey:@"event_id"];
     [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];
     
     
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dict, NSError *error) {
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:isHude showSystemError:YES completion:^(NSDictionary *dict, NSError *error) {
         
         if (!error) {
             
@@ -234,15 +205,18 @@
                         }
                         pageNumber = pageNumber+1 ;
                     }
-                    
+                    [messageLabel setHidden:YES];
                     [_tblReport reloadData];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (pageNumber ==1) {
                             [arrReport removeAllObjects];
                             [_tblReport reloadData];
+                            [messageLabel setHidden:NO];
+                            messageLabel.text = @"No Records found";
                         } else{
                             LoadMoreData = false;
+                            [messageLabel setHidden:YES];
                         }
                     });
                 }
@@ -262,5 +236,31 @@
         
     }];
     
+}
+
+#pragma mark - Scrol view delegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([arrReport count] % 10 == 0) {
+                isLoading = YES;
+                isHude=false;
+                [self apiCallMeetingReport];
+            }
+        }
+    } else{
+        _tblReport.tableFooterView = nil;
+    }
 }
 @end

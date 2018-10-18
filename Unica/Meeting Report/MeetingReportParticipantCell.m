@@ -27,7 +27,7 @@
 
 - (void)setParticipant:(NSDictionary *)dict isFromRecordExpression:(BOOL)isFromRecordExpression {
     [_nameButton setTitle:[dict valueForKey:kName] forState:UIControlStateNormal];
-    _universityName.text = [Utility replaceNULL:[dict valueForKey:@"organizationName"] value:@""];
+    _universityName.text = [Utility replaceNULL:[dict valueForKey:@"organisationName"] value:@""];
     _typeLabel.text = [Utility replaceNULL:[dict valueForKey:kType] value:@""];
     _countryLabel.text = [Utility replaceNULL:[dict valueForKey:kCountry] value:@""];
     [_imgView sd_setImageWithURL:[NSURL URLWithString:[dict valueForKey:kProfileImage]] placeholderImage:[UIImage imageNamed:@"userimageplaceholder"] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

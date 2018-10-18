@@ -116,10 +116,10 @@
 -(void)getParticipantDetails:(NSMutableDictionary *)dict dialog:(QBChatDialog *)dialog{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
-        [dict setValue:viewType forKey:@"prticipantType"];
-    [dict setValue:appDelegate.userEventId forKey:kevent_id];
-    detailView.participantDict = dict;
+    detailView.strParticipantId = dict[@"participantId"];
+//    detailView.participantDict = dict;
     detailView.dialog = dialog;
+
     [self.navigationController pushViewController:detailView animated:true];
 }
 
@@ -490,7 +490,7 @@
         
         float reload_distance = 0;
         if(y > h + reload_distance) {
-            if (pageNumber != totalRecord) {
+            if ([participantArray count] % 10 == 0) {
                 isLoading = YES;
                 isHude=false;
                 [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];

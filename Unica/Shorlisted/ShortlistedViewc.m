@@ -31,7 +31,7 @@
     messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
     messageLabel.text = @"No records found";
     messageLabel.textAlignment = NSTextAlignmentCenter;
-    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
     [self apiCallShortlistedCourse];
 }

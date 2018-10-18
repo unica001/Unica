@@ -68,6 +68,9 @@
     }
     self.revealViewController.delegate = self;
     
+    UITextField *searchField = [_searchBar valueForKey:@"_searchField"];
+    searchField.textColor = [UIColor whiteColor];
+    searchField.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

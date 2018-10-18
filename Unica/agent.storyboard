@@ -2397,62 +2397,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tXS-37-xRX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="tXS-37-xRX">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="mGt-Mh-T8a">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdr-Vh-ubA">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIEW AGENTS PERFORMANCE STATUS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zuL-q2-jk5">
-                                                    <rect key="frame" x="8" y="15" width="304" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="Xo0-vF-Pm5"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBj-eh-9jY">
-                                                    <rect key="frame" x="16" y="34" width="288" height="1"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="9l7-oa-6Gs"/>
-                                                        <constraint firstAttribute="width" constant="288" id="PnL-0n-c7M"/>
-                                                    </constraints>
-                                                </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZK-os-Z2B">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                                    <connections>
-                                                        <action selector="performanceStatusButtonAction:" destination="hcf-ri-du6" eventType="touchUpInside" id="1Xh-7c-ZdU"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="NBj-eh-9jY" secondAttribute="bottom" constant="15" id="9TK-7r-Wzc"/>
-                                                <constraint firstItem="bZK-os-Z2B" firstAttribute="leading" secondItem="hdr-Vh-ubA" secondAttribute="leading" id="DXE-Nt-xtg"/>
-                                                <constraint firstAttribute="bottom" secondItem="bZK-os-Z2B" secondAttribute="bottom" id="Krk-MT-hl3"/>
-                                                <constraint firstItem="NBj-eh-9jY" firstAttribute="centerX" secondItem="hdr-Vh-ubA" secondAttribute="centerX" id="M9u-JV-JM2"/>
-                                                <constraint firstItem="bZK-os-Z2B" firstAttribute="top" secondItem="hdr-Vh-ubA" secondAttribute="top" id="OBr-EG-SI4"/>
-                                                <constraint firstItem="zuL-q2-jk5" firstAttribute="top" secondItem="hdr-Vh-ubA" secondAttribute="top" constant="15" id="aox-3K-si6"/>
-                                                <constraint firstItem="zuL-q2-jk5" firstAttribute="leading" secondItem="hdr-Vh-ubA" secondAttribute="leading" constant="8" id="lCB-eO-tdo"/>
-                                                <constraint firstAttribute="trailing" secondItem="zuL-q2-jk5" secondAttribute="trailing" constant="8" id="mma-b0-ySV"/>
-                                                <constraint firstAttribute="trailing" secondItem="bZK-os-Z2B" secondAttribute="trailing" id="xJr-uo-mIP"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="hdr-Vh-ubA" secondAttribute="trailing" id="3im-2i-yUd"/>
-                                        <constraint firstItem="hdr-Vh-ubA" firstAttribute="leading" secondItem="mGt-Mh-T8a" secondAttribute="leading" id="Tel-as-nMz"/>
-                                        <constraint firstItem="hdr-Vh-ubA" firstAttribute="top" secondItem="mGt-Mh-T8a" secondAttribute="top" id="clX-Tf-nc4"/>
-                                        <constraint firstAttribute="bottom" secondItem="hdr-Vh-ubA" secondAttribute="bottom" id="rhl-iN-SvC"/>
-                                    </constraints>
-                                </view>
                                 <connections>
                                     <outlet property="dataSource" destination="hcf-ri-du6" id="SSQ-2I-pDw"/>
                                     <outlet property="delegate" destination="hcf-ri-du6" id="FjG-qd-GOf"/>
@@ -2468,8 +2415,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bottomView" destination="hdr-Vh-ubA" id="i7v-4w-8Za"/>
-                        <outlet property="performanceStatusLabel" destination="zuL-q2-jk5" id="HmL-iP-yVv"/>
                         <outlet property="tableView" destination="tXS-37-xRX" id="mq7-lt-w7b"/>
                     </connections>
                 </viewController>
@@ -2711,8 +2656,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Record Expression" id="Qut-Xf-sGd">
-                        <barButtonItem key="leftBarButtonItem" image="menuicon" id="TXt-MF-L2k">
+                        <barButtonItem key="leftBarButtonItem" image="BackButton" id="TXt-MF-L2k">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="tapBack:" destination="Xwa-nZ-ydn" id="syc-H4-ZIO"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

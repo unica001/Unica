@@ -28,7 +28,7 @@
     messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
     messageLabel.text = @"No records found";
     messageLabel.textAlignment = NSTextAlignmentCenter;
-    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
     [_tblRecordParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
 //    [self recordParticipantList:YES type:@"I" searchText:@""];
@@ -56,8 +56,9 @@
 */
 - (void)tapRecordExpression:(UIButton *)sender {
     NSDictionary *dict = arrRecord[sender.tag];
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Agent" bundle:nil];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
+    recordViewC.participantId = dict[@"participantId"];
     [self.navigationController pushViewController:recordViewC animated:YES];
 }
 
@@ -99,16 +100,6 @@
     [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:YES];
     [cell.btnRecordExp addTarget:self action:@selector(tapRecordExpression:) forControlEvents:UIControlEventTouchUpInside];
     cell.btnRecordExp.tag = indexPath.row;
-    if([arrRecord objectAtIndex:indexPath.row]==[arrRecord objectAtIndex:arrRecord.count-1])
-    {
-        if(arrRecord.count%10 == 0)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  0* NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                if(LoadMoreData == true)
-                {
-                    [self recordParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
-                }
-            });
-    }
     return  cell;
     
 }
@@ -117,6 +108,30 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
+#pragma mark - Scrol view delegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([arrRecord count] % 10 == 0) {
+                isLoading = YES;
+                [self recordParticipantList:true type:@"" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
+            }
+        }
+    } else{
+        _tblRecordParticipant.tableFooterView = nil;
+    }
+}
 
 #pragma mark - APIS
 
@@ -143,9 +158,10 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:([eventId isEqual: @""] ? appDelegate.userEventId : eventId) forKey:kevent_id];
-//    [dictionary setValue:@"I" forKey:@"user_type"];
-//    [dictionary setValue:@"17" forKey:@"event_id"];
-//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+    //Static Data
+    [dictionary setValue:@"I" forKey:@"user_type"];
+    [dictionary setValue:@"17" forKey:@"event_id"];
+    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
     [dictionary setValue:[NSString stringWithFormat:@"%d",_pageNumber] forKey:kPage_number];
     [dictionary setValue:searchText forKey:@"searchText"];
     [dictionary setValue:countryId forKey:@"countryId"];

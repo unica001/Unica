@@ -58,6 +58,50 @@
     headerTextArray = [[NSMutableArray alloc] initWithObjects:@"Action",@"Category",@"Remarks",@"Template",@"Date", nil];
 }
 
+-(void)setPreviousData:(NSDictionary *)dict {
+    orgNameLabel.text = [dict valueForKey:@"organizationName"];
+    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[dict valueForKey:@"action"] value:@""]];
+    
+    NSArray *filtredArray = [actions filteredArrayUsingPredicate:predicate];
+    if(filtredArray.count>0)
+    {
+        actionString = [[filtredArray objectAtIndex:0] valueForKey:@"title"];
+        actionID = [[filtredArray objectAtIndex:0] valueForKey:@"id"];
+    }
+    
+    NSPredicate *predicate2 =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[dict valueForKey:@"category"] value:@""]];
+    NSArray *filtredArray2 = [category filteredArrayUsingPredicate:predicate2];
+    if(filtredArray2.count>0)
+    {
+        categoryString = [[filtredArray2 objectAtIndex:0] valueForKey:@"title"];
+        categoryID = [[filtredArray2 objectAtIndex:0] valueForKey:@"id"];
+    }
+    
+    NSPredicate *predicate3 =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[dict valueForKey:@"template"] value:@""]];
+    NSArray *filtredArray3 = [template filteredArrayUsingPredicate:predicate3];
+    if(filtredArray3.count>0)
+    {
+        templeteID = [[filtredArray3 objectAtIndex:0] valueForKey:@"title"];
+        emailTemplateString = [filtredArray3 objectAtIndex:0] ;
+    }
+    if([Utility replaceNULL:[dict valueForKey:@"email_date"] value:@""].length>0)
+    {
+        NSDateFormatter *datePickerFormat = [[NSDateFormatter alloc] init];
+        [datePickerFormat setDateFormat:@"yyyy-MM-dd"];
+        NSDate *checkIn = [datePickerFormat dateFromString:[dict valueForKey:@"email_date"]];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+        dateString = [dateFormatter stringFromDate:checkIn];
+    }
+    [collectionView reloadData];
+}
+
+- (IBAction)tapBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 #pragma mark - Table view delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -201,7 +245,7 @@
     cell.backgroundColor = [UIColor whiteColor];
 
     
-    [cell.participantImg sd_setImageWithURL:[NSURL URLWithString:[participantArray[indexPath.row] valueForKey:kProfileImage]] placeholderImage:[UIImage imageNamed:@"userimageplaceholder"] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.participantImg sd_setImageWithURL:[NSURL URLWithString:[participantArray[indexPath.row] valueForKey:@"p_user_image_url"]] placeholderImage:[UIImage imageNamed:@"userimageplaceholder"] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     cell.participantImg.layer.cornerRadius = cell.participantImg.frame.size.width/2;
@@ -461,6 +505,7 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[NSString stringWithFormat:@"%@",[loginDictionary valueForKey:@"user_type"]] forKey:@"user_type"];
      [dic setValue:appdelegate.userEventId forKey:kevent_id];
+    [dic setValue:_participantId forKey:@"participantId"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-users-recorded-expression.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:NO showSystemError:NO completion:^(NSDictionary *dictionary, NSError *error) {
@@ -472,8 +517,8 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                     participantArray = [payloadDictionary valueForKey:@"userList"];
-                    orgNameLabel.text = [payloadDictionary valueForKey:@"organizationName"];
-                    [collectionView reloadData];
+                    [self setPreviousData:payloadDictionary];
+//                    [collectionView reloadData];
                 }
             });
         }
@@ -546,19 +591,19 @@
         // Participant
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kContent,@"participantId"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[selectedParticipant[0] valueForKey:@"participantId"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[_participantId dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
         // image_id
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:kContent,@"image_id"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"12" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:kContent,@"p_user_id"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[selectedParticipant[0] valueForKey:@"p_user_id"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
         // image Type
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:kContent,@"image_type"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"p" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:kContent,@"p_user_type"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[selectedParticipant[0] valueForKey:@"p_user_type"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
        
         // Event ID

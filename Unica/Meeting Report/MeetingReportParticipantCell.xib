@@ -148,7 +148,7 @@
                 <outlet property="imgView" destination="TAq-Qd-Xoe" id="WaA-jv-6tm"/>
                 <outlet property="nameButton" destination="cnv-QP-iDT" id="ku0-1K-EH6"/>
                 <outlet property="typeLabel" destination="qs3-EW-mHV" id="H31-H3-s5q"/>
-                <outlet property="universityName" destination="NPN-F6-Qkw" id="rBb-K9-Q03"/>
+                <outlet property="universityName" destination="NPN-F6-Qkw" id="Wqg-2H-3tS"/>
             </connections>
             <point key="canvasLocation" x="34" y="108.5"/>
         </tableViewCell>

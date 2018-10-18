@@ -11,6 +11,8 @@
 @interface UNKRecordAllParticipantViewC : UIViewController {
     NSMutableArray *arrRecord;
     UILabel *messageLabel;
+    BOOL isLoading;
+
 }
 @property (assign, nonatomic) NSInteger pageNumber;
 @property (strong, nonatomic) UIWindow *window;

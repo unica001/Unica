@@ -928,8 +928,24 @@ static NSString * const kClientID = @"616694839236-iq0tue5bstbj6p782fo3vj47bemak
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-
+    
     [self saveContext];
+    
+    [kUserDefault setValue:kfilterscleared forKey:kfilterscleared];
+    [kUserDefault setValue:@"Yes" forKey:kIsRemoveAll];
+    [kUserDefault removeObjectForKey:kselectCountrySchedule];
+    [kUserDefault removeObjectForKey:kselectCountryAvailable];
+    [kUserDefault removeObjectForKey:kselectCountryRecord];
+    [kUserDefault removeObjectForKey:kselectCountryParticipant];
+    
+    [kUserDefault removeObjectForKey:kselectTypeSchedule];
+    [kUserDefault removeObjectForKey:kselectTypeAvailable];
+    [kUserDefault removeObjectForKey:kselectTypeRecord];
+    
+    [kUserDefault removeObjectForKey:kselectEventRecord];
+    [kUserDefault removeObjectForKey:kselectEventMeeting];
+    
+    [kUserDefault synchronize];    
 }
 
 

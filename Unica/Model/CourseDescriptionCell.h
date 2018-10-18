@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *_descriptionLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *_descriptionLabelHeight;
+@property (weak, nonatomic) IBOutlet UIButton *btnLink;
 
 @end

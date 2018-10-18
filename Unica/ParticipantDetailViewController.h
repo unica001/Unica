@@ -33,6 +33,7 @@
 - (IBAction)sendRequestButtonAction:(id)sender;
 - (IBAction)accepButtonAction:(id)sender;
 
+@property(nonatomic, weak) NSString *strParticipantId;
 @property(nonatomic,retain) NSDictionary *participantDict;
 @property(nonatomic,retain) QBChatDialog *dialog;
 

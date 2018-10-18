@@ -3110,8 +3110,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9c0c5687-8e90-44b6-b0be-b0b88da3de4f";
-				PROVISIONING_PROFILE_SPECIFIER = Unica_Development;
+				PROVISIONING_PROFILE = "bcf05f95-f4e4-41a4-8c4c-8dbc8ec37646";
+				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -3161,8 +3161,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9c0c5687-8e90-44b6-b0be-b0b88da3de4f";
-				PROVISIONING_PROFILE_SPECIFIER = Unica_Development;
+				PROVISIONING_PROFILE = "bcf05f95-f4e4-41a4-8c4c-8dbc8ec37646";
+				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

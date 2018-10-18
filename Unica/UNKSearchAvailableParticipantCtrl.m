@@ -9,38 +9,90 @@
 #import "UNKSearchAvailableParticipantCtrl.h"
 #import "MeetingReportParticipantCell.h"
 
-@interface UNKSearchAvailableParticipantCtrl (){
+@interface UNKSearchAvailableParticipantCtrl() <delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter>{
     BOOL LoadMoreData;
     AppDelegate *appDelegate;
+    BOOL isFromFilter;
+    NSString *countryIDsString;
+    NSString *typeIDsString;
+    
+    NSTimer *_timer;
+
 }
 
 @end
 
 @implementation UNKSearchAvailableParticipantCtrl
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITextField *searchfield = [searchBar valueForKey:@"_searchField"];
     searchfield.textColor = [UIColor whiteColor];
     searchfield.backgroundColor = [UIColor whiteColor];
-    
-    pageNumber = 1;
     [tableView registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
-    
-    [self participantsList:YES searchText:searchBar.text];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    pageNumber = 1;
+    _isFilterApply = @"1";
+    NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryAvailable]];
+    if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountryAvailable] isKindOfClass:[NSMutableArray class]]) {
+        self.countryFilter = [dict valueForKey:kselectCountryAvailable];
+    } else {
+        [self.countryFilter removeAllObjects];
+    }
+    if (self.countryFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *countyArray = [self.countryFilter valueForKey:Kid];
+        countryIDsString = [countyArray componentsJoinedByString:@","];
+    } else {
+        countryIDsString = @"";
+    }
+    NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeAvailable]];
+    if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeAvailable] isKindOfClass:[NSMutableArray class]]) {
+        self.typeFilter = [dictType valueForKey:kselectTypeAvailable];
+    } else {
+        [self.typeFilter removeAllObjects];
+    }
+    if (self.typeFilter.count>0 && [self.isFilterApply integerValue] == 1) {
+        NSArray *typeArray = [self.typeFilter valueForKey:@"filterId"];
+        typeIDsString = [typeArray componentsJoinedByString:@","];
+    } else {
+        typeIDsString = @"";
+    }
+    
+    NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
+     [self participantsList:YES searchText:searchBar.text];
+}
+
 
 #pragma mark - IBAction Methods
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    pageNumber = 1;
-    [searchBar resignFirstResponder];
-    [self participantsList:false searchText:searchBar.text];
-}
-
 - (IBAction)tapBack:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Filter delegate
+
+-(void)checkApplyButtonAction:(NSInteger)index{
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    isFromFilter = true;
+}
+
+-(void)removeAllFilter:(NSInteger)index{
+    isFromFilter = true;
+    self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+}
+
+-(void)agentServiceMethod:(NSString *)index{
+    self.isFilterApply = index;
+    isFromFilter = true;
+}
+
+- (void)eventMethod:(NSString *)index {
+    self.isFilterApply = index;
+    isFromFilter = true;
 }
 
 #pragma mark UITableView Delegate
@@ -90,6 +142,64 @@
 }
 
 
+#pragma mark - SearchBar Delegate
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    pageNumber = 1;
+    [searchBar resignFirstResponder];
+    [self participantsList:false searchText:searchBar.text];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (_timer) {
+        if ([_timer isValid]){ [
+                                _timer invalidate];
+        }
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timeAction:) userInfo:nil repeats:NO];
+    
+}
+
+-(void)timeAction:(NSString*)text{
+    
+    [_timer invalidate];
+    _timer = nil;
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    
+    pageNumber = 1;
+    [tableView setContentOffset:CGPointZero animated:YES];
+    [self participantsList:YES searchText:searchBar.text];
+}
+
+#pragma mark - Scrol view delegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([arrParticipant count] % 10 == 0) {
+                isLoading = YES;
+                [self participantsList:false searchText:searchBar.text];
+            }
+        }
+    } else{
+        tableView.tableFooterView = nil;
+    }
+}
+
+
 #pragma Button Action
 
 
@@ -97,7 +207,7 @@
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     UNKFilterViewC *filterViewC = [sb instantiateViewControllerWithIdentifier:@"UNKFilterViewC"];
-    filterViewC.incomingViewType = kParticipantFilter;
+    filterViewC.incomingViewType = kSearchAvailableFilter;
     filterViewC.removeAllFilter = self;
     filterViewC.applyButtonDelegate = self;
     filterViewC.agentService = self;
@@ -167,7 +277,8 @@
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     [dictionary setValue:searchText forKey:ksearchText];
     [dictionary setValue:self.selectedSlotID forKey:kslotId];
-
+    [dictionary setValue:countryIDsString forKey:@"countryId"];
+    [dictionary setValue:typeIDsString forKey:@"filterType"];
     
    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-available-participants.php"];
     
@@ -233,7 +344,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     if (pageNumber ==1) {
-                                                [arrParticipant removeAllObjects];
+                        [arrParticipant removeAllObjects];
                         [tableView reloadData];
                 
                         messageLabel.text = @"No records found";

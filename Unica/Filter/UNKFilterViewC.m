@@ -47,7 +47,7 @@
     
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         [self setContainerMeetingReport];
-    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter]) {
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kSearchAvailableFilter]) {
         [self setContainerMyScheduleParticipant];
     } else if ([_incomingViewType isEqualToString:kRecordParticpantFilter]) {
         [self setRecordParticipant];
@@ -89,7 +89,7 @@
     if ([_incomingViewType isEqualToString:kMeetingFilter]) {
         eventTypeFilterView.title = @"EVENT";
         [eventTypeFilterView eventList];
-    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter]) {
+    } else if ([_incomingViewType isEqualToString:kScheduleFilter] || [_incomingViewType isEqualToString:kParticipantFilter] || ([_incomingViewType isEqualToString:kSearchAvailableFilter])) {
         if (index == 0) {
             countryFilterView.title = kCOUNTRY;
         } else if (index == 1) {
@@ -129,6 +129,9 @@
             [kUserDefault removeObjectForKey:kselectCountryRecord];
             [kUserDefault removeObjectForKey:kselectTypeRecord];
             [kUserDefault removeObjectForKey:kselectEventRecord];
+        } else if ([_incomingViewType isEqualToString:kSearchAvailableFilter]) {
+            [kUserDefault removeObjectForKey:kselectCountryAvailable];
+            [kUserDefault removeObjectForKey:kselectTypeAvailable];
         }
         
         [kUserDefault synchronize];

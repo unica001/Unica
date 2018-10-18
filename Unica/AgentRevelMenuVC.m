@@ -38,8 +38,9 @@ typedef enum
     
     selectedHeaderIndex = 0;
     isEventSelected = false;
+    appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"Student-1",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
+    menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"event-1",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
     
     menuLabelArray=[NSMutableArray arrayWithObjects:@"Home",@"View Business Cards", @"View Interested Students", @"Events",@"Tutorials", @"Login to UNICA Web Account", @"About UNICA",@"Logout", nil];
     
@@ -132,7 +133,10 @@ typedef enum
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    if (indexPath.section == 3) {
+        return (appDelegate.menuArray.count > 0) ? 50 : 0;
+    }
+    return  50;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -152,18 +156,23 @@ typedef enum
     [btnHeader addTarget:self action:@selector(headerButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:btnHeader];
     
-    if ((selectedHeaderIndex-100 == section)){
+    if ((selectedHeaderIndex-100 == section)) {
         headerView.backgroundColor = [UIColor colorWithRed:81.0f/255.0f green:151.0f/255.0f blue:242.0f/255.0f alpha:1];
     }
     else{
         headerView.backgroundColor = kDefaultBlueColor;
     }
-    
+    if (section == 3) {
+        return (appDelegate.menuArray.count != 0) ? headerView : nil;
+    }
     return headerView;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 3) {
+        return (appDelegate.menuArray.count != 0) ? 50 : 0;
+    }
     return 50;
 }
 
@@ -187,13 +196,10 @@ typedef enum
     
     //    cell.menuImage.image = [UIImage imageNamed:[menuImagesArray objectAtIndex:indexPath.section]];
     cell.menuLabel.text= appDelegate.menuArray[indexPath.row][@"name"];
-    
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
     myBackView.backgroundColor = [UIColor colorWithRed:81.0f/255.0f green:151.0f/255.0f blue:242.0f/255.0f alpha:1];
     cell.selectedBackgroundView = myBackView;
-    
     return  cell;
-    
 }
 
 -(void)headerButtonAction:(UIButton*)sender{

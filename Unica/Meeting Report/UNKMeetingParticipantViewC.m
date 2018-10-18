@@ -12,6 +12,8 @@
 @interface UNKMeetingParticipantViewC () {
     BOOL LoadMoreData;
     AppDelegate *appDelegate;
+    NSTimer *_timer;
+    UILabel *messageLabel;
 }
 
 @end
@@ -20,7 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    messageLabel.text = @"No records found";
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:messageLabel];
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITextField *searchfield = [searchBar valueForKey:@"_searchField"];
     searchfield.textColor = [UIColor whiteColor];
@@ -29,12 +35,17 @@
     self.title = self.meetingReportDict[@"reportName"];
     pageNumber = 1;
     [_tblParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
-    
     [self participantsList:YES type:@"I" searchText:@""];
 }
 
 #pragma mark - IBAction Methods
 
+- (IBAction)tapBack:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - Searchbar delegate
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     pageNumber = 1;
     [searchBar resignFirstResponder];
@@ -42,8 +53,29 @@
     searchBar.text = @"";
 }
 
-- (IBAction)tapBack:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (_timer) {
+        if ([_timer isValid]){ [
+                                _timer invalidate];
+        }
+        _timer = nil;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timeAction:) userInfo:nil repeats:NO];
+    
+}
+
+-(void)timeAction:(NSString*)text{
+    
+    [_timer invalidate];
+    _timer = nil;
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    
+    pageNumber = 1;
+    [_tblParticipant setContentOffset:CGPointZero animated:YES];
+    [self participantsList:true type:@"" searchText:searchBar.text];
 }
 
 #pragma mark UITableView Delegate
@@ -84,11 +116,30 @@
     
     return  cell;
 }
+#pragma mark - Scrol view delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([arrParticipant count] % 10 == 0) {
+                isLoading = YES;
+                [self participantsList:false type:@"" searchText:searchBar.text];
+            }
+        }
+    } else{
+        _tblParticipant.tableFooterView = nil;
+    }
 }
-
 
 #pragma mark - APIS
 
@@ -110,9 +161,10 @@
         
     }
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
+    //Static Data
     [dictionary setValue:@"17" forKey:kevent_id];
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
-      [dictionary setValue:self.meetingReportDict[@"reportStatus"] forKey:kLeadType];
+    [dictionary setValue:self.meetingReportDict[@"reportStatus"] forKey:kLeadType];
     [dictionary setValue:searchText forKey:ksearchText];
 
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-participant-list.php"];
@@ -153,6 +205,7 @@
                         NSLog(@"%lu",(unsigned long)arrParticipant.count);
                         pageNumber = pageNumber+1 ;
                     }
+                    messageLabel.hidden = YES;
                     [_tblParticipant reloadData];
 
                 }else{
@@ -161,11 +214,14 @@
                         if (pageNumber ==1) {
                             [arrParticipant removeAllObjects];
                             [_tblParticipant reloadData];
-
+                            messageLabel.text = @"No records found";
+                            messageLabel.hidden = NO;
                             
                         }
                         else{
                             LoadMoreData = false;
+                            messageLabel.text = @"";
+                            messageLabel.hidden = YES;
                         }
                     });
                 }
@@ -184,12 +240,12 @@
                         [arrParticipant removeAllObjects];
                         [_tblParticipant reloadData];
                         
-//                        messageLabel.text = @"No records found";
-//                        messageLabel.hidden = NO;
+                        messageLabel.text = @"No records found";
+                        messageLabel.hidden = NO;
                     }
                     else{
-//                        messageLabel.text = @"";
-//                        messageLabel.hidden = YES;
+                        messageLabel.text = @"";
+                        messageLabel.hidden = YES;
                         
                     }
                     
