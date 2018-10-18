@@ -189,7 +189,11 @@
     infoView.title = @"INFO";
     infoView.infoDictionary = detailDictioanry[@"info"];
     
-    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[aboutView,infoView]
+    chatView = [storyBoard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+//    chatView.view.frame = CGRectMake(0, 0, kiPhoneWidth, kiPhoneHeight-250);
+    chatView.title = @"MESSAGE";
+    chatView.dialog  =  self.dialog;
+    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[aboutView,infoView,chatView]
                                                             topBarHeight:0
                                                     parentViewController:self];
     
@@ -217,8 +221,6 @@
         selectedTap =  @"Message";
     }
 }
-
-
 
 // MARK Button Action
 

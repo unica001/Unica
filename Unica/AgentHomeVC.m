@@ -30,6 +30,8 @@
     
     NSArray *eventArray;
     NSArray *selectedEventArray;
+    NSMutableArray *userList;
+
 }
 
 @end
@@ -45,7 +47,8 @@
     [self currentLocationIdentifier];
     [self getbanner];
     [self getEventDetail];
-    
+    [self loginUserAndConnectToChat];
+
     // google analytics
     [GAI sharedInstance].dispatchInterval = 0;
     [GAI sharedInstance].trackUncaughtExceptions = YES;
@@ -88,6 +91,81 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma MARK - Connect To Quickblox
+-(void)loginUserAndConnectToChat{
+    
+    // login user
+    if([Utility connectedToInternet])
+    {
+        //[loginDictionary valueForKey:Kuserid]
+        [QBRequest logInWithUserLogin:@"user_UN2T%2BipqlwRxl8MvmKy1PAgDmE733eHmzlSK0kxWOh8=" password:kTestUsersDefaultPassword successBlock:^(QBResponse *response, QBUUser *user) {
+            
+            __weak typeof(self) weakSelf = self;
+            [weakSelf registerForRemoteNotifications];
+            
+            // Connect user to chat
+            [[QBChat instance] connectWithUser:user resource:@"iPhone6s" completion:^(NSError * _Nullable error) {
+                
+            }];
+            
+//            [[QBChat instance] connectWithUserID:user.externalUserID password:kTestUsersDefaultPassword completion:^(NSError *error)
+//             {
+//             }];
+        } errorBlock:^(QBResponse *response) {
+            
+            [Utility hideMBHUDLoader];
+            [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
+        }];
+    }
+}
+
+#pragma  Mark Handel Push Notification
+
+
+- (void)registerForRemoteNotifications {
+    
+    UIUserNotificationSettings *settings =
+    [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound |
+                                                  UIUserNotificationTypeAlert |
+                                                  UIUserNotificationTypeBadge)
+                                      categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
+
+
+
+
+- (void)getAllUser {
+    
+    [Utility ShowMBHUDLoader];
+    QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:10];
+    
+    [QBRequest usersForPage:page successBlock:^(QBResponse *response, QBGeneralResponsePage *pageInformation, NSArray *users) {
+        
+        NSLog(@"%@",users);
+        if(users.count>0)
+        {
+            NSInteger currentTimeInterval = [[NSDate date] timeIntervalSince1970];
+            NSInteger userLastRequestAtTimeInterval   = [[[users objectAtIndex:0] lastRequestAt] timeIntervalSince1970];
+            
+            NSLog(@"%@",[users objectAtIndex:0]);
+            // if user didn't do anything last 5 minutes (5*60 seconds)
+            if((currentTimeInterval - userLastRequestAtTimeInterval) > 5*60){
+                // user is offline now
+            }
+            
+            userList = [NSMutableArray arrayWithArray:users];
+            
+        }
+        
+        
+    } errorBlock:^(QBResponse *response) {
+        [Utility hideMBHUDLoader];
+        
+    }];
+    
+}
 
 #pragma mark - Navigation
 

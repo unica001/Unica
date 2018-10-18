@@ -93,7 +93,7 @@ NSString * const kCTPersistanceInitVersion = @"kCTPersistanceInitVersion";
                 NSNumber *primaryKeyValue = latestRecord[@"identifier"];
                 NSString *valueKey = [NSString stringWithFormat:@":CTPersistanceWhere_%@", [CTPersistanceVersionTable primaryKeyName]];
                 NSString *whereString = [NSString stringWithFormat:@"%@ = %@", [CTPersistanceVersionTable primaryKeyName], valueKey];
-                [bindValueList addBindKey:valueKey bindValue:primaryKeyValue columnDescription:nil];
+                [bindValueList addBindKey:valueKey bindValue:primaryKeyValue];
 
                 [[queryCommand updateTable:[CTPersistanceVersionTable tableName] valueString:valueString whereString:whereString bindValueList:bindValueList error:&error] executeWithError:&error];
 
@@ -107,6 +107,17 @@ NSString * const kCTPersistanceInitVersion = @"kCTPersistanceInitVersion";
             shouldPerformMigration = YES;
         }
     }
+}
+
+- (NSString *)databaseInitVersion {
+
+    NSArray *versionList = [self.child migrationVersionList];
+
+    if (!versionList || versionList.count < 1) {
+        return kCTPersistanceInitVersion;
+    }
+
+    return [versionList lastObject];
 }
 
 @end

@@ -28,6 +28,14 @@ NSString * const NotificationCategoryIdent  = @"ACTIONABLE";
 NSString * const NotificationActionOneIdent = @"ACTION_ONE";
 NSString * const NotificationActionTwoIdent = @"ACTION_TWO";
 
+
+const NSUInteger kApplicationID = 74205;
+NSString *const kAuthKey        = @"ZVd6t95WzEp7syT";
+NSString *const kAuthSecret     = @"EZ7mGffAMcOFPe7";
+NSString *const kAccountKey     = @"DtcVWYpeyVrnqPVJeex8A";
+NSString *const KAPI_DOMAIN = @"https://api.quickblox.com";
+NSString *const KCHAT_DOMAIN = @"chat.quickblox.com";
+
 @interface AppDelegate (){
     BOOL isAutoLogin;
 }
@@ -88,6 +96,20 @@ static NSString * const kClientID = @"616694839236-iq0tue5bstbj6p782fo3vj47bemak
     
     // crashlytics
     [Fabric with:@[[Crashlytics class]]];
+    
+    //  Set QuickBlox credentials (You must create application in admin.quickblox.com)
+    //  enabling carbons for chat
+    [QBSettings setCarbonsEnabled:YES];
+    //   Enables Quickblox REST API calls debug console output
+    [QBSettings setLogLevel:QBLogLevelNothing];
+    [QBSettings setLogLevel:QBLogLevelDebug];
+    //    Enables detailed XMPP logging in console output
+    [QBSettings enableXMPPLogging];
+   // [QMServicesManager enableLogging:NO];
+    [QBSettings setApplicationID:kApplicationID];
+    [QBSettings setAuthKey:kAuthKey];
+    [QBSettings setAuthSecret:kAuthSecret];
+    [QBSettings setAccountKey:kAccountKey];
     
    
     [self getSearchData];
@@ -996,6 +1018,21 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     [kUserDefault setValue:devToken forKey:kDeviceid];
     
     [self saveDeviceToken:devToken];
+    
+    
+    NSString *deviceIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    // subscribing for push notifications
+    QBMSubscription *subscription = [QBMSubscription subscription];
+    subscription.notificationChannel = QBMNotificationChannelAPNS;
+    subscription.deviceUDID = deviceIdentifier;
+    subscription.deviceToken = deviceToken;
+    NSLog(@"meenu%lu   , %@,   %@", (unsigned long)subscription.notificationChannel,subscription.deviceUDID,subscription.deviceToken);
+    [QBRequest createSubscription:subscription successBlock:^(QBResponse *response, NSArray<QBMSubscription *> * _Nullable objects){
+        NSLog(@"%@",response);
+        NSLog(@"%@",objects);
+    }
+                       errorBlock:nil];
     
 }
 

@@ -1,36 +1,43 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
-  - CTMediator (13)
-  - CTPersistance (159):
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
+  - CTMediator (25)
+  - CTPersistance (189):
     - CTMediator
     - SQLCipher
   - CTVideoPlayerView (1.4.5):
     - AFNetworking
     - CTPersistance
     - HandyFrame
-  - Fabric (1.7.2)
+  - Fabric (1.7.13)
+  - FFCircularProgressView (0.5)
   - FirebaseAnalytics (3.9.0):
     - FirebaseCore (~> 3.6)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseCore (3.6.0):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (1.0.10):
     - FirebaseCore (~> 3.6)
   - Google/Analytics (3.1.0):
@@ -42,40 +49,96 @@ PODS:
     - Google/Core
     - GoogleSignIn (~> 4.0)
   - GoogleAnalytics (3.17.0)
-  - GoogleSignIn (4.1.1):
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
-    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+  - GoogleSignIn (4.3.0):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+  - GoogleToolboxForMac/DebugUtils (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
+    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.1.12):
-    - GTMSessionFetcher/Full (= 1.1.12)
-  - GTMSessionFetcher/Core (1.1.12)
-  - GTMSessionFetcher/Full (1.1.12):
-    - GTMSessionFetcher/Core (= 1.1.12)
+  - GTMSessionFetcher (1.2.0):
+    - GTMSessionFetcher/Full (= 1.2.0)
+  - GTMSessionFetcher/Core (1.2.0)
+  - GTMSessionFetcher/Full (1.2.0):
+    - GTMSessionFetcher/Core (= 1.2.0)
   - HandyFrame (1.2.0)
-  - OneSignal (2.6.2)
+  - MPGNotification (1.2.5)
+  - OneSignal (2.9.0)
+  - QMChatViewController (0.6.6):
+    - FFCircularProgressView
+    - QMChatViewController/Categories (= 0.6.6)
+    - QMChatViewController/Protocols (= 0.6.6)
+    - QMChatViewController/QMChatDataSource (= 0.6.6)
+    - QMChatViewController/QMChatLocationSnapshotter (= 0.6.6)
+    - QMChatViewController/Utils (= 0.6.6)
+    - QMChatViewController/Views (= 0.6.6)
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Categories (0.6.6):
+    - FFCircularProgressView
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Protocols (0.6.6):
+    - FFCircularProgressView
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/QMChatDataSource (0.6.6):
+    - FFCircularProgressView
+    - QMChatViewController/Utils
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/QMChatLocationSnapshotter (0.6.6):
+    - FFCircularProgressView
+    - QMChatViewController/Utils
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Utils (0.6.6):
+    - FFCircularProgressView
+    - QMChatViewController/Categories
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Views (0.6.6):
+    - FFCircularProgressView
+    - QMChatViewController/Categories
+    - QMChatViewController/Protocols
+    - QMChatViewController/Utils
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMServices (0.6.2):
+    - Bolts (>= 1.9.0)
+    - QuickBlox (>= 2.17)
   - QRCodeReaderViewController (4.0.2)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
+  - QuickBlox (2.17.1)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - SearchEmojiOnString (1.1.0)
   - SQLCipher (3.4.2):
     - SQLCipher/standard (= 3.4.2)
   - SQLCipher/common (3.4.2)
   - SQLCipher/standard (3.4.2):
     - SQLCipher/common
-  - TOCropViewController (2.3.6)
+  - SVProgressHUD (1.1.3)
+  - TOCropViewController (2.3.8)
+  - TTTAttributedLabel (2.0.0)
+  - "UIAlertView+Blocks (0.9)"
   - youtube-ios-player-helper (0.1.6)
 
 DEPENDENCIES:
@@ -84,36 +147,87 @@ DEPENDENCIES:
   - Fabric
   - Google/Analytics
   - Google/SignIn
+  - MPGNotification
   - OneSignal (< 3.0, >= 2.5.2)
+  - QMChatViewController
+  - QMServices
   - QRCodeReaderViewController (~> 4.0.2)
-  - SDWebImage (~> 3.8)
+  - SDWebImage
+  - SearchEmojiOnString
+  - SVProgressHUD (~> 1.1.3)
   - TOCropViewController
+  - "UIAlertView+Blocks"
   - youtube-ios-player-helper (~> 0.1.4)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - Bolts
+    - Crashlytics
+    - CTMediator
+    - CTPersistance
+    - CTVideoPlayerView
+    - Fabric
+    - FFCircularProgressView
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - Google
+    - GoogleAnalytics
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - HandyFrame
+    - MPGNotification
+    - OneSignal
+    - QMChatViewController
+    - QMServices
+    - QRCodeReaderViewController
+    - QuickBlox
+    - SDWebImage
+    - SearchEmojiOnString
+    - SQLCipher
+    - SVProgressHUD
+    - TOCropViewController
+    - TTTAttributedLabel
+    - "UIAlertView+Blocks"
+    - youtube-ios-player-helper
+
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  CTMediator: 4cbf8ede42efc6b31715be88b78bdc9d94efa840
-  CTPersistance: 4db0d12186c2265cd679d929598796ec93e00a37
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
+  CTMediator: 830c1fc204b3a6abf2a059510c7380f56343da0f
+  CTPersistance: c9d4f20d65455df59ab74e2c195e740aac585f72
   CTVideoPlayerView: b3cd14620d68127cb9ea5d61d38a7ce0d6fed332
-  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
+  FFCircularProgressView: 683a4ab1e1bd613246a3dffa61503ffdebcde8d8
   FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
   FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  GoogleSignIn: 11183592dc63e105475c7305a325045ff95e02b7
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
-  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   HandyFrame: 437df83ba7563c56cd55b9bd0128561995463110
-  OneSignal: 95127bce89b9e495079e7205e3d47c88590b5750
+  MPGNotification: 42d24c02ef1ca0b4dad54cd963eb99965e21d848
+  OneSignal: fc816c9dc308ea4f60348a02500db8198b43cf69
+  QMChatViewController: 43e22929d4abbdb88cc5db5b25c54f13dbfe8373
+  QMServices: 96ee12749db0497cfb6543db9c4b11e8f913e2d7
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  QuickBlox: b8c327b61db8382880bd41185703acf228105a1c
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SearchEmojiOnString: 7344970449603396555d058a0dc297b5471bafa7
   SQLCipher: f9fcf29b2e59ced7defc2a2bdd0ebe79b40d4990
-  TOCropViewController: 6d972f2c609372312648f96758e13a7f689efbc0
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  TOCropViewController: 0a075f02c253e88095143bbac7b013fc6fba5090
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  "UIAlertView+Blocks": a46c99c5144f6c5dbc7d62fd2a0678daceec89a3
   youtube-ios-player-helper: 21ab92db027c7ff86cb17a3843a3f6eafc8158d2
 
-PODFILE CHECKSUM: d67d12508437b1d7b95c108d436bf7075bbc3f1f
+PODFILE CHECKSUM: 53d811c72f7eee8451171757f070f3d862d9f0cd
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

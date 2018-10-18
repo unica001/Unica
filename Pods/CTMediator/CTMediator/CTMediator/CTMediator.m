@@ -9,6 +9,8 @@
 #import "CTMediator.h"
 #import <objc/runtime.h>
 
+NSString * const kCTMediatorParamsKeySwiftTargetModuleName = @"kCTMediatorParamsKeySwiftTargetModuleName";
+
 @interface CTMediator ()
 
 @property (nonatomic, strong) NSMutableDictionary *cachedTarget;
@@ -65,21 +67,28 @@
 
 - (id)performTarget:(NSString *)targetName action:(NSString *)actionName params:(NSDictionary *)params shouldCacheTarget:(BOOL)shouldCacheTarget
 {
+    NSString *swiftModuleName = params[kCTMediatorParamsKeySwiftTargetModuleName];
     
-    NSString *targetClassString = [NSString stringWithFormat:@"Target_%@", targetName];
-    NSString *actionString = [NSString stringWithFormat:@"Action_%@:", actionName];
-    Class targetClass;
-    
+    // generate target
+    NSString *targetClassString = nil;
+    if (swiftModuleName.length > 0) {
+        targetClassString = [NSString stringWithFormat:@"%@.Target_%@", swiftModuleName, targetName];
+    } else {
+        targetClassString = [NSString stringWithFormat:@"Target_%@", targetName];
+    }
     NSObject *target = self.cachedTarget[targetClassString];
     if (target == nil) {
-        targetClass = NSClassFromString(targetClassString);
+        Class targetClass = NSClassFromString(targetClassString);
         target = [[targetClass alloc] init];
     }
-    
+
+    // generate action
+    NSString *actionString = [NSString stringWithFormat:@"Action_%@:", actionName];
     SEL action = NSSelectorFromString(actionString);
     
     if (target == nil) {
         // 这里是处理无响应请求的地方之一，这个demo做得比较简单，如果没有可以响应的target，就直接return了。实际开发过程中是可以事先给一个固定的target专门用于在这个时候顶上，然后处理这种请求的
+        [self NoTargetActionResponseWithTargetString:targetClassString selectorString:actionString originParams:params];
         return nil;
     }
     
@@ -90,21 +99,15 @@
     if ([target respondsToSelector:action]) {
         return [self safePerformAction:action target:target params:params];
     } else {
-        // 有可能target是Swift对象
-        actionString = [NSString stringWithFormat:@"Action_%@WithParams:", actionName];
-        action = NSSelectorFromString(actionString);
+        // 这里是处理无响应请求的地方，如果无响应，则尝试调用对应target的notFound方法统一处理
+        SEL action = NSSelectorFromString(@"notFound:");
         if ([target respondsToSelector:action]) {
             return [self safePerformAction:action target:target params:params];
         } else {
-            // 这里是处理无响应请求的地方，如果无响应，则尝试调用对应target的notFound方法统一处理
-            SEL action = NSSelectorFromString(@"notFound:");
-            if ([target respondsToSelector:action]) {
-                return [self safePerformAction:action target:target params:params];
-            } else {
-                // 这里也是处理无响应请求的地方，在notFound都没有的时候，这个demo是直接return了。实际开发过程中，可以用前面提到的固定的target顶上的。
-                [self.cachedTarget removeObjectForKey:targetClassString];
-                return nil;
-            }
+            // 这里也是处理无响应请求的地方，在notFound都没有的时候，这个demo是直接return了。实际开发过程中，可以用前面提到的固定的target顶上的。
+            [self NoTargetActionResponseWithTargetString:targetClassString selectorString:actionString originParams:params];
+            [self.cachedTarget removeObjectForKey:targetClassString];
+            return nil;
         }
     }
 }
@@ -116,6 +119,19 @@
 }
 
 #pragma mark - private methods
+- (void)NoTargetActionResponseWithTargetString:(NSString *)targetString selectorString:(NSString *)selectorString originParams:(NSDictionary *)originParams
+{
+    SEL action = NSSelectorFromString(@"Action_response:");
+    NSObject *target = [[NSClassFromString(@"Target_NoTargetAction") alloc] init];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    params[@"originParams"] = originParams;
+    params[@"targetString"] = targetString;
+    params[@"selectorString"] = selectorString;
+    
+    [self safePerformAction:action target:target params:params];
+}
+
 - (id)safePerformAction:(SEL)action target:(NSObject *)target params:(NSDictionary *)params
 {
     NSMethodSignature* methodSig = [target methodSignatureForSelector:action];

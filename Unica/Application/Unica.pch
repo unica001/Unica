@@ -25,6 +25,10 @@
 #import "UNKRecordExpressionListViewC.h"
 #import "UNKRecordAllParticipantViewC.h"
 #import "UNKRecordExpressionViewC.h"
+#import <Quickblox/Quickblox.h>
+#import <Quickblox/QBMulticastDelegate.h>
+#import "QMServices.h"
+#import "SVProgressHUD.h"
 #endif /* TRLUser_pch */
 
 #define kErrorMsg @"It seems like we have encountered a temporary glitch. Please try again later."

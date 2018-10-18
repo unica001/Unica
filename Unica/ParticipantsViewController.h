@@ -10,6 +10,7 @@
 #import "ParticipantsCell.h"
 #import "ParticipantDetailViewController.h"
 #import "ADPopupView.h"
+#import "ServicesManager.h"
 
 @interface ParticipantsViewController : UIViewController<ADPopupViewDelegate,UITableViewDelegate,UITableViewDataSource>{
     __weak IBOutlet UITableView *tableView;

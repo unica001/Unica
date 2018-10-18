@@ -28,6 +28,7 @@
 #import "CTPersistanceTable+Insert.h"
 #import "CTPersistanceTable+Update.h"
 #import "CTPersistanceTable+Schema.h"
+#import "CTPersistanceTable+Upsert.h"
 
 #import "CTPersistanceQueryCommand.h"
 #import "CTPersistanceQueryCommand+DataManipulations.h"
@@ -48,7 +49,7 @@ extern NSString * const kCTPersistanceConfigurationParamsKeyDatabaseName;
  @param params params is a dictionary, with key kCTPersistanceConfigurationParamsKeyDatabaseName to tell you the database name
  @return migrator
  */
-- (CTPersistanceMigrator *)Action_fetchMigrator:(NSDictionary *)params;
+- (CTPersistanceMigrator * __nullable)Action_fetchMigrator:(NSDictionary *)params;
 
 
 /**
@@ -57,8 +58,7 @@ extern NSString * const kCTPersistanceConfigurationParamsKeyDatabaseName;
  @param params params is a dictionary, with key kCTPersistanceConfigurationParamsKeyDatabaseName to tell you the database name
  @return secret key
  */
-- (NSString *)Action_secretKey:(NSDictionary *)params;
-
+- (NSArray <NSString * > * __nullable)Action_secretKey:(NSDictionary *)params;
 
 /**
  return file path if you want your database file to lcoate at specific path. return nil means use the default file path.
@@ -67,7 +67,7 @@ extern NSString * const kCTPersistanceConfigurationParamsKeyDatabaseName;
  @param params params is a dictionary, with key kCTPersistanceConfigurationParamsKeyDatabaseName to tell you the database name
  @return database file path
  */
-- (NSString *)Action_filePath:(NSDictionary *)params;
+- (NSString * __nullable)Action_filePath:(NSDictionary *)params;
 
 @end
 

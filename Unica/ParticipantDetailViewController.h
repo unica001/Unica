@@ -3,11 +3,13 @@
 #import <UIKit/UIKit.h>
 #import "ParticipantInfoViewController.h"
 #import "ParticipantAboutViewController.h"
+#import "ChatViewController.h"
 
 @interface ParticipantDetailViewController : UIViewController<YSLContainerViewControllerDelegate>{
     
     ParticipantInfoViewController * infoView;
     ParticipantAboutViewController  *aboutView;
+    ChatViewController *chatView;
     YSLContainerViewController *containerVC;
 
 }
@@ -32,5 +34,7 @@
 - (IBAction)accepButtonAction:(id)sender;
 
 @property(nonatomic,retain) NSDictionary *participantDict;
+@property(nonatomic,retain) QBChatDialog *dialog;
+
 
 @end

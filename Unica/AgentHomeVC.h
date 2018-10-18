@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "TOCropViewController.h"
 #import "GKActionSheetPicker.h"
+#import "ServicesManager.h"
 
-@interface AgentHomeVC : UIViewController<SWRevealViewControllerDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NSURLSessionDelegate,TOCropViewControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate>{
+@protocol QMAuthServiceDelegate;
+
+@interface AgentHomeVC : UIViewController<SWRevealViewControllerDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NSURLSessionDelegate,TOCropViewControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate,QMUsersServiceDelegate>{
     
     __weak IBOutlet UIBarButtonItem *_backButton;
     __weak IBOutlet UIImageView *basketImageView;

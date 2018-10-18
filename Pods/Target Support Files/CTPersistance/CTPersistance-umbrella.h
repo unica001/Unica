@@ -35,6 +35,7 @@
 #import "CTPersistanceTable+Insert.h"
 #import "CTPersistanceTable+Schema.h"
 #import "CTPersistanceTable+Update.h"
+#import "CTPersistanceTable+Upsert.h"
 #import "CTPersistanceTable.h"
 #import "CTPersistanceTransaction.h"
 

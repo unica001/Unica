@@ -20,6 +20,8 @@
     
     NSMutableArray *headerTextArray;
     UIImagePickerControllerSourceType type;
+    NSString *newUserQBID;
+
 
     
 }
@@ -1073,68 +1075,67 @@ typedef enum _UNKProfileFieldType {
 }
 
 #pragma mark - APIS
-//
-//-(void)registration:(NSMutableDictionary*)dictionary{
-//
-//    NSString *url;
-//
-//    url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"registration-student.php"];
-//
-//    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url params:(NSMutableDictionary *)dictionary timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
-//
-//        if (!error) {
-//
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
-//
-//                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-//                    _emailTextField.text = @"";
-//
-//
-//                        if ([_countryID integerValue] == 102) {
-//                            [self sendOTP:self.phoneNumberTextField.text];
-//                        }
-//
-//                        else{
-//
-//                            [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index){
-//
-//                                [kUserDefault setValue:[Utility archiveData:payloadDictionary] forKey:kLoginInfo];
-//
-//                                    [self performSegueWithIdentifier:kWelcomeSegueIdentifier sender:nil];
-//
-//                            }];
-//                        }
-//
-//                }else{
-//
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [Utility showAlertViewControllerIn:self title:kErrorTitle message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-//
-//                        }];
-//                    });
-//                }
-//
-//            });
-//        }
-//        else{
-//            NSLog(@"%@",error);
-//
-//            if([error.domain isEqualToString:kUNKError]){
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [Utility showAlertViewControllerIn:self title:kErrorTitle message:error.localizedDescription block:^(int index) {
-//
-//                    }];
-//                });
-//            }
-//
-//        }
-//
-//
-//    }];
-//
-//}
+-(void)creatUserOnQuickBlock:(NSDictionary*)loginInfo{
+    
+    QBUUser *user = [QBUUser new];
+    user.externalUserID = [[loginInfo valueForKey:Kuserid] integerValue];
+    user.fullName = [NSString stringWithFormat:@"%@ %@",[loginInfo valueForKey:kfirstname],[loginInfo valueForKey:klastname]];
+    user.phone = [loginInfo valueForKey:kMobileNumber];
+    user.login = [NSString stringWithFormat:@"user_%@",[loginInfo valueForKey:Kuserid]];
+    user.password = kTestUsersDefaultPassword;
+    
+    // check QBID
+    if (![loginInfo valueForKey:kQbId] || [[loginInfo valueForKey:kQbId] isKindOfClass:[NSNull class]] || [[loginInfo valueForKey:kQbId] isEqualToString:@""]) {
+        
+        
+        [QBRequest signUp:user successBlock:^(QBResponse *response, QBUUser *user)
+         {
+             [Utility hideMBHUDLoader];
+             newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
+             [self performSegueWithIdentifier:kVerityOTPSegueIdentifier sender:nil];
+   
+         }
+               errorBlock:^(QBResponse *response) {
+                   
+                   [Utility hideMBHUDLoader];
+                   [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){
+                       newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
+                   }];
+               }];
+    }
+    else{
+        
+        // login user and update info
+        [QBRequest logInWithUserLogin:[NSString stringWithFormat:@"user_%@",[loginInfo valueForKey:kUser_id]] password:kTestUsersDefaultPassword successBlock:^(QBResponse *response, QBUUser *user) {
+            
+            newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
+            
+            // update user info
+            
+            QBUpdateUserParameters *updateParameters = [QBUpdateUserParameters new];
+            updateParameters.phone = [loginInfo valueForKey:kMobileNumber];
+            updateParameters.fullName = [NSString stringWithFormat:@"%@ %@",[loginInfo valueForKey:kfirstname],[loginInfo valueForKey:klastname]];
+            
+            [QBRequest updateCurrentUser:updateParameters successBlock:^(QBResponse *response, QBUUser *user) {
+                [Utility hideMBHUDLoader];
+            [self performSegueWithIdentifier:kVerityOTPSegueIdentifier sender:nil];
+                
+            }
+                              errorBlock:^(QBResponse *response)
+             {
+                 [Utility hideMBHUDLoader];
+                 
+                 [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
+             }];
+            
+        } errorBlock:^(QBResponse *response) {
+            
+            [Utility hideMBHUDLoader];
+            [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
+        }];
+        
+    }
+}
 
 #define kStartTag   @"--%@\r\n"
 #define kEndTag     @"\r\n"
@@ -1319,7 +1320,6 @@ typedef enum _UNKProfileFieldType {
             
             
             
-            [Utility hideMBHUDLoader];
             
             if ([[json valueForKey:@"Status"] integerValue] == 1) {
                 
@@ -1359,32 +1359,39 @@ typedef enum _UNKProfileFieldType {
                 [kUserDefault setValue:userId forKey:kPreviousUserId];
                 [kUserDefault setValue:@"false" forKey:kisGlobalFormCompleted];
                 
-                if ([_countryID integerValue] == 102) {
-                    
-                    [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
-                    
-                    _emailTextField.text = @"";
-                    
-                    [self performSegueWithIdentifier:kVerityOTPSegueIdentifier sender:nil];
-                    
-                   // [self sendOTP:self.phoneNumberTextField.text];
-                }
                 
-                else{
-                    
-                   /* [Utility showAlertViewControllerIn:self title:@"" message:[json valueForKey:kAPIMessage] block:^(int index){
-                        
-                       
-                        
-                        
-                        [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
-                        
-                        [self performSegueWithIdentifier:kWelcomeSegueIdentifier sender:nil];
-                    }];*/
-                    [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
-                    
-                    [self performSegueWithIdentifier:kWelcomeSegueIdentifier sender:nil];
-                }
+                [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
+                
+                _emailTextField.text = @"";
+                
+                [self creatUserOnQuickBlock:info];
+                
+//                if ([_countryID integerValue] == 102) {
+//
+//                    [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
+//
+//                    _emailTextField.text = @"";
+//
+//                    [self performSegueWithIdentifier:kVerityOTPSegueIdentifier sender:nil];
+//
+//                   // [self sendOTP:self.phoneNumberTextField.text];
+//                }
+//
+//                else{
+//
+//                   /* [Utility showAlertViewControllerIn:self title:@"" message:[json valueForKey:kAPIMessage] block:^(int index){
+//
+//
+//
+//
+//                        [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
+//
+//                        [self performSegueWithIdentifier:kWelcomeSegueIdentifier sender:nil];
+//                    }];*/
+//                    [kUserDefault setValue:[Utility archiveData:info] forKey:kLoginInfo];
+//
+//                    [self performSegueWithIdentifier:kWelcomeSegueIdentifier sender:nil];
+//                }
             }
             
             else{

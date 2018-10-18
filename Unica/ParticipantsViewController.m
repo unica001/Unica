@@ -2,6 +2,7 @@
 
 #import "ParticipantsViewController.h"
 #import "TimeSlotViewController.h"
+#import "ChatViewController.h"
 
 @interface ParticipantsViewController (){
     
@@ -96,29 +97,35 @@
     cell.sendRequestbutton.tag = indexPath.row;
     cell.acceptButton.tag = indexPath.row;
     cell.rejectButton.tag = indexPath.row;
+    cell.chatButton.tag = indexPath.row;
     
     [cell.checkMarkButton addTarget:self action:@selector(checMarkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell.sendRequestbutton addTarget:self action:@selector(sendRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
       [cell.acceptButton addTarget:self action:@selector(acceptRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rejectButton addTarget:self action:@selector(rejectequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+     [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
 
     return  cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [self openChat:participantArray[indexPath.row] from:true];
+}
+-(void)getParticipantDetails:(NSMutableDictionary *)dict dialog:(QBChatDialog *)dialog{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
-    
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithDictionary:participantArray[indexPath.row]];
-    [dict setValue:viewType forKey:@"prticipantType"];
+        [dict setValue:viewType forKey:@"prticipantType"];
     [dict setValue:appDelegate.userEventId forKey:kevent_id];
     detailView.participantDict = dict;
+    detailView.dialog = dialog;
     [self.navigationController pushViewController:detailView animated:true];
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ChatViewController *chatViewController = segue.destinationViewController;
+    chatViewController.dialog = sender;
 }
 
 
@@ -153,6 +160,9 @@
 
 // MARK Button Action
 
+-(void)chatButtonAction:(UIButton*)sender{
+    [self openChat:participantArray[sender.tag] from:false];
+}
 -(void)sendRequestButtonAction:(UIButton*)sender{
     selectedRowID = sender.tag;
     NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
@@ -185,6 +195,93 @@
 }
 
 
+#pragma Mark _ Chat Dialog
+
+-(void)openChat:(NSMutableDictionary *)dic from:(BOOL)fromParticipantView
+{
+      NSMutableDictionary *loginInfo = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSMutableDictionary *detailDictionary = dic;
+    
+//    // check chat user re not current user and must have QBID
+//    NSString *userID = [NSString stringWithFormat:@"%@",[loginInfo valueForKey:Kuserid]];
+//    NSString *chatUserId = [NSString stringWithFormat:@"%@",[detailDictionary valueForKey:Kuserid]];
+//
+    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[detailDictionary valueForKey:kQbId] value:@"63951662"]];
+//    qbid = [qbid stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+//    qbid = [qbid stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
+//    qbid = [qbid stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
+//
+//
+//
+//    if(![userID isEqualToString:chatUserId])
+//    {
+//        if (![userID isEqualToString:chatUserId] && ![qbid isEqualToString:@""]  && ![qbid isEqualToString:@"0"]) {
+    
+            [Utility ShowMBHUDLoader];
+            
+            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+            [dictionary setValue:[loginInfo valueForKey:Kuserid] forKey:Kuserid];
+         //   [dictionary setValue:chatUserId forKey:@"viewId"];
+            
+            //[[NSString stringWithFormat:@"%@",[detailDictionary valueForKey:kQbId]] integerValue]
+            [QBRequest userWithID:63951662 successBlock:^(QBResponse *response, QBUUser *user) {
+                
+                
+                // Creating private chat dialog.
+                
+                
+                    // Creating private chat dialog.
+             
+                [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
+                    if (!response.success && createdDialog == nil) {
+                        
+                        if (createdDialog) {
+                            [Utility hideMBHUDLoader];
+                            createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                            
+                            if (fromParticipantView == true) {
+                                [self getParticipantDetails:dic dialog:createdDialog];
+                            }
+                            else{
+                                [self performSegueWithIdentifier:kchatSegueIdentifier sender:createdDialog];
+                            }
+                        }
+                    }
+                    else {
+                        [Utility hideMBHUDLoader];
+                        
+                        if (createdDialog) {
+                            createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                            if (fromParticipantView == true) {
+                                [self getParticipantDetails:dic dialog:createdDialog];
+                            }
+                            else{
+                                [self performSegueWithIdentifier:kchatSegueIdentifier sender:createdDialog];
+                            }
+                        }
+                        else{
+                            NSLog(@"%@",response.error);
+                        }
+                    }
+                }];
+                
+            } errorBlock:^(QBResponse *response) {
+                [Utility hideMBHUDLoader];
+                
+                NSLog(@"%@",[response.error.reasons valueForKey:@"message"]);
+                [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
+                
+            }];
+            
+    //    }
+//        else{
+//            [Utility showAlertViewControllerIn:self title:@"" message:@"User don't seems to be registered with ShaqueHand" block:^(int index){}];
+//        }
+  //  }
+    
+    
+}
 
 #pragma mark - APIS
 
@@ -403,6 +500,5 @@
         tableView.tableFooterView = nil;
     }
 }
-
 
 @end

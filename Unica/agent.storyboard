@@ -2090,6 +2090,7 @@
                         <outlet property="messageLabel" destination="lkQ-sh-NY0" id="VZa-us-jtW"/>
                         <outlet property="selectAllButton" destination="uCt-cl-XAc" id="CAz-Lr-tpE"/>
                         <outlet property="tableView" destination="OPA-8M-Nse" id="lNb-Sh-ZCJ"/>
+                        <segue destination="oao-oR-3cQ" kind="show" identifier="chatSegueIdentifier" id="WVQ-4x-2y1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Duz-uj-8CW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2934,6 +2935,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2hW-z7-wQ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="21" y="5928"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="3Lh-lb-Qh5">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oao-oR-3cQ" customClass="ChatViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="7fx-xb-TRI">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="BackButton" id="EaE-CA-gO7">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonAction:" destination="oao-oR-3cQ" id="Zfv-9Q-tfS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jk3-6H-mQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1215" y="5416"/>
         </scene>
     </scenes>
     <resources>

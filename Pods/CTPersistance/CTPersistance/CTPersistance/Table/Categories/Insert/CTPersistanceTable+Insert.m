@@ -24,13 +24,16 @@ static NSString * const kCTPersistanceErrorUserinfoKeyErrorRecord = @"kCTPersist
 
 - (BOOL)insertRecordList:(NSArray<NSObject <CTPersistanceRecordProtocol> *> *)recordList error:(NSError *__autoreleasing *)error
 {
-    __block BOOL result = YES;
-    [recordList enumerateObjectsUsingBlock:^(NSObject<CTPersistanceRecordProtocol> * _Nonnull record, NSUInteger idx, BOOL * _Nonnull stop) {
+    BOOL result = YES;
+
+    for (id<CTPersistanceRecordProtocol> record in recordList) {
         result = [self insertRecord:record error:error];
+
         if (result == NO) {
-            *stop = YES;
+            break;
         }
-    }];
+    }
+
     return result;
 }
 
@@ -65,6 +68,7 @@ static NSString * const kCTPersistanceErrorUserinfoKeyErrorRecord = @"kCTPersist
 
 - (NSNumber *)insertValue:(id)value forKey:(NSString *)key error:(NSError *__autoreleasing *)error
 {
+
     if (value == nil) {
         value = [NSNull null];
     }
@@ -72,7 +76,15 @@ static NSString * const kCTPersistanceErrorUserinfoKeyErrorRecord = @"kCTPersist
     if (key == nil) {
         return nil;
     }
-    
+
+    if(self.child.columnDetaultValue && value == [NSNull null]  ) {
+        id defaultVale = [self.child.columnDetaultValue valueForKey:key];
+
+        if(defaultVale) {
+            value = defaultVale;
+        }
+    }
+
     BOOL result = [[self.queryCommand insertTable:self.child.tableName columnInfo:self.child.columnInfo dataList:@[@{key:value}] error:error] executeWithError:error];
     if (result) {
         return [self.queryCommand lastInsertRowId];
