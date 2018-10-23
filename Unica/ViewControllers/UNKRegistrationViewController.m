@@ -1075,7 +1075,7 @@ typedef enum _UNKProfileFieldType {
 }
 
 #pragma mark - APIS
--(void)creatUserOnQuickBlock:(NSDictionary*)loginInfo{
+/*-(void)creatUserOnQuickBlock:(NSDictionary*)loginInfo{
     
     QBUUser *user = [QBUUser new];
     user.externalUserID = [[loginInfo valueForKey:Kuserid] integerValue];
@@ -1086,7 +1086,6 @@ typedef enum _UNKProfileFieldType {
     
     // check QBID
     if (![loginInfo valueForKey:kQbId] || [[loginInfo valueForKey:kQbId] isKindOfClass:[NSNull class]] || [[loginInfo valueForKey:kQbId] isEqualToString:@""]) {
-        
         
         [QBRequest signUp:user successBlock:^(QBResponse *response, QBUUser *user)
          {
@@ -1135,7 +1134,7 @@ typedef enum _UNKProfileFieldType {
         }];
         
     }
-}
+}*/
 
 #define kStartTag   @"--%@\r\n"
 #define kEndTag     @"\r\n"
@@ -1364,7 +1363,10 @@ typedef enum _UNKProfileFieldType {
                 
                 _emailTextField.text = @"";
                 
-                [self creatUserOnQuickBlock:info];
+                [self performSegueWithIdentifier:kVerityOTPSegueIdentifier sender:nil];
+
+                
+//                [self creatUserOnQuickBlock:info];
                 
 //                if ([_countryID integerValue] == 102) {
 //

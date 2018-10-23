@@ -36,6 +36,7 @@
 @property(nonatomic, weak) NSString *strParticipantId;
 @property(nonatomic,retain) NSDictionary *participantDict;
 @property(nonatomic,retain) QBChatDialog *dialog;
+- (IBAction)chatButtonAction:(id)sender;
 
 
 @end

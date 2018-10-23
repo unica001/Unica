@@ -12,10 +12,12 @@
     
     __weak IBOutlet UIBarButtonItem *menuButton;
 }
+- (IBAction)backButtonAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *viewContainer;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic,retain) NSMutableArray *countryFilter;
 @property (nonatomic,retain) NSMutableArray *typeFilter;
 @property (nonatomic,retain) NSMutableArray *eventFilter;
 @property (nonatomic,retain) NSString *isFilterApply;
+@property(nonatomic,retain) NSString *fromView;
 @end

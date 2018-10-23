@@ -54,6 +54,7 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
+    
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {  SWRevealViewController *revealViewController = self.revealViewController;
@@ -73,6 +74,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
     [self getEventID];
 
 }
@@ -97,8 +99,11 @@
     // login user
     if([Utility connectedToInternet])
     {
-        //[loginDictionary valueForKey:Kuserid]
-        [QBRequest logInWithUserLogin:@"user_UN2T%2BipqlwRxl8MvmKy1PAgDmE733eHmzlSK0kxWOh8=" password:kTestUsersDefaultPassword successBlock:^(QBResponse *response, QBUUser *user) {
+        
+        NSString *userId = [NSString stringWithFormat:@"user_%@",[loginDictionary valueForKey:Kid]];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+
+        [QBRequest logInWithUserLogin:userId password:kTestUsersDefaultPassword successBlock:^(QBResponse *response, QBUUser *user) {
             
             __weak typeof(self) weakSelf = self;
             [weakSelf registerForRemoteNotifications];
@@ -107,16 +112,78 @@
             [[QBChat instance] connectWithUser:user resource:@"iPhone6s" completion:^(NSError * _Nullable error) {
                 
             }];
-            
-//            [[QBChat instance] connectWithUserID:user.externalUserID password:kTestUsersDefaultPassword completion:^(NSError *error)
-//             {
-//             }];
+
         } errorBlock:^(QBResponse *response) {
             
             [Utility hideMBHUDLoader];
             [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
         }];
     }
+}
+
+-(void)creatUserOnQuickBlock:(NSDictionary*)loginInfo{
+    
+    NSString *userId = [loginDictionary valueForKey:@"id"];
+    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    QBUUser *user = [QBUUser new];
+//    user.externalUserID = [userId integerValue];
+    user.fullName = [NSString stringWithFormat:@"%@",[loginInfo valueForKey:kName]];
+    user.phone = [loginInfo valueForKey:kMobileNumber];
+    user.login = [NSString stringWithFormat:@"user_%@",userId];
+    user.password = kTestUsersDefaultPassword;
+    
+    // check QBID
+ if (![loginInfo valueForKey:kQbId] || [[loginInfo valueForKey:kQbId] isKindOfClass:[NSNull class]] || [[loginInfo valueForKey:kQbId] isEqualToString:@""]) {
+        [QBRequest signUp:user successBlock:^(QBResponse *response, QBUUser *user)
+         {
+             [Utility hideMBHUDLoader];
+             NSString *newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
+             [self saveQBID:newUserQBID];
+         }
+         
+               errorBlock:^(QBResponse *response) {
+                   
+//                   [Utility hideMBHUDLoader];
+//                   [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){
+//                   }];
+               }];
+    }
+    else{
+        [self saveQBID:[loginInfo valueForKey:kQbId]];
+
+    }
+   
+   
+    /*else{
+        
+        // login user and update info
+        [QBRequest logInWithUserLogin:[NSString stringWithFormat:@"user_%@",[loginInfo valueForKey:kUser_id]] password:kTestUsersDefaultPassword successBlock:^(QBResponse *response, QBUUser *user) {
+            
+            NSString *newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
+
+            // update user info
+            
+            QBUpdateUserParameters *updateParameters = [QBUpdateUserParameters new];
+            updateParameters.phone = [loginInfo valueForKey:kMobileNumber];
+            updateParameters.fullName = [NSString stringWithFormat:@"%@ %@",[loginInfo valueForKey:kfirstname],[loginInfo valueForKey:klastname]];
+            
+            [QBRequest updateCurrentUser:updateParameters successBlock:^(QBResponse *response, QBUUser *user) {
+                [Utility hideMBHUDLoader];
+                
+            }
+                              errorBlock:^(QBResponse *response)
+             {
+                 [Utility hideMBHUDLoader];
+                 
+                 [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
+             }];
+            
+        } errorBlock:^(QBResponse *response) {
+            
+            [Utility hideMBHUDLoader];
+            [Utility showAlertViewControllerIn:self title:@"Error" message:[response.error  description] block:^(int index){}];
+        }];
+    }*/
 }
 
 #pragma  Mark Handel Push Notification
@@ -862,7 +929,35 @@
                     app.userEventId =  dictionary[kAPIPayload][kevent_id];
                     app.menuArray = dictionary[kAPIPayload][@"menus"];
                     app.webLoginUrl = dictionary[@"login_url"];
+                   [self creatUserOnQuickBlock:loginDictionary];
+
                 }
+            });
+        }
+    }];
+}
+
+-(void)saveQBID:(NSString *)qbid{
+    
+    NSMutableDictionary*dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSString *userId = [loginDictionary valueForKey:@"id"];
+    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:userId forKey:@"user_id"];
+    [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
+    [dic setValue:qbid forKey:kQbId];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-save-chat-id.php"];
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:false showSystemError:false completion:^(NSDictionary *dictionary, NSError *error) {
+        if (!error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"%@",dictionary);
+                [dictLogin setValue:qbid forKey:kQbId];
+                [kUserDefault setValue:[Utility archiveData:dictLogin] forKey:kLoginInfo];
+                loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+   
             });
         }
     }];

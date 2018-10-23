@@ -143,7 +143,13 @@
 
     
     if ([dict[kpark_free] integerValue] == 1 ) { // Park Free
-        [self parkFreeRequest:mainDict index:sender.tag];
+        
+        [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure, you want to Park this time slot as FREE time?" block:^(int index){
+            
+            if (index == 0) {
+                [self parkFreeRequest:mainDict index:sender.tag];
+            }
+        }];
         
     }
     else if ([dict[@"search_people"] integerValue] == 1 ) { //search_people
@@ -327,7 +333,6 @@
         }
     }];
 }
-
 
 -(void)parkFreeRequest:(NSDictionary*)maindict index:(NSInteger)index{
     

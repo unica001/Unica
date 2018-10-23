@@ -91,7 +91,7 @@
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"ParticipantsCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setParticipantsData:participantArray[indexPath.row ] viewType:viewType selectedArray:selectedArray title:self.title];
+    [cell setParticipantsData:participantArray[indexPath.row] viewType:viewType selectedArray:selectedArray title:self.title];
     
     cell.checkMarkButton.tag  = indexPath.row;
     cell.sendRequestbutton.tag = indexPath.row;
@@ -105,20 +105,29 @@
     [cell.rejectButton addTarget:self action:@selector(rejectequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
      [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-
+    NSString *qbid = [Utility replaceNULL:participantArray[indexPath.row][kQbId] value:@""];
+    if ([[Utility replaceNULL:qbid value:@""] isEqualToString:@""]) {
+        cell.chatButton.hidden = true;
+    }
+    else{
+        cell.chatButton.hidden = false;
+    }
     return  cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+        [self getParticipantDetails:participantArray[indexPath.row] dialog:nil];
     
-    [self openChat:participantArray[indexPath.row] from:true];
+//    else{
+//        [self openChat:participantArray[indexPath.row] from:true];
+//    }
 }
 -(void)getParticipantDetails:(NSMutableDictionary *)dict dialog:(QBChatDialog *)dialog{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
     detailView.strParticipantId = dict[@"participantId"];
-//    detailView.participantDict = dict;
-    detailView.dialog = dialog;
+    detailView.participantDict = dict;
+//    detailView.dialog = dialog;
 
     [self.navigationController pushViewController:detailView animated:true];
 }
@@ -133,6 +142,7 @@
 
 -(void)checMarkButtonAction:(UIButton *)sender{
     NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
+    selectedRowID = sender.tag;
     if ([selectedArray containsObject:dict]) {
         [selectedArray removeObject:dict];
     }
@@ -163,35 +173,52 @@
 -(void)chatButtonAction:(UIButton*)sender{
     [self openChat:participantArray[sender.tag] from:false];
 }
+
 -(void)sendRequestButtonAction:(UIButton*)sender{
-    selectedRowID = sender.tag;
-    NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
-    [self sendParticipantRequest:dict[@"participantId"]];
-    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            selectedRowID = sender.tag;
+            NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
+            [self sendParticipantRequest:dict[@"participantId"]];        }
+    }];
 }
 -(void)acceptRequestButtonAction:(UIButton*)sender{
-    selectedRowID = sender.tag;
-    NSDictionary *dict = participantArray[sender.tag];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
-    TimeSlotViewController *eventList = [storyboard instantiateViewControllerWithIdentifier:@"TimeSlotViewController"];
-    eventList.participantID = dict[@"participantId"];
-    eventList.eventID = appDelegate.userEventId;
-    eventList.dictDetail = dict;
-    [self.navigationController pushViewController:eventList animated:true];
     
+        selectedRowID = sender.tag;
+        NSDictionary *dict = participantArray[sender.tag];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+        TimeSlotViewController *eventList = [storyboard instantiateViewControllerWithIdentifier:@"TimeSlotViewController"];
+        eventList.participantID = dict[@"participantId"];
+        eventList.eventID = appDelegate.userEventId;
+        eventList.dictDetail = dict;
+        [self.navigationController pushViewController:eventList animated:true];        
+   
 }
 -(void)rejectequestButtonAction:(UIButton*)sender{
-    selectedRowID = sender.tag;
-    NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
-    [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            selectedRowID = sender.tag;
+            NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
+            [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];        }
+    }];
+
     
 }
 
 - (IBAction)selectAllButtonAction:(id)sender {
-    NSArray *participantIds = [selectedArray valueForKey:@"participantId"];
-    NSString *ids = [participantIds componentsJoinedByString:@","];
-   
-    [self sendParticipantRequest:ids];
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            NSArray *participantIds = [selectedArray valueForKey:@"participantId"];
+            NSString *ids = [participantIds componentsJoinedByString:@","];
+            [self sendParticipantRequest:ids];
+        }
+    }];
+
 }
 
 
@@ -199,40 +226,15 @@
 
 -(void)openChat:(NSMutableDictionary *)dic from:(BOOL)fromParticipantView
 {
-      NSMutableDictionary *loginInfo = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
-    
-    NSMutableDictionary *detailDictionary = dic;
-    
-//    // check chat user re not current user and must have QBID
-//    NSString *userID = [NSString stringWithFormat:@"%@",[loginInfo valueForKey:Kuserid]];
-//    NSString *chatUserId = [NSString stringWithFormat:@"%@",[detailDictionary valueForKey:Kuserid]];
-//
-    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[detailDictionary valueForKey:kQbId] value:@"63951662"]];
-//    qbid = [qbid stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-//    qbid = [qbid stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
-//    qbid = [qbid stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
-//
-//
-//
-//    if(![userID isEqualToString:chatUserId])
-//    {
-//        if (![userID isEqualToString:chatUserId] && ![qbid isEqualToString:@""]  && ![qbid isEqualToString:@"0"]) {
-    
+    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[dic valueForKey:kQbId] value:@""]];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
+
             [Utility ShowMBHUDLoader];
             
-            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-            [dictionary setValue:[loginInfo valueForKey:Kuserid] forKey:Kuserid];
-         //   [dictionary setValue:chatUserId forKey:@"viewId"];
-            
-            //[[NSString stringWithFormat:@"%@",[detailDictionary valueForKey:kQbId]] integerValue]
-            [QBRequest userWithID:63951662 successBlock:^(QBResponse *response, QBUUser *user) {
-                
-                
-                // Creating private chat dialog.
-                
-                
-                    // Creating private chat dialog.
-             
+            [QBRequest userWithID:[qbid integerValue] successBlock:^(QBResponse *response, QBUUser *user) {
+
                 [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
                     if (!response.success && createdDialog == nil) {
                         
@@ -240,12 +242,7 @@
                             [Utility hideMBHUDLoader];
                             createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
                             
-                            if (fromParticipantView == true) {
-                                [self getParticipantDetails:dic dialog:createdDialog];
-                            }
-                            else{
                                 [self performSegueWithIdentifier:kchatSegueIdentifier sender:createdDialog];
-                            }
                         }
                     }
                     else {
@@ -253,12 +250,8 @@
                         
                         if (createdDialog) {
                             createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
-                            if (fromParticipantView == true) {
-                                [self getParticipantDetails:dic dialog:createdDialog];
-                            }
-                            else{
+                          
                                 [self performSegueWithIdentifier:kchatSegueIdentifier sender:createdDialog];
-                            }
                         }
                         else{
                             NSLog(@"%@",response.error);
@@ -273,14 +266,6 @@
                 [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
                 
             }];
-            
-    //    }
-//        else{
-//            [Utility showAlertViewControllerIn:self title:@"" message:@"User don't seems to be registered with ShaqueHand" block:^(int index){}];
-//        }
-  //  }
-    
-    
 }
 
 #pragma mark - APIS
@@ -300,7 +285,6 @@
         NSString *userId =[dictLogin valueForKey:Kuserid];
         userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         [dictionary setValue:userId forKey:kUser_id];
-        
     }
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:appDelegate.userEventId forKey:kevent_id];
@@ -426,7 +410,12 @@
                         
                         [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
                             
+                            [selectedArray removeAllObjects];
+                             countLabel.text = @"";
+                            bottomView.hidden = true;
+                            bottomViewHeight.constant = 0;
                            [self reloadTbleViewCell:dictionary[kAPIPayload]];
+                            [tableView reloadData];
                         }];
                     }
                 });

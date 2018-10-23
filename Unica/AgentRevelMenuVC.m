@@ -37,10 +37,11 @@ typedef enum
     [super viewDidLoad];
     
     selectedHeaderIndex = 0;
-    isEventSelected = false;
+    isEventSelected = true;
+    selectedHeaderIndex = 103;
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"event-1",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
+    menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"event_menu",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
     
     menuLabelArray=[NSMutableArray arrayWithObjects:@"Home",@"View Business Cards", @"View Interested Students", @"Events",@"Tutorials", @"Login to UNICA Web Account", @"About UNICA",@"Logout", nil];
     
@@ -280,9 +281,7 @@ typedef enum
             UNKRecordExpressionViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionViewC"];
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
             [navController setViewControllers: @[meetingView] animated: NO ];
-            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-//            [self performSegueWithIdentifier:kredordExpressionSegueIdentifier sender:nil];
-        }
+            [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];        }
     }
     else{
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:appDelegate.menuArray[indexPath.row][@"url"]] options:@{} completionHandler:nil];

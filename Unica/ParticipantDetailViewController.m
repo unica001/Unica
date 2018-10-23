@@ -24,6 +24,11 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     eventID = appDelegate.userEventId;
     [self getParticipantDetails];
+    
+    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[self.participantDict valueForKey:kQbId] value:@""]];
+    if ([qbid isEqualToString:@""]) {
+        _chatButton.hidden = true;
+    }
 }
 
 -(void)setHeaderDetails:(NSDictionary*)detailsDict{
@@ -195,7 +200,7 @@
 //    chatView.view.frame = CGRectMake(0, 0, kiPhoneWidth, kiPhoneHeight-250);
     chatView.title = @"MESSAGE";
     chatView.dialog  =  self.dialog;
-    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[aboutView,infoView,chatView]
+    containerVC = [[YSLContainerViewController alloc]initWithControllers:@[aboutView,infoView]
                                                             topBarHeight:0
                                                     parentViewController:self];
     
@@ -230,7 +235,13 @@
 }
 
 - (IBAction)rejectButtonAction:(id)sender {
-    [self participantRejectRequest:_strParticipantId request_type:@"2"];
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            [self participantRejectRequest:_strParticipantId request_type:@"2"];
+        }
+    }];
 }
 
 - (IBAction)nameButtonAction:(id)sender {
@@ -240,7 +251,13 @@
 }
 
 - (IBAction)sendRequestButtonAction:(id)sender {
-    [self sendParticipantRequest:_strParticipantId];
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            [self sendParticipantRequest:_strParticipantId];
+        }
+    }];
 }
 
 - (IBAction)accepButtonAction:(id)sender {
@@ -249,5 +266,64 @@
     TimeSlotViewController *eventList = [storyboard instantiateViewControllerWithIdentifier:@"TimeSlotViewController"];
     eventList.participantID = _strParticipantId;
     [self.navigationController pushViewController:eventList animated:true];
+    
+  
+
+}
+- (IBAction)chatButtonAction:(id)sender {
+    [self openChat:self.participantDict];
+}
+
+#pragma Mark _ Chat Dialog
+
+#pragma Mark _ Chat Dialog
+
+-(void)openChat:(NSDictionary *)dict
+{
+    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[dict valueForKey:kQbId] value:@""]];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
+    
+    [Utility ShowMBHUDLoader];
+    
+    [QBRequest userWithID:[qbid integerValue] successBlock:^(QBResponse *response, QBUUser *user) {
+        
+        [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
+            if (!response.success && createdDialog == nil) {
+                
+                if (createdDialog) {
+                    [Utility hideMBHUDLoader];
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dict valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+            }
+            else {
+                [Utility hideMBHUDLoader];
+                
+                if (createdDialog) {
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dict valueForKey:@"name"]];
+                    
+                    [self opentChatView:createdDialog];
+                }
+                else{
+                    NSLog(@"%@",response.error);
+                }
+            }
+        }];
+        
+    } errorBlock:^(QBResponse *response) {
+        [Utility hideMBHUDLoader];
+        
+        NSLog(@"%@",[response.error.reasons valueForKey:@"message"]);
+        [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
+        
+    }];
+}
+-(void)opentChatView:(QBChatDialog*)dialog{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ChatViewController *chatView = [storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+    chatView.dialog = dialog;
+    [self.navigationController pushViewController:chatView animated:true];
 }
 @end

@@ -52,8 +52,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    pageNumber = 1;
     isHude = YES;
+    [self getMeetingReportList];
+}
+-(void)getMeetingReportList{
+    
+    pageNumber = 1;
     NSMutableDictionary *dictevent = [Utility unarchiveData:[kUserDefault valueForKey:kselectEventMeeting]];
     if ([dictevent isKindOfClass:[NSMutableDictionary class]] && [[dictevent valueForKey:kselectEventMeeting] isKindOfClass:[NSMutableArray class]]) {
         self.eventFilter = [dictevent valueForKey:kselectEventMeeting];
@@ -68,9 +72,7 @@
     }
     NSLog(@"event id %@", eventIDsString);
     [self apiCallMeetingReport];
-    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -145,11 +147,19 @@
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    isHude = false;
+
+    [self getMeetingReportList];
+
 }
 
 - (void)eventMethod:(NSString *)index {
     self.isFilterApply = index;
     isFromFilter = true;
+    isHude = false;
+
+    [self getMeetingReportList];
+
 }
 
 #pragma mark API call
@@ -169,10 +179,7 @@
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
     [dictionary setValue:(([eventIDsString  isEqual: @""]) ? appDelegate.userEventId : eventIDsString) forKey:kevent_id];
-    //Static Data
-    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
+   
     [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];
     
@@ -206,14 +213,19 @@
                         pageNumber = pageNumber+1 ;
                     }
                     [messageLabel setHidden:YES];
+                    noRecordView.hidden = true;
+                    noRecordLabel.text = @"";
+
                     [_tblReport reloadData];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (pageNumber ==1) {
                             [arrReport removeAllObjects];
                             [_tblReport reloadData];
-                            [messageLabel setHidden:NO];
+                            [messageLabel setHidden:YES];
+                            noRecordView.hidden = false;
                             messageLabel.text = @"No Records found";
+                            noRecordLabel.text = [dict valueForKey:@"Message"];
                         } else{
                             LoadMoreData = false;
                             [messageLabel setHidden:YES];
@@ -262,5 +274,12 @@
     } else{
         _tblReport.tableFooterView = nil;
     }
+}
+- (IBAction)recordExpressionButtonAction:(id)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+    UNKRecordExpressionViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionViewC"];
+    meetingView.fromView = @"meetingReport";
+    [self.navigationController pushViewController:meetingView animated:true];
+    
 }
 @end

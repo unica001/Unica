@@ -19,6 +19,13 @@
     __weak IBOutlet NSLayoutConstraint *bottomViewHeight;
     __weak IBOutlet UIButton *submitButton;
     __weak IBOutlet UIView *footerView;
+    
+    int pageNumber;
+    int totalRecord;
+    BOOL isLoading;
+    BOOL isHude;
+    BOOL isFromFilter;
+    BOOL LoadMoreData;
 }
 - (IBAction)backButtonAction:(id)sender;
 - (IBAction)myTableButtonAction:(id)sender;

@@ -131,8 +131,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = kDefaultBlueColor;
     cell.btnRecordExp.tag = indexPath.row;
+    cell.chatButton.tag = indexPath.row;
+    
+    [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell setParticipant:arrParticipant[indexPath.row] isFromRecordExpression:YES];
     [cell.btnRecordExp addTarget:self action:@selector(sendRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString *qbid = [Utility replaceNULL:arrParticipant[indexPath.row][kQbId] value:@""];
+    if ([[Utility replaceNULL:qbid value:@""] isEqualToString:@""]) {
+        cell.chatButton.hidden = true;
+    }
+    else{
+        cell.chatButton.hidden = false;
+    }
     
     return  cell;
 }
@@ -202,7 +213,6 @@
 
 #pragma Button Action
 
-
 - (IBAction)filterButtonAction:(id)sender {
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
@@ -220,14 +230,61 @@
 
 -(void)sendRequestButtonAction:(UIButton*)sender{
     NSDictionary *dict = [arrParticipant objectAtIndex:sender.tag];
-    [self sendParticipantRequest:dict[@"participantId"]];
+    [self sendParticipantRequest:dict[@"participantId"] index:sender.tag];
     
+}
+-(void)chatButtonAction:(UIButton*)sender{
+    [self openChat:arrParticipant[sender.tag]];
+}
+
+#pragma Mark _ Chat Dialog
+
+-(void)openChat:(NSMutableDictionary *)dic
+{
+    [Utility ShowMBHUDLoader];
+    
+    [QBRequest userWithID:[dic[kQbId] integerValue] successBlock:^(QBResponse *response, QBUUser *user) {
+        
+        [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
+            if (!response.success && createdDialog == nil) {
+                
+                if (createdDialog) {
+                    [Utility hideMBHUDLoader];
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+            }
+            else {
+                [Utility hideMBHUDLoader];
+                
+                if (createdDialog) {
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+                else{
+                }
+            }
+        }];
+        
+    } errorBlock:^(QBResponse *response) {
+        [Utility hideMBHUDLoader];
+        
+        NSLog(@"%@",[response.error.reasons valueForKey:@"message"]);
+        [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
+        
+    }];
+}
+-(void)opentChatView:(QBChatDialog*)dialog{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ChatViewController *chatView = [storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+    chatView.dialog = dialog;
+    [self.navigationController pushViewController:chatView animated:true];
 }
 
 #pragma mark - APIS
 
 
--(void)sendParticipantRequest:(NSString*)participantId{
+-(void)sendParticipantRequest:(NSString*)participantId index:(NSInteger)index{
     
     NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
@@ -245,10 +302,11 @@
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    
+                   
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                        [self participantsList:false searchText:searchBar.text];
-                        
+                        [arrParticipant removeObjectAtIndex:index];
+                        [tableView reloadData];
+//                        [self participantsList:false searchText:searchBar.text];
                     }];
                 }
             });

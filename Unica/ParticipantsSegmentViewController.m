@@ -197,6 +197,8 @@
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    
+    
 }
 
 -(void)agentServiceMethod:(NSString *)index{

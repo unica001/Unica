@@ -97,9 +97,21 @@
     
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
-    [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:YES];
-    [cell.btnRecordExp addTarget:self action:@selector(tapRecordExpression:) forControlEvents:UIControlEventTouchUpInside];
+    
     cell.btnRecordExp.tag = indexPath.row;
+    cell.chatButton.tag = indexPath.row;
+
+    [cell setParticipant:arrRecord[indexPath.row] isFromRecordExpression:YES];
+    [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.btnRecordExp addTarget:self action:@selector(tapRecordExpression:) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString *qbid = [Utility replaceNULL:arrRecord[indexPath.row][kQbId] value:@""];
+    if ([[Utility replaceNULL:qbid value:@""] isEqualToString:@""]) {
+        cell.chatButton.hidden = true;
+    }
+    else{
+        cell.chatButton.hidden = false;
+    }
     return  cell;
     
 }
@@ -108,6 +120,53 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
+-(void)chatButtonAction:(UIButton*)sender{
+    [self openChat:arrRecord[sender.tag]];
+}
+
+#pragma Mark _ Chat Dialog
+
+-(void)openChat:(NSMutableDictionary *)dic
+{
+    [Utility ShowMBHUDLoader];
+    
+    [QBRequest userWithID:[dic[kQbId]integerValue] successBlock:^(QBResponse *response, QBUUser *user) {
+        
+        [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
+            if (!response.success && createdDialog == nil) {
+                
+                if (createdDialog) {
+                    [Utility hideMBHUDLoader];
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+            }
+            else {
+                [Utility hideMBHUDLoader];
+                
+                if (createdDialog) {
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+                else{
+                }
+            }
+        }];
+        
+    } errorBlock:^(QBResponse *response) {
+        [Utility hideMBHUDLoader];
+        
+        NSLog(@"%@",[response.error.reasons valueForKey:@"message"]);
+        [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
+        
+    }];
+}
+-(void)opentChatView:(QBChatDialog*)dialog{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ChatViewController *chatView = [storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+    chatView.dialog = dialog;
+    [self.navigationController pushViewController:chatView animated:true];
+}
 #pragma mark - Scrol view delegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView

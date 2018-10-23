@@ -43,6 +43,9 @@
 - (IBAction)tapBack:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+-(void)chatButtonAction:(UIButton*)sender{
+    [self openChat:arrParticipant[sender.tag]];
+}
 
 
 #pragma mark - Searchbar delegate
@@ -114,7 +117,68 @@
     cell.backgroundColor = kDefaultBlueColor;
     [cell setParticipant:arrParticipant[indexPath.row] isFromRecordExpression:YES];
     
+    cell.chatButton.tag  = indexPath.row;
+    [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    NSString *qbid = [Utility replaceNULL:arrParticipant[indexPath.row][kQbId] value:@""];
+    if ([[Utility replaceNULL:qbid value:@""] isEqualToString:@""]) {
+        cell.chatButton.hidden = true;
+    }
+    else{
+        cell.chatButton.hidden = false;
+    }
     return  cell;
+}
+
+#pragma Mark _ Chat Dialog
+
+-(void)openChat:(NSMutableDictionary *)dic
+{
+    NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[dic valueForKey:kQbId] value:@""]];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<null>" withString:@""];
+    qbid = [qbid stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
+    
+    [Utility ShowMBHUDLoader];
+    
+    [QBRequest userWithID:[qbid integerValue] successBlock:^(QBResponse *response, QBUUser *user) {
+        
+        [ServicesManager.instance.chatService createPrivateChatDialogWithOpponent:user completion:^(QBResponse *response, QBChatDialog *createdDialog) {
+            if (!response.success && createdDialog == nil) {
+                
+                if (createdDialog) {
+                    [Utility hideMBHUDLoader];
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+            }
+            else {
+                [Utility hideMBHUDLoader];
+                
+                if (createdDialog) {
+                    createdDialog.name  = [NSString stringWithFormat:@"%@",[dic valueForKey:@"name"]];
+                    [self opentChatView:createdDialog];
+                }
+                else{
+                    NSLog(@"%@",response.error);
+                }
+            }
+        }];
+        
+    } errorBlock:^(QBResponse *response) {
+        [Utility hideMBHUDLoader];
+        
+        NSLog(@"%@",[response.error.reasons valueForKey:@"message"]);
+        [Utility showAlertViewControllerIn:self title:@"" message:[NSString stringWithFormat:@"%@",[response.error.reasons valueForKey:@"message"]] block:^(int index){}];
+        
+    }];
+}
+
+-(void)opentChatView:(QBChatDialog*)dialog{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ChatViewController *chatView = [storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+    chatView.dialog = dialog;
+    [self.navigationController pushViewController:chatView animated:true];
 }
 #pragma mark - Scrol view delegate
 

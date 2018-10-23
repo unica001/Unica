@@ -360,12 +360,59 @@
                                     <outlet property="delegate" destination="bB0-qX-Crs" id="xcO-JC-8hC"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L9n-bg-EfA">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3K4-m1-H6L">
+                                        <rect key="frame" x="16" y="150" width="343" height="120"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="7jt-9h-s49"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEk-DK-oNM">
+                                        <rect key="frame" x="97.5" y="306" width="180" height="45"/>
+                                        <color key="backgroundColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="CAT-LU-BaL"/>
+                                            <constraint firstAttribute="width" constant="180" id="iIw-pe-vbL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
+                                        <state key="normal" title="Record Expression">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="recordExpressionButtonAction:" destination="bB0-qX-Crs" eventType="touchUpInside" id="62b-r7-w2D"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="3K4-m1-H6L" secondAttribute="trailing" constant="16" id="43M-Oe-z2c"/>
+                                    <constraint firstItem="VEk-DK-oNM" firstAttribute="centerX" secondItem="L9n-bg-EfA" secondAttribute="centerX" id="BLa-MQ-aF3"/>
+                                    <constraint firstItem="3K4-m1-H6L" firstAttribute="top" secondItem="L9n-bg-EfA" secondAttribute="top" constant="150" id="UgZ-Cg-F7y"/>
+                                    <constraint firstItem="VEk-DK-oNM" firstAttribute="top" secondItem="3K4-m1-H6L" secondAttribute="bottom" constant="36" id="idc-U1-dB7"/>
+                                    <constraint firstItem="3K4-m1-H6L" firstAttribute="leading" secondItem="L9n-bg-EfA" secondAttribute="leading" constant="16" id="kNS-ca-CoX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Ro8-2X-Cip" firstAttribute="trailing" secondItem="oIu-Fw-mWS" secondAttribute="trailing" id="54T-9j-gS5"/>
+                            <constraint firstItem="Ro8-2X-Cip" firstAttribute="bottom" secondItem="L9n-bg-EfA" secondAttribute="bottom" id="54m-dO-NWj"/>
+                            <constraint firstItem="L9n-bg-EfA" firstAttribute="leading" secondItem="Ro8-2X-Cip" secondAttribute="leading" id="I4b-kS-j5c"/>
                             <constraint firstItem="Ro8-2X-Cip" firstAttribute="bottom" secondItem="oIu-Fw-mWS" secondAttribute="bottom" constant="8" id="QU4-0u-c37"/>
+                            <constraint firstItem="Ro8-2X-Cip" firstAttribute="trailing" secondItem="L9n-bg-EfA" secondAttribute="trailing" id="ohx-go-Ztp"/>
                             <constraint firstItem="oIu-Fw-mWS" firstAttribute="leading" secondItem="Ro8-2X-Cip" secondAttribute="leading" id="sAR-G8-2Cy"/>
+                            <constraint firstItem="L9n-bg-EfA" firstAttribute="top" secondItem="Ro8-2X-Cip" secondAttribute="top" id="t4A-Cc-r0X"/>
                             <constraint firstItem="oIu-Fw-mWS" firstAttribute="top" secondItem="Ro8-2X-Cip" secondAttribute="top" id="xnq-Fy-Kdo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ro8-2X-Cip"/>
@@ -386,6 +433,8 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="menuButton" destination="l0g-kz-OhU" id="1Kb-g7-vWJ"/>
+                        <outlet property="noRecordLabel" destination="3K4-m1-H6L" id="CVZ-bm-esD"/>
+                        <outlet property="noRecordView" destination="L9n-bg-EfA" id="l4o-pL-eYB"/>
                         <outlet property="tblReport" destination="oIu-Fw-mWS" id="ofe-JG-J1t"/>
                     </connections>
                 </viewController>
@@ -836,6 +885,9 @@
                     <navigationItem key="navigationItem" title="Record Metting Expression" id="1M2-Fr-bZi">
                         <barButtonItem key="leftBarButtonItem" image="menuicon" id="hIh-j9-ciz">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButtonAction:" destination="qaI-fR-PeB" id="4SN-MG-nLd"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Filter" id="0hN-v5-msL">
                             <connections>

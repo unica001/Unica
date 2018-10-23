@@ -21,8 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    selectedTableID = @"";
     selectedSlotArray = [[NSMutableArray alloc]init];
-    
+    pageNumber = 1;
+    isHude = true;
     [self getSlot];
 }
 
@@ -106,23 +108,65 @@
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:self.participantID forKey:@"participantId"];
     [dic setValue:self.eventID forKey:kevent_id];
+    [dic setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
+
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-time-slots.php"];
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:isHude showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    
-                    slotArray = [dictionary valueForKey:kAPIPayload][@"participant"];
-                    optionArray = [dictionary valueForKey:kAPIPayload][@"table_option"];
-                    [self updateFooterView];
-                    [tableView reloadData];
-                }
-                else {
-                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                        [self.navigationController popViewControllerAnimated:true];
-                    }];
-                }
+                
+                    if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                        
+                         optionArray = [dictionary valueForKey:kAPIPayload][@"table_option"];
+                        [self updateFooterView];
+                        
+                        int counter = (int)([[dictionary valueForKey:kAPIPayload][@"table_option"]count] % 10 );
+                        if(counter>0)
+                        {
+                            LoadMoreData = false;
+                        }
+                        
+                        if (pageNumber == 1 ) {
+                            if (slotArray) {
+                                [slotArray removeAllObjects];
+                            }
+                            slotArray = [dictionary valueForKey:kAPIPayload][@"participant"];
+                            pageNumber = 2;
+                        }
+                        else{
+                            NSMutableArray *arr = [dictionary valueForKey:kAPIPayload][@"participant"];;
+                            if(arr.count > 0){
+                                
+                            [slotArray addObjectsFromArray:arr];
+//                                NSArray * newArray =
+//                                [[NSOrderedSet orderedSetWithArray:slotArray] array];
+//                                slotArray =[[NSMutableArray alloc] initWithArray:newArray];
+                            }
+                            NSLog(@"%lu",(unsigned long)slotArray.count);
+                            pageNumber = pageNumber+1 ;
+                        }
+                        [tableView reloadData];
+                        
+                    }
+                    else{
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            
+                            if (pageNumber ==1) {
+                                [slotArray removeAllObjects];
+                                [tableView reloadData];
+                              //  messageLabel.text = @"No records found";
+                              //  messageLabel.hidden = NO;
+                                
+                            }
+                            else{
+                               // messageLabel.text = @"";
+                               // messageLabel.hidden = YES;
+                                LoadMoreData = false;
+                            }
+                        });
+                    }
             });
         }
     }];
@@ -141,7 +185,7 @@
     [dic setValue:participantId forKey:@"participantId"];
     [dic setValue:self.eventID forKey:kevent_id];
     [dic  setValue:selectedSlotArray[0][@"slotId"] forKey:@"slotId"];
-    [dic setValue:selectedTableID forKey:@"tableId"];
+    [dic setValue:selectedTableID forKey:@"table_id"];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-recevie-request.php"];
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
@@ -191,7 +235,41 @@
         }];
     }
    else {
-       [self participantAcceptRejectRequest:self.participantID request_type:@"1"];
+       
+       [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to initiate a request to schedule a meeting with this member?" block:^(int index){
+           
+           if (index == 0) {
+               [self participantAcceptRejectRequest:self.participantID request_type:@"1"];
+           }
+       }];
+     
    }
+}
+
+
+#pragma mark - Scrol view delegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate{
+    if(!isLoading)
+    {
+        CGPoint offset = scrollView.contentOffset;
+        CGRect bounds = scrollView.bounds;
+        CGSize size = scrollView.contentSize;
+        UIEdgeInsets inset = scrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        
+        float reload_distance = 0;
+        if(y > h + reload_distance) {
+            if ([slotArray count] % 10 == 0) {
+                isLoading = YES;
+                isHude=false;
+                [self getSlot];
+            }
+        }
+    } else{
+        tableView.tableFooterView = nil;
+    }
 }
 @end

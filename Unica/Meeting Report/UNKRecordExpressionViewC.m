@@ -56,17 +56,23 @@
     [self.viewContainer addSubview:containerVC.view];
     self.isFilterApply = @"1";
     
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {  SWRevealViewController *revealViewController = self.revealViewController;
-        if ( revealViewController )
-        {
-            [menuButton setTarget: self.revealViewController];
-            [menuButton setAction: @selector( revealToggle: )];
-            [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        }
+    if ([self.fromView isEqualToString:@"meetingReport"]) {
+        [menuButton setImage:[UIImage imageNamed:@"BackButton"]];
     }
-    self.revealViewController.delegate = self;
+    else{
+        
+        SWRevealViewController *revealViewController = self.revealViewController;
+        if ( revealViewController )
+        {  SWRevealViewController *revealViewController = self.revealViewController;
+            if ( revealViewController )
+            {
+                [menuButton setTarget: self.revealViewController];
+                [menuButton setAction: @selector( revealToggle: )];
+                [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+            }
+        }
+        self.revealViewController.delegate = self;
+    }
     
     UITextField *searchField = [_searchBar valueForKey:@"_searchField"];
     searchField.textColor = [UIColor whiteColor];
@@ -139,9 +145,7 @@
 */
 
 #pragma mark - IBAction Methods
-- (IBAction)tapBack:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
@@ -246,4 +250,7 @@
     [self searchInformation:_searchBar.text];
 }
 
+- (IBAction)backButtonAction:(id)sender {
+    [self.navigationController popViewControllerAnimated:true];
+}
 @end

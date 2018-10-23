@@ -76,6 +76,8 @@
                 [_acceptButton setTitle:buttons[i][@"name"] forState:UIControlStateNormal];
                 _acceptButton.enabled = false;
                 _acceptButton.alpha = 0.4;
+                _checkMarkButton.hidden = true;
+
             }
            else  if ([buttons[i][@"status"] integerValue] == 1 &&  i == 0) {
                 [_acceptButton setTitle:buttons[i][@"name"] forState:UIControlStateNormal];
