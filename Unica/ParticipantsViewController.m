@@ -1,7 +1,6 @@
 
 
 #import "ParticipantsViewController.h"
-#import "TimeSlotViewController.h"
 #import "ChatViewController.h"
 
 @interface ParticipantsViewController (){
@@ -192,8 +191,14 @@
         eventList.participantID = dict[@"participantId"];
         eventList.eventID = appDelegate.userEventId;
         eventList.dictDetail = dict;
+         eventList.reloadDelegate = self;
         [self.navigationController pushViewController:eventList animated:true];        
    
+}
+
+-(void)loadAcceptCellData:(NSDictionary*)dict{
+    [tableView reloadData];
+    
 }
 -(void)rejectequestButtonAction:(UIButton*)sender{
     

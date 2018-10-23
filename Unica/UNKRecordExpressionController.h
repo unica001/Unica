@@ -17,6 +17,7 @@
 @property (nonatomic, strong) GKActionSheetPicker *picker;
 @property (nonatomic, strong) NSDate *dateCellSelectedDate;
 @property (nonatomic, strong) NSString *participantId;
+
 - (IBAction)scanBusinessCartAction:(id)sender;
 - (IBAction)submitButtonAction:(id)sender;
 - (IBAction)cancelButtonAcrtion:(id)sender;

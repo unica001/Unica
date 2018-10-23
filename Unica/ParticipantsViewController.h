@@ -10,8 +10,9 @@
 #import "ParticipantsCell.h"
 #import "ParticipantDetailViewController.h"
 #import "ADPopupView.h"
+#import "TimeSlotViewController.h"
 
-@interface ParticipantsViewController : UIViewController<ADPopupViewDelegate,UITableViewDelegate,UITableViewDataSource>{
+@interface ParticipantsViewController : UIViewController<ADPopupViewDelegate,UITableViewDelegate,UITableViewDataSource,reloadParticipantTable>{
     __weak IBOutlet UITableView *tableView;
     
     int pageNumber;

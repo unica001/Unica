@@ -45,7 +45,6 @@
     category =[[[UtilityPlist getData:Kcategories] valueForKey:kAPIPayload] valueForKey:@"category_lists"];
     
     selectedParticipant = [[NSMutableArray alloc]init];
-    
     appdelegate  = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [self setupInitialLayout];
     [self GetTemplateList];
@@ -518,7 +517,7 @@
                     NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                     participantArray = [payloadDictionary valueForKey:@"userList"];
                     [self setPreviousData:payloadDictionary];
-//                    [collectionView reloadData];
+                    [collectionView reloadData];
                 }
             });
         }
@@ -668,7 +667,7 @@
         {
             // image File
             [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=%@; filename=imageName.jpeg\r\n", @"card_image"] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=%@; filename=imageName.jpeg\r\n", @"scan_image"] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:imageData];
             [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -729,8 +728,7 @@
                         
                         
                         dispatch_async( dispatch_get_main_queue(), ^{
-                            NSLog(@"finished");
-    
+                            [self.navigationController popViewControllerAnimated:true];
                         });
                         
                     }];

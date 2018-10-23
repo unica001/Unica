@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "TimeSlotCell.h"
 
+@protocol reloadParticipantTable <NSObject>
+-(void)loadAcceptCellData:(NSDictionary *)reloadDic;
+@end
+
 @interface TimeSlotViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     __weak IBOutlet UITableView *tableView;
     __weak IBOutlet UIImageView *myTableImgView;
@@ -32,6 +36,7 @@
 - (IBAction)submitButtonAction:(id)sender;
 - (IBAction)yourTableButtonAction:(id)sender;
 
+@property(nonatomic,retain) id<reloadParticipantTable>  reloadDelegate;
 @property(nonatomic,retain) NSDictionary *dictDetail;
 @property(nonatomic,retain) NSString *participantID;
 @property(nonatomic,retain) NSString *eventID;

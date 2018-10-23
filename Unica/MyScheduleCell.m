@@ -54,7 +54,20 @@
         }
         
     }
-
+    else if (buttons.count > 1){
+        for (int i = 0; i< buttons.count; i++) {
+            if ([buttons[0][kType] integerValue] == 1) {
+                _viewButtons.hidden = false;
+                _parkFreeLabel.hidden = true;
+                if (i == 0) {
+                    [self.button1 setTitle:buttons[i][kName] forState:UIControlStateNormal];
+                }
+                else {
+                    [self.button2 setTitle:buttons[i][kName] forState:UIControlStateNormal];
+                }
+            }
+        }
+    }
 }
 
 @end

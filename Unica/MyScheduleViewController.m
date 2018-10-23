@@ -25,7 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     UITextField *searchField = [searchBar valueForKey:@"_searchField"];
@@ -131,42 +130,44 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-         [self performSegueWithIdentifier:kavailabelParticipantSegueIdentifier sender:myScheduleArray[indexPath.row][kslotId]];
+    
 }
 
 // Button Action
 
 -(void)button1Action:(UIButton *)sender{
-    NSMutableDictionary *dict = myScheduleArray[sender.tag][kbuttons][0];
-    
-    NSMutableDictionary *mainDict = myScheduleArray[sender.tag];
+    [self buttonActionOnClick:sender.tag buttonIndex:0];
 
+}
+-(void)button2Action:(UIButton *)sender{
+    [self buttonActionOnClick:sender.tag buttonIndex:1];
+}
+
+-(void)buttonActionOnClick:(NSInteger)index buttonIndex:(NSInteger)buttonIndex{
     
+    NSMutableDictionary *dict = myScheduleArray[index][kbuttons][buttonIndex];
+    NSMutableDictionary *mainDict = myScheduleArray[index];
+
     if ([dict[kpark_free] integerValue] == 1 ) { // Park Free
         
-        [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure, you want to Park this time slot as FREE time?" block:^(int index){
+        [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure, you want to Park this time slot as FREE time?" block:^(int alterIndex){
             
-            if (index == 0) {
-                [self parkFreeRequest:mainDict index:sender.tag];
+            if (alterIndex == 0) {
+                [self parkFreeRequest:mainDict index:index];
             }
         }];
         
     }
     else if ([dict[@"search_people"] integerValue] == 1 ) { //search_people
-        
+        [self performSegueWithIdentifier:kavailabelParticipantSegueIdentifier sender:myScheduleArray[index][kslotId]];
     }
-    else if ([dict[@"search_people"] integerValue] > 0 ) { // record expression
-        
+    else if ([dict[@"participantId"] integerValue] > 0 ) { // record expression
+        NSDictionary *dict = myScheduleArray[index];
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+        UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
+        recordViewC.participantId = dict[@"participantId"];
+        [self.navigationController pushViewController:recordViewC animated:YES];
     }
-}
--(void)button2Action:(UIButton *)sender{
-    //Record expression
-    NSDictionary *dict = myScheduleArray[sender.tag];
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
-    UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
-    recordViewC.participantId = dict[@"participantId"];
-    [self.navigationController pushViewController:recordViewC animated:YES];
-    
 }
 - (IBAction)filterButtonAction:(id)sender {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
@@ -353,21 +354,26 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
-                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int alertIndex) {
                         
-                        NSMutableDictionary *dict = maindict[kbuttons][0];
-                        [dict setValue:@"0" forKey:kstatus];
-                        [dict setValue:@"0" forKey:kType];
-                        [dict setValue:@"0" forKey:kpark_free];
-                         [dict setValue:@"Slot is Parket as FREE TIME" forKey:kName];
-                        
-                        [maindict[kbuttons] removeObjectAtIndex:0];
-                        [maindict[kbuttons] addObject:dict];
+//                        NSMutableDictionary *dict = maindict[kbuttons][0];
+//                        [dict setValue:@"0" forKey:kstatus];
+//                        [dict setValue:@"0" forKey:kType];
+//                        [dict setValue:@"0" forKey:kpark_free];
+//                         [dict setValue:@"Slot is Parket as FREE TIME" forKey:kName];
+//
+//                        [maindict[kbuttons] removeObjectAtIndex:0];
+//                        [maindict[kbuttons] addObject:dict];
+//
+//                        [myScheduleArray removeObjectAtIndex:index];
+//                        [myScheduleArray insertObject:maindict atIndex:index];
+//                        [tableView reloadData];
                         
                         [myScheduleArray removeObjectAtIndex:index];
-                        [myScheduleArray insertObject:maindict atIndex:index];
-                        [tableView reloadData];
-
+                        [myScheduleArray insertObject:dictionary[kAPIPayload][@"schedules"][0] atIndex:index];
+                        
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     }];
                 }
             });
