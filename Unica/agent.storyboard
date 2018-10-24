@@ -1042,7 +1042,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan QR Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3C-fz-Cue">
-                                        <rect key="frame" x="94.5" y="100" width="102.5" height="30"/>
+                                        <rect key="frame" x="94" y="100" width="102.5" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="vX2-nN-u5J"/>
                                         </constraints>
@@ -2437,7 +2437,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uQ-ok-fnp">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uQ-ok-fnp" customClass="TPKeyboardAvoidingTableView">
                                 <rect key="frame" x="10" y="74" width="300" height="484"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="dzl-ZN-oax">
@@ -2695,7 +2695,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <subviews>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JkN-sY-jVm">
-                                        <rect key="frame" x="10" y="0.0" width="265" height="56"/>
+                                        <rect key="frame" x="10" y="0.0" width="295" height="56"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="52M-nG-8HH"/>
@@ -2708,11 +2708,11 @@
                                         </connections>
                                     </searchBar>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LuT-WB-3tv">
-                                        <rect key="frame" x="280" y="13" width="30" height="30"/>
+                                        <rect key="frame" x="310" y="13" width="0.0" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="AHB-hW-gOC"/>
-                                            <constraint firstAttribute="width" constant="30" id="rqQ-Lq-wpH"/>
+                                            <constraint firstAttribute="width" id="rqQ-Lq-wpH"/>
                                         </constraints>
                                         <state key="normal" image="Filter"/>
                                         <connections>

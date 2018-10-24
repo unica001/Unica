@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *profileImgButton;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *slotTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tableNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *slotLabel;
 @property (weak, nonatomic) IBOutlet UILabel *parkFreeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *button1;

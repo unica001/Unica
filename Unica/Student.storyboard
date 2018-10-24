@@ -807,7 +807,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="6D0-12-xRp" customClass="TPKeyboardAvoidingTableView">
-                                <rect key="frame" x="8" y="73" width="359" height="437"/>
+                                <rect key="frame" x="3" y="67" width="369" height="443"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="fWb-hs-yWl" id="HVm-8m-1Ub"/>
@@ -817,10 +817,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="7fB-Dj-dwA" firstAttribute="trailing" secondItem="6D0-12-xRp" secondAttribute="trailing" constant="8" id="KVj-Qb-1Yv"/>
+                            <constraint firstItem="7fB-Dj-dwA" firstAttribute="trailing" secondItem="6D0-12-xRp" secondAttribute="trailing" constant="3" id="KVj-Qb-1Yv"/>
                             <constraint firstItem="7fB-Dj-dwA" firstAttribute="bottom" secondItem="6D0-12-xRp" secondAttribute="bottom" constant="157" id="U6w-Ch-udA"/>
-                            <constraint firstItem="6D0-12-xRp" firstAttribute="leading" secondItem="7fB-Dj-dwA" secondAttribute="leading" constant="8" id="Vws-Gd-LPl"/>
-                            <constraint firstItem="6D0-12-xRp" firstAttribute="top" secondItem="7fB-Dj-dwA" secondAttribute="top" constant="9" id="wEz-sa-3cp"/>
+                            <constraint firstItem="6D0-12-xRp" firstAttribute="leading" secondItem="7fB-Dj-dwA" secondAttribute="leading" constant="3" id="Vws-Gd-LPl"/>
+                            <constraint firstItem="6D0-12-xRp" firstAttribute="top" secondItem="7fB-Dj-dwA" secondAttribute="top" constant="3" id="wEz-sa-3cp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7fB-Dj-dwA"/>
                     </view>
@@ -915,7 +915,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="FGa-mD-hOC" customClass="TPKeyboardAvoidingTableView">
-                                <rect key="frame" x="8" y="73" width="359" height="466"/>
+                                <rect key="frame" x="3" y="67" width="369" height="472"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="rxb-6h-fvp" id="9Kp-91-920"/>
@@ -925,10 +925,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="FGa-mD-hOC" firstAttribute="leading" secondItem="lXc-h3-D03" secondAttribute="leading" constant="8" id="7Ta-Eg-bSm"/>
-                            <constraint firstItem="lXc-h3-D03" firstAttribute="trailing" secondItem="FGa-mD-hOC" secondAttribute="trailing" constant="8" id="FR1-0j-Brc"/>
+                            <constraint firstItem="FGa-mD-hOC" firstAttribute="leading" secondItem="lXc-h3-D03" secondAttribute="leading" constant="3" id="7Ta-Eg-bSm"/>
+                            <constraint firstItem="lXc-h3-D03" firstAttribute="trailing" secondItem="FGa-mD-hOC" secondAttribute="trailing" constant="3" id="FR1-0j-Brc"/>
                             <constraint firstItem="lXc-h3-D03" firstAttribute="bottom" secondItem="FGa-mD-hOC" secondAttribute="bottom" constant="128" id="KaI-3H-MxX"/>
-                            <constraint firstItem="FGa-mD-hOC" firstAttribute="top" secondItem="lXc-h3-D03" secondAttribute="top" constant="9" id="TyM-Sc-pJj"/>
+                            <constraint firstItem="FGa-mD-hOC" firstAttribute="top" secondItem="lXc-h3-D03" secondAttribute="top" constant="3" id="TyM-Sc-pJj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lXc-h3-D03"/>
                     </view>

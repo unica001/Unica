@@ -27,6 +27,7 @@ typedef enum
     NSInteger selectedHeaderIndex;
     BOOL isEventSelected;
     AppDelegate *appDelegate;
+    NSInteger selectedCellIndex;
     
 }
 @end
@@ -36,9 +37,9 @@ typedef enum
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    selectedHeaderIndex = 0;
     isEventSelected = true;
     selectedHeaderIndex = 103;
+    selectedCellIndex = 200;
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"event_menu",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
@@ -67,7 +68,9 @@ typedef enum
 
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
+    [self getEventID];
     [self setupInitialLayout];
+  
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -184,22 +187,20 @@ typedef enum
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *cellIdentifier  =@"menuCell";
     
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MenuCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
-    
-    
     cell.backgroundColor = kDefaultBlueColor;
     
-    //    cell.menuImage.image = [UIImage imageNamed:[menuImagesArray objectAtIndex:indexPath.section]];
     cell.menuLabel.text= appDelegate.menuArray[indexPath.row][@"name"];
+    
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
     myBackView.backgroundColor = [UIColor colorWithRed:81.0f/255.0f green:151.0f/255.0f blue:242.0f/255.0f alpha:1];
     cell.selectedBackgroundView = myBackView;
+    
+ 
     return  cell;
 }
 
@@ -258,6 +259,7 @@ typedef enum
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    selectedCellIndex =  indexPath.row + 200;
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     
@@ -334,6 +336,38 @@ typedef enum
     }
 }
 
+
+#pragma APIs
+
+-(void)getEventID{
+    
+    NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSString *userId = [loginDictionary valueForKey:@"id"];
+    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:userId forKey:@"user_id"];
+    [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-mandatory-status.php"];
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:false showSystemError:false completion:^(NSDictionary *dictionary, NSError *error) {
+        if (!error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    app.userEventId =  dictionary[kAPIPayload][kevent_id];
+                    if ( app.menuArray.count> 0) {
+                        [app.menuArray removeAllObjects];
+                    }
+                    app.menuArray = dictionary[kAPIPayload][@"menus"];
+                    app.webLoginUrl = dictionary[@"login_url"];
+                    [menuTable reloadData];
+                }
+            });
+        }
+    }];
+}
 @end
 
 

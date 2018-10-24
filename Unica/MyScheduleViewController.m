@@ -2,7 +2,6 @@
 
 #import "MyScheduleViewController.h"
 #import "UNKSearchAvailableParticipantCtrl.h"
-#import "UNKRecordExpressionController.h"
 
 @interface MyScheduleViewController() <delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter>{
     
@@ -17,6 +16,8 @@
 
     NSString *countryIDsString;
     NSString *typeIDsString;
+    NSInteger selectedIndex;
+    BOOL isFromSearch;
 }
 
 @end
@@ -45,12 +46,16 @@
     _countryFilter = [[NSMutableArray alloc] init];
     _typeFilter = [[NSMutableArray alloc] init];
     self.isFilterApply = @"1";
-    
-    
+    isFromSearch =  false;
+    [self getRecords];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+}
+
+
+-(void)getRecords{
     pageNumber  = 1;
     isHude = YES;
     
@@ -79,10 +84,11 @@
         typeIDsString = @"";
     }
     
-
+    
     NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
-    [self getScheduleList];
+    [self getScheduleList:isFromSearch];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -145,6 +151,7 @@
 
 -(void)buttonActionOnClick:(NSInteger)index buttonIndex:(NSInteger)buttonIndex{
     
+    selectedIndex = index;
     NSMutableDictionary *dict = myScheduleArray[index][kbuttons][buttonIndex];
     NSMutableDictionary *mainDict = myScheduleArray[index];
 
@@ -166,6 +173,7 @@
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
         UNKRecordExpressionController *recordViewC = [sb instantiateViewControllerWithIdentifier:@"UNKRecordExpressionController"];
         recordViewC.participantId = dict[@"participantId"];
+        recordViewC.reloadDelegate = self;
         [self.navigationController pushViewController:recordViewC animated:YES];
     }
 }
@@ -182,16 +190,29 @@
 - (IBAction)menuButtonAction:(id)sender {
 }
 
+-(void)loadRecordExpressionCellData:(NSDictionary*)dict{
+    NSLog(@"%@",dict);
+    
+    [myScheduleArray removeObjectAtIndex:selectedIndex];
+    [myScheduleArray insertObject:dict atIndex:selectedIndex];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedIndex inSection:0];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 #pragma mark - Filter delegate
 
 -(void)checkApplyButtonAction:(NSInteger)index{
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
     isFromFilter = true;
+    [self getRecords];
 }
 
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    [self getRecords];
+
 }
 
 -(void)agentServiceMethod:(NSString *)index{
@@ -212,7 +233,8 @@
     isHude = true;
     pageNumber = 1;
     [tableView setContentOffset:CGPointZero animated:YES];
-    [self getScheduleList];
+    isFromSearch = true;
+    [self getScheduleList:isFromSearch];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -238,7 +260,14 @@
     isHude = true;
     pageNumber = 1;
     [tableView setContentOffset:CGPointZero animated:YES];
-    [self getScheduleList];
+    
+    if ([searchBar.text isEqualToString:@""]) {
+        isFromSearch = false;
+    }
+    else{
+    isFromSearch = true;
+    }
+    [self getScheduleList:isFromSearch];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
@@ -254,12 +283,12 @@
         
         float reload_distance = 0;
         if(y > h + reload_distance) {
-            if ([myScheduleArray count] % 10 == 0) {
+//            if ([myScheduleArray count] % 10 == 0) {
                 isLoading = YES;
                 isHude=false;
-                [self getScheduleList];
+                [self getScheduleList:isFromSearch];
             }
-        }
+        //}
     } else{
         tableView.tableFooterView = nil;
     }
@@ -267,7 +296,7 @@
 
 #pragma mark - APIS
 
--(void)getScheduleList{
+-(void)getScheduleList:(BOOL)isFromSearch{
     
     NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
@@ -278,12 +307,18 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:appDelegate.userEventId forKey:kevent_id];
-    [dic setValue:countryIDsString forKey:@"countryId"];
-    [dic setValue:typeIDsString forKey:@"filterType"];
     [dic setValue:searchBar.text forKey:@"searchText"];
     [dic setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-schedule-lists.php"];
+    
+    NSString *url = @"";
+    if (isFromSearch == false) {
+        url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-schedule-lists.php"];
+    }
+    else {
+        url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-event-search-participants.php"];
+
+    }
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dic  timeoutInterval:kAPIResponseTimeout showHUD:isHude showSystemError:isHude completion:^(NSDictionary *dictionary, NSError *error) {
         
         if (!error) {
@@ -355,20 +390,7 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int alertIndex) {
-                        
-//                        NSMutableDictionary *dict = maindict[kbuttons][0];
-//                        [dict setValue:@"0" forKey:kstatus];
-//                        [dict setValue:@"0" forKey:kType];
-//                        [dict setValue:@"0" forKey:kpark_free];
-//                         [dict setValue:@"Slot is Parket as FREE TIME" forKey:kName];
-//
-//                        [maindict[kbuttons] removeObjectAtIndex:0];
-//                        [maindict[kbuttons] addObject:dict];
-//
-//                        [myScheduleArray removeObjectAtIndex:index];
-//                        [myScheduleArray insertObject:maindict atIndex:index];
-//                        [tableView reloadData];
-                        
+                      
                         [myScheduleArray removeObjectAtIndex:index];
                         [myScheduleArray insertObject:dictionary[kAPIPayload][@"schedules"][0] atIndex:index];
                         

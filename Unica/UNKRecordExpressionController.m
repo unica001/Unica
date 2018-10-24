@@ -58,9 +58,21 @@
 }
 
 -(void)setPreviousData:(NSDictionary *)dict {
-    orgNameLabel.text = [dict valueForKey:@"organizationName"];
-    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[dict valueForKey:@"action"] value:@""]];
     
+    NSArray *usrList = dict[@"userList"];
+    if ([usrList count] > 0) {
+        
+        NSPredicate *predicate =[NSPredicate predicateWithFormat:@"p_user_id == %@",[Utility replaceNULL:[dict valueForKey:@"p_user_id"] value:@""]];
+        NSArray *filtredArray = [usrList filteredArrayUsingPredicate:predicate];
+        if(filtredArray.count>0)
+        {
+            [selectedParticipant addObject:filtredArray[0]];
+        }
+    }
+    orgNameLabel.text = [dict valueForKey:@"organizationName"];
+    remarkTextView = [Utility replaceNULL:[dict valueForKey:@"remark"] value:@""];
+    
+    NSPredicate *predicate =[NSPredicate predicateWithFormat:@"id == %@",[Utility replaceNULL:[dict valueForKey:@"action"] value:@""]];
     NSArray *filtredArray = [actions filteredArrayUsingPredicate:predicate];
     if(filtredArray.count>0)
     {
@@ -94,6 +106,7 @@
         dateString = [dateFormatter stringFromDate:checkIn];
     }
     [collectionView reloadData];
+    [tableView reloadData];
 }
 
 - (IBAction)tapBack:(id)sender {
@@ -114,49 +127,16 @@
 {
     if(indexPath.row == 2)
     {
-            static NSString *cellIdentifier3  =@"signIn8";
+        static NSString *cellIdentifier3  =@"signIn8";
         
-            remarkCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
-            NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"remarkCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.remarktextView.text = [detail valueForKey:@"remarks"];
-          cell.remarktextView.delegate = self;
-            return cell;
-        }
-   
-//        static NSString *cellIdentifier3  =@"signIn";
-//
-//        studentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
-//        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"studentCell" owner:self options:nil];
-//        cell = [nib objectAtIndex:0];
-//
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//        cell.contentHeaderLabel.text = [headerTextArray objectAtIndex:indexPath.row];
-//        cell.outerView.layer.cornerRadius = 3;
-//        cell.outerView.layer.borderWidth = 1;
-//        cell.outerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//        cell.outerView.clipsToBounds = YES;
-//
-//        switch (indexPath.row) {
-//            case 0:
-//                cell.detailLabel.text = actionString;
-//                break;
-//            case 1:
-//                cell.detailLabel.text = categoryString;
-//                break;
-//            case 3:
-//                cell.detailLabel.text = emailTemplateString;
-//                break;
-//            case 4:
-//                cell.detailLabel.text = dateString;
-//                break;
-//
-//            default:
-//                break;
-//        }
-    
+        remarkCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier3];
+        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"remarkCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.remarktextView.text = remarkTextView;
+        cell.remarktextView.delegate = self;
+        return cell;
+    }
     
     static NSString *cellIdentifier3  =@"signIn";
     
@@ -168,7 +148,7 @@
     cell.contentLabel.text = [headerTextArray objectAtIndex:indexPath.row];
     cell.contenttextField.userInteractionEnabled = false;
     cell.contenttextField.placeholder = @"Select";
-
+    
     if (indexPath.row == 0) {
         cell.dropImageView.constant = 25;
         cell.contenttextField.text = actionString;
@@ -177,7 +157,7 @@
         cell.dropImageView.constant = 25;
         cell.contenttextField.text =categoryString;
     }
-   
+    
     else if (indexPath.row == 3) {
         cell.dropImageView.constant = 25;
         cell.contenttextField.text = emailTemplateString;
@@ -194,7 +174,7 @@
         lbl.backgroundColor = [UIColor lightGrayColor];
         [cell.contentView addSubview:lbl];
     }
-        return cell;
+    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -211,7 +191,7 @@
     {
         return 140;
     }
-        return 50;
+    return 50;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -242,7 +222,7 @@
 {
     RecordExpressionCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"RecordExpressionCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-
+    
     
     [cell.participantImg sd_setImageWithURL:[NSURL URLWithString:[participantArray[indexPath.row] valueForKey:@"p_user_image_url"]] placeholderImage:[UIImage imageNamed:@"userimageplaceholder"] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
@@ -301,7 +281,7 @@
             actionString = [NSString stringWithFormat:@"%@", selected];
             actionID = filtredArray[0][@"id"];
             [tableView reloadData];
-
+            
         }
     } cancelCallback:nil];
     
@@ -321,7 +301,7 @@
             categoryString = [NSString stringWithFormat:@"%@", selected];
             categoryID = filtredArray[0][@"id"];
             [tableView reloadData];
-
+            
         }
     } cancelCallback:nil];
     
@@ -349,14 +329,14 @@
 }
 
 -(void)addDatePicker{
-    self.picker = [GKActionSheetPicker datePickerWithMode:UIDatePickerModeDate from:[NSDate date] to:[NSDate dateWithTimeIntervalSinceNow:+60*60*24*365*48] interval:5 selectCallback:^(id selected) {
+    self.picker = [GKActionSheetPicker datePickerWithMode:UIDatePickerModeDate from:[NSDate dateWithTimeIntervalSinceNow:+60*60*24] to:[NSDate dateWithTimeIntervalSinceNow:+60*60*24*365*48] interval:5 selectCallback:^(id selected) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"dd/MM/yyyy"];
         NSString *selectedDate = [dateFormatter stringFromDate:selected];
         
         dateString = [NSString stringWithFormat:@"%@", selectedDate];
         [tableView reloadData];
-
+        
     } cancelCallback:^{
     }];
     
@@ -446,7 +426,12 @@
 - (IBAction)submitButtonAction:(id)sender {
     if([self Validation])
     {
-        [self addCard];
+        [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure you want to complete meeting with this member?" block:^(int index){
+            
+            if (index == 0) {
+                [self addCard];
+            }
+        }];
     }
 }
 
@@ -503,7 +488,7 @@
     userId =  [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[NSString stringWithFormat:@"%@",[loginDictionary valueForKey:@"user_type"]] forKey:@"user_type"];
-     [dic setValue:appdelegate.userEventId forKey:kevent_id];
+    [dic setValue:appdelegate.userEventId forKey:kevent_id];
     [dic setValue:_participantId forKey:@"participantId"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-users-recorded-expression.php"];
     
@@ -532,7 +517,6 @@
             }
         }
     }];
-    
 }
 
 #define kStartTag   @"--%@\r\n"
@@ -545,7 +529,7 @@
     NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
     NSString *userId = [loginDictionary valueForKey:@"id"];
-    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    // userId =  [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
     
     
     if(![Utility connectedToInternet])
@@ -565,7 +549,7 @@
         NSLog(@"image upload");
         
         NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-send-expression.php"];
-       
+        
         NSMutableData *body = [NSMutableData data];
         request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:url]];
@@ -573,7 +557,7 @@
         
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",kBoundary];
         [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-    
+        
         // UserID
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kContent,@"user_id"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -604,7 +588,7 @@
         [body appendData:[[NSString stringWithFormat:kContent,@"p_user_type"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[selectedParticipant[0] valueForKey:@"p_user_type"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
-       
+        
         // Event ID
         
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -613,20 +597,20 @@
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
         
-       // Action
+        // Action
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kContent,@"action"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[actionID dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
-       
+        
         // Remark
         [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kContent,@"remark"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[remarkTextView dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
-       // Email
+        // Email
         
         if (templeteID.length > 0) {
             [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -661,7 +645,7 @@
         [body appendData:[categoryID dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
         
-    
+        
         NSData *imageData = [NSData dataWithData:UIImagePNGRepresentation(businessCartImage.image)];
         if (imageData)
         {
@@ -715,7 +699,7 @@
                             return;
                         }
                     });
-    
+                    
                 }
                 else{
                     NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data
@@ -734,7 +718,7 @@
                     }];
                     
                 }
-     
+                
             }
             else {
                 NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data
@@ -747,7 +731,13 @@
                     
                     dispatch_async( dispatch_get_main_queue(), ^{
                         NSLog(@"finished");
-   
+                        
+                        if ([self.reloadDelegate respondsToSelector:@selector(loadRecordExpressionCellData:)]) {
+                            [self.reloadDelegate loadRecordExpressionCellData:json[kAPIPayload][@"schedules"][0]];
+                        }
+                        [self.navigationController popViewControllerAnimated:true];
+                        
+                        
                     });
                     
                 }];
@@ -768,7 +758,7 @@
         }];
         return false;
     }
-   else if(actionString.length == 0)
+    else if(actionString.length == 0)
     {
         [Utility showAlertViewControllerIn:self title:kUNKError message:@"Please select action" block:^(int index) {
         }];

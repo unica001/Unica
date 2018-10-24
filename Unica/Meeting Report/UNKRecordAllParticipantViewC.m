@@ -264,12 +264,28 @@
     else{
         cell.chatButton.hidden = false;
     }
+    
+    NSString *colorcode = [Utility replaceNULL:arrRecord[indexPath.row][@"color_code"] value:@""] ;
+    
+    if (![colorcode isEqualToString:@""]) {
+        cell.imgView.layer.borderWidth = 3;
+        cell.imgView.layer.borderColor = [Utility colorWithHexString:colorcode].CGColor;
+    }
+    
     return  cell;
     
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self getParticipantDetails:arrRecord[indexPath.row]];
+}
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)getParticipantDetails:(NSMutableDictionary *)dict{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
+    detailView.strParticipantId = dict[@"participantId"];
+    detailView.participantDict = dict;
+    [self.navigationController pushViewController:detailView animated:true];
 }
 
 #pragma mark - Scrol view delegate
@@ -288,7 +304,7 @@
         float reload_distance = 0;
         if(y > h + reload_distance) {
             if ([arrRecord count] % 10 == 0) {
-                isLoading = YES;
+                isLoading = false;
                 [self recordAllParticipantList:true type:@"" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
             }
         }
@@ -371,11 +387,8 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:([eventId isEqual: @""] ? appDelegate.userEventId : eventId) forKey:kevent_id];
-    //Static Data
-//    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
-//    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
-    [dictionary setValue:[NSString stringWithFormat:@"%d",_pageNumber] forKey:kPage_number];
+   
+    [dictionary setValue:[NSString stringWithFormat:@"%ld",(long)_pageNumber] forKey:kPageNumber];
     [dictionary setValue:searchText forKey:@"searchText"];
     [dictionary setValue:countryId forKey:@"countryId"];
     [dictionary setValue:typeId forKey:@"filterType"];
@@ -411,15 +424,13 @@
                     else{
                         NSMutableArray *arr = [payloadDictionary valueForKey:@"participant"];
                         if(arr.count > 0){
-                            
                             [arrRecord addObjectsFromArray:arr];
-                            NSArray * newArray =
-                            [[NSOrderedSet orderedSetWithArray:arrRecord] array];
-                            arrRecord =[[NSMutableArray alloc] initWithArray:newArray];
+//                            NSArray * newArray =
+//                            [[NSOrderedSet orderedSetWithArray:arrRecord] array];
+//                            arrRecord =[[NSMutableArray alloc] initWithArray:newArray];
                         }
                         NSLog(@"%lu",(unsigned long)arrRecord.count);
                         _pageNumber = _pageNumber+1 ;
-                        
                         
                     }
                     [messageLabel setHidden:YES];
@@ -550,11 +561,11 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-//                    [self recordAllParticipantList:YES type:@"I" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
-//                    [overlayView removeFromSuperview];
-                }else{
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        
+                        [Utility showAlertViewControllerIn:self title:@"" message:dictionary[kAPIMessage] block:^(int index) {
+                            
+                        }];
                     });
                 }
                 

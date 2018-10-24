@@ -82,11 +82,11 @@
                                     <constraint firstItem="FaO-Jl-jhh" firstAttribute="width" secondItem="zoF-qd-KIe" secondAttribute="width" id="qPn-Xy-0ur"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ghg" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTn-Gs-Kh1">
-                                <rect key="frame" x="80" y="39.5" width="210" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTn-Gs-Kh1">
+                                <rect key="frame" x="80" y="36.5" width="210" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="MoK-WC-EGV"/>
+                                    <constraint firstAttribute="height" constant="16" id="MoK-WC-EGV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="14"/>
                                 <nil key="highlightedColor"/>
@@ -116,10 +116,19 @@
                                     <constraint firstAttribute="width" constant="60" id="gtQ-G6-poy"/>
                                 </constraints>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ghg" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Sk-DL-vg2">
-                                <rect key="frame" x="80" y="15" width="210" height="19.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Sk-DL-vg2">
+                                <rect key="frame" x="80" y="12" width="210" height="19.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="16"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oi1-Mn-fQm">
+                                <rect key="frame" x="80" y="55" width="210" height="32"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="8aD-jR-e4k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -131,14 +140,17 @@
                             <constraint firstItem="EIE-Cx-trv" firstAttribute="leading" secondItem="9GE-sa-URj" secondAttribute="leading" constant="10" id="AyY-1Q-gwK"/>
                             <constraint firstItem="sJw-Ay-Avc" firstAttribute="leading" secondItem="9GE-sa-URj" secondAttribute="leading" constant="10" id="E7I-w3-zNy"/>
                             <constraint firstItem="VUZ-sN-SAU" firstAttribute="leading" secondItem="9GE-sa-URj" secondAttribute="leading" constant="10" id="FbL-pn-Pth"/>
+                            <constraint firstAttribute="trailing" secondItem="oi1-Mn-fQm" secondAttribute="trailing" constant="10" id="JMC-WC-QE4"/>
                             <constraint firstItem="lTn-Gs-Kh1" firstAttribute="leading" secondItem="sJw-Ay-Avc" secondAttribute="trailing" constant="10" id="Woo-RY-wc2"/>
                             <constraint firstItem="1Sk-DL-vg2" firstAttribute="leading" secondItem="sJw-Ay-Avc" secondAttribute="trailing" constant="10" id="XgA-46-wSa"/>
                             <constraint firstItem="VUZ-sN-SAU" firstAttribute="top" secondItem="9GE-sa-URj" secondAttribute="top" constant="10" id="b62-jl-p6L"/>
                             <constraint firstAttribute="trailing" secondItem="1Sk-DL-vg2" secondAttribute="trailing" constant="10" id="cOP-SC-xKv"/>
                             <constraint firstAttribute="trailing" secondItem="bbW-ye-Hx5" secondAttribute="trailing" constant="5" id="gSX-dX-OA1"/>
                             <constraint firstAttribute="trailing" secondItem="lTn-Gs-Kh1" secondAttribute="trailing" constant="10" id="iaI-Jd-ymW"/>
+                            <constraint firstItem="oi1-Mn-fQm" firstAttribute="top" secondItem="lTn-Gs-Kh1" secondAttribute="bottom" constant="2.5" id="kMC-gf-et9"/>
                             <constraint firstItem="bbW-ye-Hx5" firstAttribute="top" secondItem="sJw-Ay-Avc" secondAttribute="bottom" constant="15" id="n1r-qM-uJr"/>
-                            <constraint firstItem="1Sk-DL-vg2" firstAttribute="top" secondItem="9GE-sa-URj" secondAttribute="top" constant="15" id="rMN-A2-Gwk"/>
+                            <constraint firstItem="oi1-Mn-fQm" firstAttribute="leading" secondItem="sJw-Ay-Avc" secondAttribute="trailing" constant="10" id="nhE-xJ-fZY"/>
+                            <constraint firstItem="1Sk-DL-vg2" firstAttribute="top" secondItem="9GE-sa-URj" secondAttribute="top" constant="12" id="rMN-A2-Gwk"/>
                             <constraint firstItem="bbW-ye-Hx5" firstAttribute="leading" secondItem="9GE-sa-URj" secondAttribute="leading" constant="5" id="t5p-b8-wkH"/>
                             <constraint firstAttribute="trailing" secondItem="EIE-Cx-trv" secondAttribute="trailing" constant="5" id="vJd-oB-FxD"/>
                         </constraints>
@@ -166,6 +178,7 @@
                 <outlet property="profileImgButton" destination="VUZ-sN-SAU" id="OU0-2t-NWv"/>
                 <outlet property="slotLabel" destination="1Sk-DL-vg2" id="8xW-6E-P1z"/>
                 <outlet property="slotTimeLabel" destination="lTn-Gs-Kh1" id="Q7m-l4-eY3"/>
+                <outlet property="tableNumberLabel" destination="oi1-Mn-fQm" id="6xs-aX-n9N"/>
                 <outlet property="viewButtons" destination="bbW-ye-Hx5" id="g5q-XO-PXs"/>
             </connections>
             <point key="canvasLocation" x="34" y="115.5"/>

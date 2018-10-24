@@ -24,7 +24,7 @@
 
 - (void)setInfo:(NSDictionary *)dict {
     _lblHeader.text = dict[@"reportName"];
-    _lblNumber.text = dict[@"reportCount"];
+    _lblNumber.text = [Utility replaceNULL:dict[@"reportCount"] value:@""];
     NSString *strUrl = dict[@"profileImage"];
     [_imgView sd_setImageWithURL:[NSURL URLWithString:strUrl] placeholderImage:nil options:SDWebImageRefreshCached];
 }

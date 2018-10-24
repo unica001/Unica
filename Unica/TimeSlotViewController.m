@@ -230,7 +230,7 @@
 }
 
 - (IBAction)submitButtonAction:(id)sender {
-    if ([selectedTableID isEqualToString:@""]) {
+    if ([selectedTableID isEqualToString:@""] && optionArray.count > 0) {
         [Utility showAlertViewControllerIn:self title:@"" message:@"Please select table"   block:^(int index) {
         }];
     }

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MyScheduleCell.h"
 #import "ParticipantsSegmentViewController.h"
-@interface MyScheduleViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SWRevealViewControllerDelegate>{
+#import "UNKRecordExpressionController.h"
+
+@interface MyScheduleViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SWRevealViewControllerDelegate,reloadRecordExpressionTable>{
     
     __weak IBOutlet UISearchBar *searchBar;
     __weak IBOutlet UITableView *tableView;

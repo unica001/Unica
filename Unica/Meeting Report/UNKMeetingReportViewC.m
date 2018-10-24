@@ -99,6 +99,7 @@
     filterViewC.incomingViewType = kMeetingFilter;
     filterViewC.removeAllFilter = self;
     filterViewC.eventFilterDelegate = self;
+
     [self.navigationController pushViewController:filterViewC animated:YES];
 }
 
@@ -135,11 +136,11 @@
     return  cell;
 }
 
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
     UNKMeetingParticipantViewC *viewC = [sb instantiateViewControllerWithIdentifier:@"UNKMeetingParticipantViewC"];
     viewC.meetingReportDict = arrReport[indexPath.row];
+    viewC.eventID = (([eventIDsString  isEqual: @""]) ? appDelegate.userEventId : eventIDsString);
     [self.navigationController pushViewController:viewC animated:YES];
 }
 
@@ -169,10 +170,12 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
     
     if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
-        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:@"user_id"];
+       NSString *userId = [[dictLogin valueForKey:Kid] stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:@"user_id"];
     }
     else{
-        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:@"user_id"];
+        NSString *userId = [[dictLogin valueForKey:Kuserid] stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:@"user_id"];
     }
 
     if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
@@ -180,7 +183,6 @@
     }
     [dictionary setValue:(([eventIDsString  isEqual: @""]) ? appDelegate.userEventId : eventIDsString) forKey:kevent_id];
    
-    [dictionary setValue:[NSString stringWithFormat:@"%d", pageNumber] forKey:kPage_number];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-meeting-report-list.php"];
     
     
@@ -192,26 +194,7 @@
                 NSMutableDictionary *payloadDictionary = [dict valueForKey:kAPIPayload];
                 isLoading = NO;
                 if ([[dict valueForKey:kAPICode] integerValue]== 200) {
-                    int counter = (int)([[payloadDictionary valueForKey:@"reportList"] count] % 10 );
-                    if(counter>0) {
-                        LoadMoreData = false;
-                    }
-                    if (pageNumber == 1 ) {
-                        if (arrReport.count > 0) {
-                            [arrReport removeAllObjects];
-                        }
-                        arrReport = [payloadDictionary valueForKey:@"reportList"];
-                        pageNumber = 2;
-                    } else {
-                        NSMutableArray *arr = [payloadDictionary valueForKey:@"reportList"];
-                        if(arr.count > 0){
-                            [arrReport addObjectsFromArray:arr];
-                            NSArray * newArray =
-                            [[NSOrderedSet orderedSetWithArray:arrReport] array];
-                            arrReport =[[NSMutableArray alloc] initWithArray:newArray];
-                        }
-                        pageNumber = pageNumber+1 ;
-                    }
+                    arrReport = [payloadDictionary valueForKey:@"reportList"];
                     [messageLabel setHidden:YES];
                     noRecordView.hidden = true;
                     noRecordLabel.text = @"";

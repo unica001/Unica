@@ -26,7 +26,7 @@
 }
 
 - (void)setParticipant:(NSDictionary *)dict isFromRecordExpression:(BOOL)isFromRecordExpression {
-    [_nameButton setTitle:[dict valueForKey:kName] forState:UIControlStateNormal];
+    [_nameButton setTitle:[Utility replaceNULL:[dict valueForKey:kName] value:@""] forState:UIControlStateNormal];
     _universityName.text = [Utility replaceNULL:[dict valueForKey:@"organisationName"] value:@""];
     _typeLabel.text = [Utility replaceNULL:[dict valueForKey:kType] value:@""];
     _countryLabel.text = [Utility replaceNULL:[dict valueForKey:kCountry] value:@""];
@@ -36,14 +36,14 @@
     
     if (isFromRecordExpression) {
         [_btnRecordExp setTitle:@"Record Expression" forState:UIControlStateNormal];
-        BOOL isRecordExp = [dict[@"isAlreadyRecorded"] boolValue];
-        if (isRecordExp) {
-            [_btnRecordExp setBackgroundColor:[UIColor lightGrayColor]];
-            [_btnRecordExp setUserInteractionEnabled:NO];
-        } else {
-            [_btnRecordExp setBackgroundColor:kDefaultBlueColor];
-            [_btnRecordExp setUserInteractionEnabled:YES];
-        }
+//        BOOL isRecordExp = [dict[@"isAlreadyRecorded"] boolValue];
+//        if (isRecordExp) {
+//            [_btnRecordExp setBackgroundColor:[UIColor lightGrayColor]];
+//            [_btnRecordExp setUserInteractionEnabled:NO];
+//        } else {
+//            [_btnRecordExp setBackgroundColor:kDefaultBlueColor];
+//            [_btnRecordExp setUserInteractionEnabled:YES];
+//        }
         
         if ([dict[@"buttons"] isKindOfClass:[NSArray class]]) {
             [_btnRecordExp setHidden:NO];

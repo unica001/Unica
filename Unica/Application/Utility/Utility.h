@@ -112,5 +112,5 @@
 
 +(UIImage *)compressImage:(UIImage *)image;
 +(BOOL)compareDate:(NSDate*)checkin ServeDate:(NSDate*)checkout;
-
++(UIColor*)colorWithHexString:(NSString*)hex;
 @end

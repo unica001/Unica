@@ -15,9 +15,7 @@
     BOOL isFromFilter;
     NSString *countryIDsString;
     NSString *typeIDsString;
-    
     NSTimer *_timer;
-
 }
 
 @end
@@ -32,10 +30,16 @@
     searchfield.textColor = [UIColor whiteColor];
     searchfield.backgroundColor = [UIColor whiteColor];
     [tableView registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
+    [self getData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+   
+}
+
+-(void)getData{
+    
     pageNumber = 1;
     _isFilterApply = @"1";
     NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountryAvailable]];
@@ -64,10 +68,8 @@
     }
     
     NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
-     [self participantsList:YES searchText:searchBar.text];
+    [self participantsList:YES searchText:searchBar.text];
 }
-
-
 #pragma mark - IBAction Methods
 - (IBAction)tapBack:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -78,21 +80,29 @@
 -(void)checkApplyButtonAction:(NSInteger)index{
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
     isFromFilter = true;
+    [self getData];
+
 }
 
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
+    [self getData];
+
 }
 
 -(void)agentServiceMethod:(NSString *)index{
     self.isFilterApply = index;
     isFromFilter = true;
+    [self getData];
+
 }
 
 - (void)eventMethod:(NSString *)index {
     self.isFilterApply = index;
     isFromFilter = true;
+    [self getData];
+
 }
 
 #pragma mark UITableView Delegate
@@ -229,8 +239,15 @@
 }
 
 -(void)sendRequestButtonAction:(UIButton*)sender{
-    NSDictionary *dict = [arrParticipant objectAtIndex:sender.tag];
-    [self sendParticipantRequest:dict[@"participantId"] index:sender.tag];
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+        
+        if (index == 0) {
+            NSDictionary *dict = [arrParticipant objectAtIndex:sender.tag];
+            [self sendParticipantRequest:dict[@"participantId"] index:sender.tag];
+    }
+    }];
+  
     
 }
 -(void)chatButtonAction:(UIButton*)sender{

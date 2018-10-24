@@ -31,7 +31,7 @@
 #import "SVProgressHUD.h"
 #import "ServicesManager.h"
 #import "ChatViewController.h"
-
+#import "ParticipantDetailViewController.h"
 
 #endif /* TRLUser_pch */
 

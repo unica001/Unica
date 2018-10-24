@@ -54,7 +54,6 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
-    
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {  SWRevealViewController *revealViewController = self.revealViewController;
@@ -64,7 +63,6 @@
             [_backButton setAction: @selector( revealToggle: )];
             [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
         }
-        
     }
     self.revealViewController.delegate = self;
     
@@ -75,7 +73,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    [self getEventID];
+    //[self getEventID];
 
 }
 
@@ -389,7 +387,7 @@
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"dashboard-banners.php"];
     
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:false showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
         
         if (!error) {
             
@@ -897,7 +895,7 @@
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events.php"];
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:false showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
@@ -927,6 +925,9 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     app.userEventId =  dictionary[kAPIPayload][kevent_id];
+                    if ( app.menuArray.count> 0) {
+                        [app.menuArray removeAllObjects];
+                    }
                     app.menuArray = dictionary[kAPIPayload][@"menus"];
                     app.webLoginUrl = dictionary[@"login_url"];
                    [self creatUserOnQuickBlock:loginDictionary];
@@ -969,7 +970,7 @@
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:userId forKey:@"user_id"];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"attending_event_view.php"];
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:false showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {

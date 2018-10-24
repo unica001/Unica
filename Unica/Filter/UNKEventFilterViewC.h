@@ -24,6 +24,8 @@
     UILabel *messageLabel;
 }
 @property (nonatomic,retain) NSString *incomingViewType;
+@property (nonatomic,retain) NSString *eventID;
+
 @property (nonatomic,retain) id <delegateEvent> eventDelegate;
 
 -(void)eventList;

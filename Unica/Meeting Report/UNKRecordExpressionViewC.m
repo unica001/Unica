@@ -8,7 +8,7 @@
 
 #import "UNKRecordExpressionViewC.h"
 
-@interface UNKRecordExpressionViewC ()<YSLContainerViewControllerDelegate, delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter> {
+@interface UNKRecordExpressionViewC ()<YSLContainerViewControllerDelegate, delegateAgentService, delegateEvent, delegateForCheckApply, delegateRemoveAllFilter,delegateEvent> {
     YSLContainerViewController *containerVC;
     
     UNKRecordExpressionListViewC *recordExpressionListViewC;
@@ -226,7 +226,7 @@
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if (_timer) {
+   if (_timer) {
         if ([_timer isValid]){
             [ _timer invalidate];
         }

@@ -188,16 +188,12 @@
                             [messageLabel removeFromSuperview];
                         }
                     }
-                    
                     else{
                         messageLabel.hidden = NO;
                         messageLabel.text = @"No records found";
                         isLoading = false;
-                        
                     }
 
-                    
-                    
                 }else{
                     
                     dispatch_async(dispatch_get_main_queue(), ^{

@@ -100,9 +100,7 @@
     if ([[dictLogin valueForKey:@"user_type"] length]>0 && ![[dictLogin valueForKey:@"user_type"] isKindOfClass:[NSNull class]]) {
         [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     }
-    //Static Data
-    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"QFQnrkBGpbHaCfTQ47%2BTxA6VAD/2suYomC0G4%2B7Odpc=" forKey:@"user_id"];
+    [dictionary setValue:self.eventID forKey:kevent_id];
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-participated-events.php"];
     
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:(NSMutableDictionary*)dictionary  timeoutInterval:kAPIResponseTimeout showHUD:showloader showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {

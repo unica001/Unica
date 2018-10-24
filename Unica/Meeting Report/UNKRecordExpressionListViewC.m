@@ -25,8 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
-    messageLabel.text = @"No records found";
+    messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height/2)-80, self.view.frame.size.width, 60)];
+    messageLabel.numberOfLines = 0;
+    messageLabel.text = @"";
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
@@ -113,11 +114,18 @@
         cell.chatButton.hidden = false;
     }
     return  cell;
-    
 }
 
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self getParticipantDetails:arrRecord[indexPath.row]];
+  
+}
+-(void)getParticipantDetails:(NSMutableDictionary *)dict{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
+    detailView.strParticipantId = dict[@"participantId"];
+    detailView.participantDict = dict;
+    [self.navigationController pushViewController:detailView animated:true];
 }
 
 -(void)chatButtonAction:(UIButton*)sender{
@@ -217,11 +225,8 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     [dictionary setValue:([eventId isEqual: @""] ? appDelegate.userEventId : eventId) forKey:kevent_id];
-    //Static Data
-    [dictionary setValue:@"I" forKey:@"user_type"];
-    [dictionary setValue:@"17" forKey:@"event_id"];
-    [dictionary setValue:@"N3dSitac/%2Bzjzp/PJogW1Ybu2wDGwz/sm%2BY/oZeD6vA=" forKey:@"user_id"];
-    [dictionary setValue:[NSString stringWithFormat:@"%d",_pageNumber] forKey:kPage_number];
+   
+    [dictionary setValue:[NSString stringWithFormat:@"%ld",(long)_pageNumber] forKey:kPage_number];
     [dictionary setValue:searchText forKey:@"searchText"];
     [dictionary setValue:countryId forKey:@"countryId"];
     [dictionary setValue:typeId forKey:@"filterType"];
@@ -280,7 +285,7 @@
                             [arrRecord removeAllObjects];
                             [_tblRecordParticipant reloadData];
                             [messageLabel setHidden:NO];
-                            messageLabel.text = @"No Record Found";
+                            messageLabel.text = [dictionary valueForKey:kAPIMessage];
                         }
                         else{
                             LoadMoreData = false;

@@ -164,7 +164,10 @@
         [bottomView setHidden:true];
         bottomViewHeight.constant = 0;
     }
-    [tableView reloadData];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    [tableView reloadData];
 }
 
 // MARK Button Action
@@ -197,9 +200,22 @@
 }
 
 -(void)loadAcceptCellData:(NSDictionary*)dict{
+    [participantArray removeObjectAtIndex:selectedRowID];
     [tableView reloadData];
-    
+
+//    if (selectedRowID > 0) {
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedRowID-1 inSection:0];
+//    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    }
+//    else{
+//    }
+//    
+    if (participantArray.count == 0) {
+        messageLabel.text = @"No records found";
+        messageLabel.hidden = NO;
+    }
 }
+
 -(void)rejectequestButtonAction:(UIButton*)sender{
     
     [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
@@ -462,9 +478,20 @@
         [selectedArray removeAllObjects];
     }
     
-    [participantArray removeObjectAtIndex:selectedRowID];
-    [participantArray insertObject:dictionary[@"participant"][0] atIndex:selectedRowID];
+    NSArray *array = dictionary[@"participant"];
     
+    for (int index = 0; index < array.count; index++) {
+        
+        NSString *participantID = [NSString stringWithFormat:@"%@",array[index][@"participantId"]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"participantId = %@",participantID];
+        NSArray *filterArray = [participantArray filteredArrayUsingPredicate:predicate];
+        
+        if (filterArray.count > 0) {
+            NSInteger objectIndex = [participantArray indexOfObject:filterArray[0]];
+            [participantArray removeObjectAtIndex:objectIndex];
+            [participantArray insertObject:array[index] atIndex:objectIndex];
+        }
+    }
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedRowID inSection:0];
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }

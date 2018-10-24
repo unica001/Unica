@@ -46,7 +46,7 @@
 @property (nonatomic,retain) UIApplication *application;
 @property (strong, nonatomic) NSTimer *twoMinTimer;
 @property (strong, nonatomic) NSString *userEventId;
-@property (strong, nonatomic) NSArray *menuArray;
+@property (strong, nonatomic) NSMutableArray *menuArray;
 @property (strong, nonatomic) NSMutableArray *arrQuickSearch;
 @property(strong, nonatomic) NSString *webLoginUrl;
 

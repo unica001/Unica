@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UNKMeetingParticipantViewC : UIViewController {
+@interface UNKMeetingParticipantViewC : UIViewController<UISearchBarDelegate> {
     NSMutableArray *arrParticipant;
     __weak IBOutlet UISearchBar *searchBar;
     int pageNumber;
@@ -16,5 +16,7 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *tblParticipant;
 @property(nonatomic,retain) NSDictionary *meetingReportDict;
+@property(nonatomic,retain) NSString *eventID;
+
 
 @end

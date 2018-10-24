@@ -56,6 +56,10 @@
     searchBar.text = @"";
 }
 
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (_timer) {
@@ -129,6 +133,19 @@
     }
     return  cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self getParticipantDetails:arrParticipant[indexPath.row]];
+}
+
+-(void)getParticipantDetails:(NSMutableDictionary *)dict{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
+    detailView.strParticipantId = dict[@"participantId"];
+    detailView.participantDict = dict;
+    [self.navigationController pushViewController:detailView animated:true];
+}
+
 
 #pragma Mark _ Chat Dialog
 
@@ -226,7 +243,7 @@
     }
     [dictionary setValue:[dictLogin valueForKey:@"user_type"] forKey:@"user_type"];
     //Static Data
-    [dictionary setValue:@"17" forKey:kevent_id];
+    [dictionary setValue:self.eventID forKey:kevent_id];
     [dictionary setValue:[NSString stringWithFormat:@"%d",pageNumber] forKey:kPageNumber];
     [dictionary setValue:self.meetingReportDict[@"reportStatus"] forKey:kLeadType];
     [dictionary setValue:searchText forKey:ksearchText];

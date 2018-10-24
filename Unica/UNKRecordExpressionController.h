@@ -5,6 +5,10 @@
 #import "RecordExpressionCell.h"
 #import "TOCropViewController.h"
 
+@protocol reloadRecordExpressionTable <NSObject>
+-(void)loadRecordExpressionCellData:(NSDictionary *)reloadDic;
+@end
+
 @interface UNKRecordExpressionController : UIViewController<GKActionSheetPickerDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,TOCropViewControllerDelegate,UITextViewDelegate>{
     
     __weak IBOutlet UIBarButtonItem *menuButton;
@@ -17,6 +21,7 @@
 @property (nonatomic, strong) GKActionSheetPicker *picker;
 @property (nonatomic, strong) NSDate *dateCellSelectedDate;
 @property (nonatomic, strong) NSString *participantId;
+@property(nonatomic,retain) id<reloadRecordExpressionTable>  reloadDelegate;
 
 - (IBAction)scanBusinessCartAction:(id)sender;
 - (IBAction)submitButtonAction:(id)sender;

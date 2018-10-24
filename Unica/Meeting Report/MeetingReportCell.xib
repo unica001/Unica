@@ -30,16 +30,16 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hot Leads" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCL-yp-hvz">
-                                <rect key="frame" x="106" y="23" width="148" height="20"/>
+                                <rect key="frame" x="106" y="20" width="148" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="FQe-JS-xI3"/>
+                                    <constraint firstAttribute="height" constant="24" id="FQe-JS-xI3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdU-Qy-bzg">
-                                <rect key="frame" x="106" y="48" width="148" height="20"/>
+                                <rect key="frame" x="106" y="49" width="148" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="QTF-E4-65x"/>
                                 </constraints>
@@ -53,7 +53,7 @@
                             <constraint firstItem="TCL-yp-hvz" firstAttribute="leading" secondItem="VAF-RZ-2xR" secondAttribute="trailing" constant="20" id="Ejd-4t-CbI"/>
                             <constraint firstItem="VAF-RZ-2xR" firstAttribute="leading" secondItem="wFx-9D-dM0" secondAttribute="leading" constant="6" id="MPo-Rj-DYs"/>
                             <constraint firstItem="VAF-RZ-2xR" firstAttribute="top" secondItem="wFx-9D-dM0" secondAttribute="top" constant="6" id="P3p-Sf-eRm"/>
-                            <constraint firstItem="TCL-yp-hvz" firstAttribute="top" secondItem="wFx-9D-dM0" secondAttribute="top" constant="23" id="XRL-hW-cnO"/>
+                            <constraint firstItem="TCL-yp-hvz" firstAttribute="top" secondItem="wFx-9D-dM0" secondAttribute="top" constant="20" id="XRL-hW-cnO"/>
                             <constraint firstAttribute="trailing" secondItem="TCL-yp-hvz" secondAttribute="trailing" constant="50" id="f47-Yq-9a4"/>
                             <constraint firstItem="SdU-Qy-bzg" firstAttribute="top" secondItem="TCL-yp-hvz" secondAttribute="bottom" constant="5" id="kXQ-ju-2nN"/>
                             <constraint firstItem="SdU-Qy-bzg" firstAttribute="leading" secondItem="VAF-RZ-2xR" secondAttribute="trailing" constant="20" id="sS6-Wo-OwS"/>
