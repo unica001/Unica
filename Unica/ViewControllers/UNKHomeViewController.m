@@ -74,6 +74,8 @@
     badgeLabel.textAlignment = NSTextAlignmentCenter;
     badgeLabel.font = [UIFont systemFontOfSize:12];
     [self.navigationController.navigationBar addSubview:badgeLabel];
+    
+    [self apiCallQuickCourse];
    
 }
 
@@ -660,10 +662,16 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
     
     if ([[dictLogin valueForKey:Kid] length]>0 && ![[dictLogin valueForKey:Kid] isKindOfClass:[NSNull class]]) {
-        [dictionary setValue:[dictLogin valueForKey:Kid] forKey:kUser_id];
+        
+        NSString *userId = [dictLogin valueForKey:Kid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
     }
     else{
-        [dictionary setValue:[dictLogin valueForKey:Kuserid] forKey:kUser_id];
+        
+        NSString *userId = [dictLogin valueForKey:Kuserid];
+        userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        [dictionary setValue:userId forKey:kUser_id];
     }
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"quick_find_course.php"];
     

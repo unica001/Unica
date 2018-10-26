@@ -29,6 +29,6 @@
 @property (nonatomic,retain) id <delegateEvent> eventDelegate;
 
 -(void)eventList;
-
 - (IBAction)applyButton_clicked:(id)sender;
+
 @end

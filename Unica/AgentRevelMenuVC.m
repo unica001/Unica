@@ -281,6 +281,7 @@ typedef enum
         }
         else if ([appDelegate.menuArray[indexPath.row][@"action"]integerValue] == participantAll) {
             UNKRecordExpressionViewC *meetingView = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionViewC"];
+            meetingView.title  = appDelegate.menuArray[indexPath.row][@"name"];
             UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
             [navController setViewControllers: @[meetingView] animated: NO ];
             [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];        }

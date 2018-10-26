@@ -16,6 +16,7 @@
     NSString *strTypeId;
     NSString *strEventId;
     NSString *strSearch;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -32,7 +33,15 @@
     messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
     [_tblRecordParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
-//    [self recordParticipantList:YES type:@"I" searchText:@""];
+    
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [_tblRecordParticipant addSubview:refreshControl];
+}
+-(void)refresh{
+    _pageNumber = 1;
+    [self recordParticipantList:false type:@"" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,6 +49,7 @@
     _pageNumber = 1;
     LoadMoreData = YES;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -97,6 +107,8 @@
     MeetingReportParticipantCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
+
     cell = [nib objectAtIndex:0];
     
     cell.btnRecordExp.tag = indexPath.row;
@@ -238,7 +250,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
-                
+                [refreshControl endRefreshing];
                 isLoading = NO;
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {

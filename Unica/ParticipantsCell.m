@@ -69,14 +69,14 @@
         
         _viewReceived.hidden = false;
         _sendRequestbutton.hidden = true;
-        
+        _checkMarkButton.hidden = true;
+
         for (int i = 0; i< buttons.count; i++) {
             
             if ([buttons[i][@"status"] integerValue] == 0 &&  i == 0) {
                 [_acceptButton setTitle:buttons[i][@"name"] forState:UIControlStateNormal];
                 _acceptButton.enabled = false;
                 _acceptButton.alpha = 0.4;
-                _checkMarkButton.hidden = true;
 
             }
            else  if ([buttons[i][@"status"] integerValue] == 1 &&  i == 0) {

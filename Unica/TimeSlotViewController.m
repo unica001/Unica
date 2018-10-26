@@ -26,6 +26,11 @@
     pageNumber = 1;
     isHude = true;
     [self getSlot];
+    
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14],
+                                                                    NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                                    };
 }
 
 - (void)didReceiveMemoryWarning {
@@ -147,7 +152,10 @@
                             pageNumber = pageNumber+1 ;
                         }
                         [tableView reloadData];
-                        
+                        messageLabel.text = @"";
+                        messageLabel.hidden = YES;
+                        submitButton.hidden = false;
+
                     }
                     else{
                         
@@ -156,13 +164,14 @@
                             if (pageNumber ==1) {
                                 [slotArray removeAllObjects];
                                 [tableView reloadData];
-                              //  messageLabel.text = @"No records found";
-                              //  messageLabel.hidden = NO;
+                               messageLabel.text = [dictionary valueForKey:kAPIMessage];
+                              messageLabel.hidden = NO;
+                            submitButton.hidden = true;
                                 
                             }
                             else{
-                               // messageLabel.text = @"";
-                               // messageLabel.hidden = YES;
+                                messageLabel.text = @"";
+                                messageLabel.hidden = YES;
                                 LoadMoreData = false;
                             }
                         });

@@ -31,6 +31,7 @@
     UITextField *txtFieldTemplate;
     
     NSArray *template;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -46,6 +47,14 @@
     messageLabel.textColor = [UIColor grayColor];
     [self.view addSubview:messageLabel];
     [_tblRecordAllParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [_tblRecordAllParticipant addSubview:refreshControl];
+}
+-(void)refresh{
+    _pageNumber = 1;
+    [self recordAllParticipantList:false type:@"" searchText:strSearch countryId:strCountryId typeId:strTypeId eventId:strEventId];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -247,7 +256,7 @@
     
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
-    
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
     cell.btnRecordExp.tag = indexPath.row;
     cell.chatButton.tag = indexPath.row;
 
@@ -401,6 +410,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                 isLoading = NO;
+                [refreshControl endRefreshing];
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     if([[payloadDictionary valueForKey:@"participant"] count]<=0)
                     {

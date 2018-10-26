@@ -31,6 +31,7 @@
     self.eventCountryFilterArray = [[NSMutableArray alloc]init];
     _searchTextField.placeholder = @"Search country";
     pageNumber = 0;
+    
     if ([_incomingViewType isEqualToString:kScheduleFilter]) {
         NSMutableDictionary *dict = [Utility unarchiveData:[kUserDefault valueForKey:kselectCountrySchedule]];
         if ([dict isKindOfClass:[NSMutableDictionary class]] && [[dict valueForKey:kselectCountrySchedule] isKindOfClass:[NSMutableArray class]]) {
@@ -248,6 +249,10 @@
             [Utility showAlertViewControllerIn:self title:@"" message:@"You can select max 10 countries." block:^(int index){}];
         } else {
             if (![filterArray containsObject:[searchArray objectAtIndex:indexPath.row]]) {
+                
+                if ([_incomingViewType isEqualToString:kParticipantFilter] || [_incomingViewType isEqualToString:kSearchAvailableFilter]|| [_incomingViewType isEqualToString:kRecordParticpantFilter]){ // on case of participant single selection
+                    [filterArray removeAllObjects];
+                }
                 [filterArray addObject:[searchArray objectAtIndex:indexPath.row]];
             }
             [self.eventCountryFilterArray removeAllObjects];

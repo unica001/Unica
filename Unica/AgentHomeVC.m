@@ -31,6 +31,7 @@
     NSArray *eventArray;
     NSArray *selectedEventArray;
     NSMutableArray *userList;
+    AppDelegate *appDelegate;
 
 }
 
@@ -43,11 +44,11 @@
     
     viewEvent.layer.cornerRadius = 2;
     viewEvent.layer.masksToBounds = true;
-   
+     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
     [self currentLocationIdentifier];
     [self getbanner];
     [self getEventDetail];
-    [self loginUserAndConnectToChat];
 
     // google analytics
     [GAI sharedInstance].dispatchInterval = 0;
@@ -67,13 +68,16 @@
     self.revealViewController.delegate = self;
     
     [self getEventList];
-    
+    [self getEventID];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    //[self getEventID];
+    if (appDelegate.menuArray.count > 0) {
+        [self creatUserOnQuickBlock:loginDictionary];
+    }
 
 }
 
@@ -137,6 +141,7 @@
              [Utility hideMBHUDLoader];
              NSString *newUserQBID = [NSString stringWithFormat:@"%lu",(unsigned long)user.ID];
              [self saveQBID:newUserQBID];
+             [self loginUserAndConnectToChat];
          }
          
                errorBlock:^(QBResponse *response) {
@@ -147,8 +152,8 @@
                }];
     }
     else{
+        [self loginUserAndConnectToChat];
         [self saveQBID:[loginInfo valueForKey:kQbId]];
-
     }
    
    
@@ -923,15 +928,13 @@
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    app.userEventId =  dictionary[kAPIPayload][kevent_id];
-                    if ( app.menuArray.count> 0) {
-                        [app.menuArray removeAllObjects];
+                    appDelegate.userEventId =  dictionary[kAPIPayload][kevent_id];
+                    if ( appDelegate.menuArray.count> 0) {
+                        [appDelegate.menuArray removeAllObjects];
                     }
-                    app.menuArray = dictionary[kAPIPayload][@"menus"];
-                    app.webLoginUrl = dictionary[@"login_url"];
+                    appDelegate.menuArray = dictionary[kAPIPayload][@"menus"];
+                    appDelegate.webLoginUrl = dictionary[@"login_url"];
                    [self creatUserOnQuickBlock:loginDictionary];
-
                 }
             });
         }

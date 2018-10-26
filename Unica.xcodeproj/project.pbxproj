@@ -271,8 +271,6 @@
 		9ADAB173217762A8002D5218 /* UIAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAB16E217762A8002D5218 /* UIAlertDialog.m */; };
 		9ADAB178217762B9002D5218 /* QMMessageNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAB174217762B9002D5218 /* QMMessageNotificationManager.m */; };
 		9ADAB179217762B9002D5218 /* QMMessageNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAB177217762B9002D5218 /* QMMessageNotification.m */; };
-		9ADAB1862177646F002D5218 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADAB1852177646F002D5218 /* Quickblox.framework */; };
-		9ADAB1872177646F002D5218 /* Quickblox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9ADAB1852177646F002D5218 /* Quickblox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9ADAB18A21776C53002D5218 /* MessageStatusStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADAB18921776C53002D5218 /* MessageStatusStringBuilder.m */; };
 		9AE3DB602175F12500269749 /* UNKSearchAvailableParticipantCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE3DB5F2175F12500269749 /* UNKSearchAvailableParticipantCtrl.m */; };
 		9AE3DB81217734F500269749 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE3DB7F217734F500269749 /* NotificationService.m */; };
@@ -355,7 +353,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9ADAB1872177646F002D5218 /* Quickblox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -826,7 +823,6 @@
 		9ADAB175217762B9002D5218 /* QMMessageNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMMessageNotificationManager.h; path = Chat/ThirdParty/QMMessageNotificationManager/QMMessageNotificationManager.h; sourceTree = "<group>"; };
 		9ADAB176217762B9002D5218 /* QMMessageNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMMessageNotification.h; path = Chat/ThirdParty/QMMessageNotificationManager/QMMessageNotification.h; sourceTree = "<group>"; };
 		9ADAB177217762B9002D5218 /* QMMessageNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMMessageNotification.m; path = Chat/ThirdParty/QMMessageNotificationManager/QMMessageNotification.m; sourceTree = "<group>"; };
-		9ADAB1852177646F002D5218 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Pods/QuickBlox/Quickblox.framework; sourceTree = "<group>"; };
 		9ADAB18821776C53002D5218 /* MessageStatusStringBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageStatusStringBuilder.h; path = Chat/Services/MessageStatusStringBuilder.h; sourceTree = "<group>"; };
 		9ADAB18921776C53002D5218 /* MessageStatusStringBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageStatusStringBuilder.m; path = Chat/Services/MessageStatusStringBuilder.m; sourceTree = "<group>"; };
 		9AE3DB5E2175F12500269749 /* UNKSearchAvailableParticipantCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNKSearchAvailableParticipantCtrl.h; sourceTree = "<group>"; };
@@ -958,7 +954,6 @@
 				88694F5D1E6840A00036EB54 /* FBSDKLoginKit.framework in Frameworks */,
 				88BD34441E66C7FF00DA9ED0 /* Security.framework in Frameworks */,
 				10D04C331F34448100389D8D /* EBSLib.a in Frameworks */,
-				9ADAB1862177646F002D5218 /* Quickblox.framework in Frameworks */,
 				88BD34421E66C7F800DA9ED0 /* MediaPlayer.framework in Frameworks */,
 				88BD34401E66C7EE00DA9ED0 /* CoreText.framework in Frameworks */,
 				88BD343E1E66C7E700DA9ED0 /* CoreGraphics.framework in Frameworks */,
@@ -1717,7 +1712,6 @@
 		8891FFE21E66928A00233A3F = {
 			isa = PBXGroup;
 			children = (
-				9ADAB1852177646F002D5218 /* Quickblox.framework */,
 				10D04BFD1F34448100389D8D /* Required_Files */,
 				885C06CD1F2CC46D0037E5DD /* gapstep4.json */,
 				88667A0F1EADCF86001E7CD9 /* GoogleService-Info.plist */,
@@ -2965,8 +2959,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica.onesignal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8607478e-fae9-4f44-9105-13292c08461e";
-				PROVISIONING_PROFILE_SPECIFIER = unica_onesignalappstore;
+				PROVISIONING_PROFILE = "89bec34a-e723-415c-a61a-e6b04260036f";
+				PROVISIONING_PROFILE_SPECIFIER = unica_oneSignal_Distribution;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -3161,8 +3155,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "242462b1-3227-4c3f-a0f6-a27efd2a4111";
-				PROVISIONING_PROFILE_SPECIFIER = unica_appStore_provisioning;
+				PROVISIONING_PROFILE = "bcf05f95-f4e4-41a4-8c4c-8dbc8ec37646";
+				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -7,13 +7,14 @@
     
     NSMutableArray *selectedArray;
     NSString *viewType;
-    NSString *searchtext;
+    NSString *searchtextString;
     NSString *countryId;
-    NSString *typeId;
+    NSString *typeID;
     AppDelegate *appDelegate;
     
     NSInteger selectedRowID;
-
+    UITextField *reasonTextField;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -31,10 +32,13 @@
    
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-//    if ([self.title isEqualToString:@"ALL"]) {
-//        [self participantsList:false type:self.title searchText:@""];
-//    }
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [tableView addSubview:refreshControl];
 }
+-(void)refresh{
+    pageNumber = 1;
+   [self participantsList:false type:viewType searchText:searchtextString countryId:countryId typeId:typeID];}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -45,9 +49,9 @@
     viewType = type;
     selectedIndex = index+1;
     pageNumber = 1;
-    searchtext = searchText;
+    searchtextString = searchText;
     countryId = countryId;
-    typeId = typeId;
+    typeID = typeId;
 
     [self participantsList:false type:type searchText:searchText countryId:countryId typeId:typeId];
 }
@@ -196,20 +200,12 @@
         eventList.dictDetail = dict;
          eventList.reloadDelegate = self;
         [self.navigationController pushViewController:eventList animated:true];        
-   
 }
 
--(void)loadAcceptCellData:(NSDictionary*)dict{
+-(void)loadAcceptCellData{
     [participantArray removeObjectAtIndex:selectedRowID];
     [tableView reloadData];
 
-//    if (selectedRowID > 0) {
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedRowID-1 inSection:0];
-//    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//    }
-//    else{
-//    }
-//    
     if (participantArray.count == 0) {
         messageLabel.text = @"No records found";
         messageLabel.hidden = NO;
@@ -218,13 +214,37 @@
 
 -(void)rejectequestButtonAction:(UIButton*)sender{
     
-    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
-        
-        if (index == 0) {
-            selectedRowID = sender.tag;
-            NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
-            [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];        }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Are you sure to cancel this request?" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Please write a reason";
+        reasonTextField = textField;
     }];
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        NSLog(@"Current password %@", [[alertController textFields][0] text]);
+        
+        selectedRowID = sender.tag;
+        NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
+        [self participantRejectRequest:dict[@"participantId"] request_type:@"2" message:[[alertController textFields][0] text]];
+
+        
+    }];
+    [alertController addAction:confirmAction];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+//    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
+//
+//        if (index == 0) {
+//            selectedRowID = sender.tag;
+//            NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
+//            [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];
+//
+//        }
+//    }];
 
     
 }
@@ -328,6 +348,7 @@
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                 
                 isLoading = NO;
+                [refreshControl endRefreshing];
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
@@ -436,7 +457,6 @@
                             bottomView.hidden = true;
                             bottomViewHeight.constant = 0;
                            [self reloadTbleViewCell:dictionary[kAPIPayload]];
-                            [tableView reloadData];
                         }];
                     }
                 });
@@ -444,7 +464,7 @@
         }];
 }
 
--(void)participantRejectRequest:(NSString*)participantId request_type:(NSString*)request_type{
+-(void)participantRejectRequest:(NSString*)participantId request_type:(NSString*)request_type message:(NSString*)message{
     
     NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
     
@@ -455,6 +475,7 @@
     [dic setValue:userId forKey:@"user_id"];
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:participantId forKey:@"participantId"];
+    [dic setValue:message forKey:@"message"];
     [dic setValue:appDelegate.userEventId forKey:kevent_id];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-cancel-request.php"];
@@ -464,7 +485,13 @@
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+                        
+                        if ([viewType isEqualToString:@"Send"]) {
+                            [self loadAcceptCellData];
+                        }
+                        else{
                         [self reloadTbleViewCell:dictionary[kAPIPayload]];
+                        }
                     }];
                 }
             });
@@ -514,7 +541,7 @@
             if ([participantArray count] % 10 == 0) {
                 isLoading = YES;
                 isHude=false;
-                [self participantsList:false type:viewType searchText:searchtext countryId:countryId typeId:typeId];
+                [self participantsList:false type:viewType searchText:searchtextString countryId:countryId typeId:typeID];
             }
         }
     } else{

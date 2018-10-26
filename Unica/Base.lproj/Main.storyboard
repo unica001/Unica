@@ -1368,7 +1368,7 @@
                                             <attributedString key="attributedTitle">
                                                 <fragment>
                                                     <string key="content">QUICK SEARCH
-(Based on you profile prefrence)</string>
+(Based on your profile preference)</string>
                                                     <attributes>
                                                         <color key="NSColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
@@ -2968,42 +2968,42 @@
                                     <action selector="applyButton_clicked:" destination="rdf-jA-1Vs" eventType="touchUpInside" id="Nti-PW-vTW"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-Jz-Mbh">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-Jz-Mbh">
                                 <rect key="frame" x="10" y="74" width="355" height="430"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="service" rowHeight="40" id="g5V-Bu-2c8">
-                                        <rect key="frame" x="0.0" y="28" width="355" height="40"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="service" rowHeight="50" id="g5V-Bu-2c8">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g5V-Bu-2c8" id="UOw-LP-62I">
-                                            <rect key="frame" x="0.0" y="0.0" width="355" height="39.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voM-mD-7vY">
-                                                    <rect key="frame" x="10" y="5" width="295" height="30"/>
+                                                    <rect key="frame" x="47" y="5" width="298" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="AIi-pV-jFl"/>
+                                                        <constraint firstAttribute="height" constant="40" id="aDz-dE-1HK"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RC6-iB-opC">
-                                                    <rect key="frame" x="323" y="5" width="24" height="24"/>
+                                                    <rect key="frame" x="13" y="13" width="24" height="24"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="8E9-V9-RGN"/>
-                                                        <constraint firstAttribute="height" constant="24" id="BB2-i1-TGU"/>
+                                                        <constraint firstAttribute="height" constant="24" id="N85-R8-gOi"/>
+                                                        <constraint firstAttribute="width" constant="24" id="h5v-bq-YaS"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="voM-mD-7vY" firstAttribute="leading" secondItem="UOw-LP-62I" secondAttribute="leading" constant="10" id="1mG-sw-uvI"/>
-                                                <constraint firstItem="RC6-iB-opC" firstAttribute="top" secondItem="UOw-LP-62I" secondAttribute="top" constant="5" id="9EM-Oz-9Bp"/>
-                                                <constraint firstItem="RC6-iB-opC" firstAttribute="leading" secondItem="voM-mD-7vY" secondAttribute="trailing" constant="18" id="WFV-kF-hnm"/>
-                                                <constraint firstItem="voM-mD-7vY" firstAttribute="top" secondItem="UOw-LP-62I" secondAttribute="top" constant="5" id="g01-8M-v3l"/>
-                                                <constraint firstAttribute="trailing" secondItem="RC6-iB-opC" secondAttribute="trailing" constant="8" id="oax-g3-F6g"/>
+                                                <constraint firstItem="RC6-iB-opC" firstAttribute="top" secondItem="UOw-LP-62I" secondAttribute="top" constant="13" id="59l-dr-7WW"/>
+                                                <constraint firstItem="voM-mD-7vY" firstAttribute="top" secondItem="UOw-LP-62I" secondAttribute="top" constant="5" id="BXo-Dq-pXb"/>
+                                                <constraint firstItem="voM-mD-7vY" firstAttribute="leading" secondItem="RC6-iB-opC" secondAttribute="trailing" constant="10" id="hFx-If-ydS"/>
+                                                <constraint firstItem="RC6-iB-opC" firstAttribute="leading" secondItem="UOw-LP-62I" secondAttribute="leading" constant="13" id="lTs-C2-EXg"/>
+                                                <constraint firstAttribute="trailing" secondItem="voM-mD-7vY" secondAttribute="trailing" constant="10" id="umn-N4-zJ2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

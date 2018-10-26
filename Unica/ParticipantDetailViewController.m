@@ -33,18 +33,20 @@
 
 -(void)setHeaderDetails:(NSDictionary*)detailsDict{
 
-        
         [_nameButton setTitle:[detailsDict valueForKey:kName] forState:UIControlStateNormal];
         _universityName.text = [detailsDict valueForKey:korganisationName];
         _typeLabel.text = [detailsDict valueForKey:kType];
         _countryLabel.text = [detailsDict valueForKey:kCountry];
+    
+    
+    headerHeightConstrant.constant  = [Utility getTextHeight:[detailsDict valueForKey:korganisationName] size:CGSizeMake(kiPhoneWidth-120, CGFLOAT_MAX) font:kDefaultFontForApp]+170;
+
         
         [_imgView sd_setImageWithURL:[NSURL URLWithString:[detailsDict valueForKey:kProfileImage]] placeholderImage:[UIImage imageNamed:@"userimageplaceholder"] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         }];
         
         self.viewReceived.hidden = false;
         
-    
         NSArray *buttons = detailsDict[@"buttons"];
         
         if (buttons.count == 1) {
@@ -104,7 +106,6 @@
     [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
     [dic setValue:_strParticipantId forKey:@"participantId"];
     [dic setValue:eventID forKey:kevent_id];
-//    [dic setValue:self.participantDict[@"buttons"][0][@"type"] forKey:@"prticipantType"];
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-events-participants-data.php"];
     [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {

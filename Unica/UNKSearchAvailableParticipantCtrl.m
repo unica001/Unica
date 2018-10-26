@@ -16,6 +16,7 @@
     NSString *countryIDsString;
     NSString *typeIDsString;
     NSTimer *_timer;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -31,11 +32,18 @@
     searchfield.backgroundColor = [UIColor whiteColor];
     [tableView registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
     [self getData];
+
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [tableView addSubview:refreshControl];
+}
+-(void)refresh{
+    pageNumber = 1;
+    [self participantsList:false searchText:searchBar.text];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-   
 }
 
 -(void)getData{
@@ -158,10 +166,17 @@
     return  cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self getParticipantDetails:arrParticipant[indexPath.row]];
 }
 
+-(void)getParticipantDetails:(NSMutableDictionary *)dict{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+    ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
+    detailView.strParticipantId = dict[@"participantId"];
+    detailView.participantDict = dict;
+    [self.navigationController pushViewController:detailView animated:true];
+}
 
 #pragma mark - SearchBar Delegate
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -323,7 +338,6 @@
                     [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
                         [arrParticipant removeObjectAtIndex:index];
                         [tableView reloadData];
-//                        [self participantsList:false searchText:searchBar.text];
                     }];
                 }
             });
@@ -363,8 +377,8 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
-                
                 isLoading = NO;
+                [refreshControl endRefreshing];
                 
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
@@ -393,12 +407,17 @@
                         NSLog(@"%lu",(unsigned long)arrParticipant.count);
                         pageNumber = pageNumber+1 ;
                     }
+                    messageLabel.text = @"";
+                    messageLabel.hidden = YES;
                     [tableView reloadData];
                     
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
                         if (pageNumber ==1) {
+                            messageLabel.text = @"No records found";
+                            messageLabel.hidden = NO;
+
                             [arrParticipant removeAllObjects];
                             [tableView reloadData];
    

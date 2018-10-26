@@ -34,13 +34,13 @@
                         <rect key="frame" x="10" y="10" width="300" height="153"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbW-ye-Hx5">
-                                <rect key="frame" x="5" y="85" width="290" height="60"/>
+                                <rect key="frame" x="5" y="85" width="290" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zoF-qd-KIe">
-                                        <rect key="frame" x="5" y="7" width="137.5" height="46"/>
+                                        <rect key="frame" x="5" y="5" width="137.5" height="38"/>
                                         <color key="backgroundColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="K6g-wT-L0h"/>
+                                            <constraint firstAttribute="height" constant="38" id="K6g-wT-L0h"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                         <state key="normal" title="Record Expression">
@@ -53,10 +53,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="FaO-Jl-jhh">
-                                        <rect key="frame" x="147.5" y="7" width="137.5" height="46"/>
+                                        <rect key="frame" x="147.5" y="5" width="137.5" height="38"/>
                                         <color key="backgroundColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="O2F-Aa-sZF"/>
+                                            <constraint firstAttribute="height" constant="38" id="O2F-Aa-sZF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                         <state key="normal" title="Meeting Confirmed">
@@ -71,10 +71,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="IbB-bn-EMe"/>
-                                    <constraint firstItem="FaO-Jl-jhh" firstAttribute="top" secondItem="bbW-ye-Hx5" secondAttribute="top" constant="7" id="QPS-ve-gg2"/>
+                                    <constraint firstAttribute="height" constant="50" id="IbB-bn-EMe"/>
+                                    <constraint firstItem="FaO-Jl-jhh" firstAttribute="top" secondItem="bbW-ye-Hx5" secondAttribute="top" constant="5" id="QPS-ve-gg2"/>
                                     <constraint firstItem="zoF-qd-KIe" firstAttribute="leading" secondItem="bbW-ye-Hx5" secondAttribute="leading" constant="5" id="Y76-Lw-kzv"/>
-                                    <constraint firstItem="zoF-qd-KIe" firstAttribute="top" secondItem="bbW-ye-Hx5" secondAttribute="top" constant="7" id="YnG-aZ-uJ8"/>
+                                    <constraint firstItem="zoF-qd-KIe" firstAttribute="top" secondItem="bbW-ye-Hx5" secondAttribute="top" constant="5" id="YnG-aZ-uJ8"/>
                                     <constraint firstAttribute="bottom" secondItem="FaO-Jl-jhh" secondAttribute="bottom" constant="7" id="eZA-XF-HGT"/>
                                     <constraint firstAttribute="trailing" secondItem="FaO-Jl-jhh" secondAttribute="trailing" constant="5" id="iRZ-HB-nba"/>
                                     <constraint firstItem="FaO-Jl-jhh" firstAttribute="leading" secondItem="zoF-qd-KIe" secondAttribute="trailing" constant="5" id="nF1-CG-juF"/>

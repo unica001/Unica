@@ -744,6 +744,8 @@ static NSString *const kPushNotificationDialogMessageKey = @"message";
 #define kParticipantFilter @"participantFilter"
 #define kRecordParticpantFilter @"RecordParticipantFilter"
 #define kSearchAvailableFilter @"SearchAvailableFilter"
+#define kSearchAvailableType @"SearchAvailableType"
+
 
 typedef enum _UNKWebViewMode {
     UNKScholarShip = 101,

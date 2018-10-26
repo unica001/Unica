@@ -45,7 +45,7 @@
 - (void)setUpView {
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     currentCourse = 0;
-//    [self apiCallQuickCourse];
+    [self apiCallQuickCourse];
     [self setUpCourseData];
 }
 
@@ -1089,7 +1089,6 @@
                         }];
                     });
                 }
-                
             });
         }
         else{

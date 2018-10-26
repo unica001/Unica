@@ -350,13 +350,13 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
+ 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"service"];
-    
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     UILabel *serviceLabel = (UILabel *)[cell.contentView viewWithTag:101];
+    serviceLabel.frame = CGRectMake(0, 0, kiPhoneWidth, 50);
+    serviceLabel.numberOfLines = 0;
     UIImageView *checkMarkImage = (UIImageView *)[cell.contentView viewWithTag:102];
     
     
@@ -405,23 +405,31 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 50;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     
     if ([_selectedServiceArray containsObject:[_serviceArray objectAtIndex:indexPath.row]]) {
         [_selectedServiceArray removeObject:[_serviceArray objectAtIndex:indexPath.row]];
     }
     else {
+        if ([self.title isEqualToString:kTYPE]) {
+            [_selectedServiceArray removeAllObjects];
+        }
         [_selectedServiceArray addObject:[_serviceArray objectAtIndex:indexPath.row]];
     }
     
     if ([_incomingViewType isEqualToString:kParticipantFilter]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeParticipant];
-        
         [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeParticipant];
-    } else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
+        
+    }
+    else  if ([_incomingViewType isEqualToString:kSearchAvailableFilter]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeAvailable];
+        [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeAvailable];
+    }
+    
+    else if ([_incomingViewType isEqualToString:kScheduleFilter]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:_selectedServiceArray forKey:kselectTypeSchedule];
         
         [kUserDefault setValue:[Utility archiveData:dict] forKey:kselectTypeSchedule];
@@ -435,13 +443,10 @@
         [kUserDefault setValue:[Utility archiveData:dict] forKey:kselecteService];
     }
     
-    
     [kUserDefault setValue:@"No" forKey:kIsRemoveAll];
     [kUserDefault synchronize];
 
     [_serviceTable reloadData];
- 
-    
 }
 
 - (void)didReceiveMemoryWarning {

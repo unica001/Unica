@@ -38,10 +38,10 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Student" bundle:[NSBundle mainBundle]];
     
     recordAllParticipantViewC = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordAllParticipantViewC"];
-    recordAllParticipantViewC.title = @"View Participant";
+    recordAllParticipantViewC.title = @"VIEW PARTICIPANTS";
     
     recordExpressionListViewC = [storyBoard instantiateViewControllerWithIdentifier:@"UNKRecordExpressionListViewC"];
-    recordExpressionListViewC.title = @"Record Expression";
+    recordExpressionListViewC.title = @"RECORD EXPRESSION";
     
     containerVC = [[YSLContainerViewController alloc]initWithControllers:@[recordExpressionListViewC, recordAllParticipantViewC]
                                                             topBarHeight:0

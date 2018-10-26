@@ -11,7 +11,8 @@
     ParticipantAboutViewController  *aboutView;
     ChatViewController *chatView;
     YSLContainerViewController *containerVC;
-
+    __weak IBOutlet NSLayoutConstraint *headerHeightConstrant;
+    
 }
 @property (weak, nonatomic) IBOutlet UIView *viewBg;
 @property (weak, nonatomic) IBOutlet UIView *segmentView;

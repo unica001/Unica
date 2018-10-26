@@ -23,6 +23,7 @@
     __weak IBOutlet NSLayoutConstraint *bottomViewHeight;
     __weak IBOutlet UIButton *submitButton;
     __weak IBOutlet UIView *footerView;
+    __weak IBOutlet UILabel *messageLabel;
     
     int pageNumber;
     int totalRecord;

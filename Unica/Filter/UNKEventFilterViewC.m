@@ -211,9 +211,11 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"event"];
-    
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     UILabel *serviceLabel = (UILabel *)[cell.contentView viewWithTag:101];
+    serviceLabel.frame = CGRectMake(0, 0, kiPhoneWidth, 50);
+    serviceLabel.numberOfLines = 0;
     UIImageView *checkMarkImage = (UIImageView *)[cell.contentView viewWithTag:102];
     
     
@@ -253,7 +255,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 40;
+    return 50;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([selectedEventArray containsObject:[eventArray objectAtIndex:indexPath.row]]) {

@@ -36,6 +36,10 @@
     [self apiCallShortlistedCourse];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = false;
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

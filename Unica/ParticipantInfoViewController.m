@@ -10,6 +10,12 @@
 
 @interface ParticipantInfoViewController (){
     NSArray *infoArray;
+    
+    NSString *designation;
+    NSString *emailStrign;
+    NSString *mobileNoString;
+    NSString *websiteString;
+    NSString *countryString;
 }
 
 @end
@@ -20,6 +26,13 @@
     [super viewDidLoad];
     
     infoArray = [[NSMutableArray alloc]initWithObjects:@"Designation",@"Email ID",@"Phone Number",@"Website",@"Country",@"Certification", nil];
+    
+    designation = [Utility replaceNULL:self.infoDictionary[@"designation"] value:@""];
+    emailStrign = [Utility replaceNULL:self.infoDictionary[@"email"] value:@""];
+    mobileNoString = [Utility replaceNULL:self.infoDictionary[@"mobileNo"] value:@""];
+    websiteString = [Utility replaceNULL:self.infoDictionary[@"website"] value:@""];
+    countryString = [Utility replaceNULL:self.infoDictionary[@"country"] value:@""];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -57,6 +70,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if ((indexPath.row == 0 && [designation isEqualToString:@""]) || (indexPath.row == 4 && [countryString isEqualToString:@""])|| (indexPath.row == 3 && [websiteString isEqualToString:@""])|| (indexPath.row == 2 && [mobileNoString isEqualToString:@""])|| (indexPath.row == 1 && [emailStrign isEqualToString:@""])) {
+        return 0;
+    }
     return 60;
 }
 
@@ -73,20 +90,45 @@
     
     cell.headerLabel.text = [infoArray objectAtIndex:indexPath.row];
     cell.btnLink.hidden = YES;
+    
     if (indexPath.row == 0) {
-        cell._descriptionLabel.text = self.infoDictionary[@"designation"];
+        if ([designation isEqualToString:@""]) {
+            cell.hidden = true; }else {
+        cell._descriptionLabel.text = designation;
+        }
     }
     else if (indexPath.row == 1){
-        cell._descriptionLabel.text = self.infoDictionary[@"email"];
+        
+        if ([emailStrign isEqualToString:@""]) {
+            cell.hidden = true;
+        }
+        else {
+            cell._descriptionLabel.text = emailStrign;
+        }
     }
     else if (indexPath.row == 2){
-        cell._descriptionLabel.text = self.infoDictionary[@"mobileNo"];
+        if ([mobileNoString isEqualToString:@""]) {
+            cell.hidden = true;
+        }
+        else {
+        cell._descriptionLabel.text = mobileNoString;
+        }
     }
     else if (indexPath.row == 3){
-        cell._descriptionLabel.text = self.infoDictionary[@"website"];
+        if ([websiteString isEqualToString:@""]) {
+            cell.hidden = true;
+        }
+        else {
+        cell._descriptionLabel.text = websiteString;
+        }
     }
     else if (indexPath.row == 4){
-        cell._descriptionLabel.text = self.infoDictionary[@"country"];
+        
+        if ([countryString isEqualToString:@""]) {
+            cell.hidden = true;
+        }else {
+        cell._descriptionLabel.text = countryString;
+        }
         
     } else if (indexPath.row == 5){
         NSString *strCertificate = [Utility replaceNULL:self.infoDictionary[@"certification"] value:@""];
@@ -99,7 +141,7 @@
                                     value:[NSNumber numberWithInt:1]
                                     range:(NSRange){0,[attributeString length]}];
             [attributeString addAttribute:NSFontAttributeName
-                                    value:[UIFont fontWithName:@"SFUIText-Medium" size:17]
+                                    value:[UIFont fontWithName:@"SFUIText-Medium" size:15]
                                     range:(NSRange){0,[attributeString length]}];
             cell._descriptionLabel.attributedText = attributeString;
         } else {

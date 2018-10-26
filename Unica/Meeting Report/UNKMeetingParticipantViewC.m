@@ -14,6 +14,7 @@
     AppDelegate *appDelegate;
     NSTimer *_timer;
     UILabel *messageLabel;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -36,6 +37,14 @@
     pageNumber = 1;
     [_tblParticipant registerNib:[UINib nibWithNibName:@"MeetingReportParticipantCell" bundle:nil] forCellReuseIdentifier:@"MeetingReportParticipantCell"];
     [self participantsList:YES type:@"I" searchText:@""];
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [_tblParticipant addSubview:refreshControl];
+}
+-(void)refresh{
+    pageNumber = 1;
+    [self participantsList:false type:@"" searchText:searchBar.text];
 }
 
 #pragma mark - IBAction Methods
@@ -118,6 +127,7 @@
     
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
     cell.backgroundColor = kDefaultBlueColor;
     [cell setParticipant:arrParticipant[indexPath.row] isFromRecordExpression:YES];
     
@@ -258,7 +268,7 @@
                 NSMutableDictionary *payloadDictionary = [dictionary valueForKey:kAPIPayload];
                 
                 isLoading = NO;
-                
+                [refreshControl endRefreshing];
                 if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                     
                     int counter = (int)([[payloadDictionary valueForKey:@"userList"] count] % 10 );

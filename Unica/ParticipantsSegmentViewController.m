@@ -10,6 +10,7 @@
     NSString *countryIDsString;
     NSString *typeIDsString;
     NSTimer *_timer;
+    NSInteger currentIndex;
 
 }
 
@@ -54,6 +55,7 @@
         countryIDsString = @"";
     }
     NSMutableDictionary *dictType = [Utility unarchiveData:[kUserDefault valueForKey:kselectTypeParticipant]];
+    
     if ([dictType isKindOfClass:[NSMutableDictionary class]] && [[dictType valueForKey:kselectTypeParticipant] isKindOfClass:[NSMutableArray class]]) {
         self.typeFilter = [dictType valueForKey:kselectTypeParticipant];
     } else {
@@ -66,8 +68,7 @@
         typeIDsString = @"";
     }
 
-    NSLog(@"Country id %@, type Id %@", countryIDsString, typeIDsString);
-     [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    [self reloadSegment];
 }
 
 -(void)favouriteSliderController:(NSString*)eventID{
@@ -85,7 +86,7 @@
 
     
     participantsViewSend = [storyBoard instantiateViewControllerWithIdentifier:kparticipantsStoryboardID];
-    participantsViewSend.title = @"SEND";
+    participantsViewSend.title = @"SENT";
 
     containerVC = [[YSLContainerViewController alloc]initWithControllers:@[participantsViewAll,participantsViewRecieved,participantsViewSend]
                                                             topBarHeight:0
@@ -132,33 +133,20 @@
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     
-    [participantsViewAll reloadParticipantsData:selectedIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    [self reloadSegment];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
     [searchBar resignFirstResponder];
-    
-    [participantsViewAll reloadParticipantsData:selectedIndex type  :selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    [self reloadSegment];
+
 }
 
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
-    
-    if (index == 0){
-        selectedTap =  @"All";
-        [participantsViewAll reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
-    }
-    else if (index == 1){
-        selectedTap =  @"Received";
-        [participantsViewRecieved reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
-    }
-    else if (index == 2){
-        selectedTap =  @"Send";
-        [participantsViewSend reloadParticipantsData:index type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
-    }
-
-    
+    currentIndex = index;
+    [self reloadSegment];
 }
 
 
@@ -189,6 +177,21 @@
 
 #pragma mark - Filter delegate
 
+-(void)reloadSegment{
+    if (currentIndex == 0){
+        selectedTap =  @"All";
+        [participantsViewAll reloadParticipantsData:currentIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    }
+    else if (currentIndex == 1){
+        selectedTap =  @"Received";
+        [participantsViewRecieved reloadParticipantsData:currentIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    }
+    else if (currentIndex == 2){
+        selectedTap =  @"Send";
+        [participantsViewSend reloadParticipantsData:currentIndex type:selectedTap searchText:searchBar.text fromSearch: true countryId:countryIDsString typeId:typeIDsString];
+    }
+}
+
 -(void)checkApplyButtonAction:(NSInteger)index{
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
     isFromFilter = true;
@@ -197,8 +200,6 @@
 -(void)removeAllFilter:(NSInteger)index{
     isFromFilter = true;
     self.isFilterApply = [NSString stringWithFormat:@"%ld",(long)index];
-    
-    
 }
 
 -(void)agentServiceMethod:(NSString *)index{
