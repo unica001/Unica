@@ -28,6 +28,8 @@
     NSMutableArray *_imagesArray;
     NSMutableArray *_textArray;
     NSMutableArray *_bannerArr,*imageBannerArr ,*textBannerArr ,*imageArr ,*titleArr ,*desArray,*imageArrayOfUrl,*navigationArr ;
+    
+    AppDelegate *appDelegate;
 }
 
 @end
@@ -37,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [self getbanner];
     // google analytics
     [GAI sharedInstance].dispatchInterval = 0;
@@ -167,8 +169,12 @@
         [self performSegueWithIdentifier:kAgentSegueIdentifier sender:kHomeView];
     }
      else if (indexPath.row == 1) {
-
-         [viewSearchOption setHidden:NO];
+         if (appDelegate.arrQuickSearch.count > 0) {
+             [viewSearchOption setHidden:NO];
+         }
+         else{
+         [self performSegueWithIdentifier:kCourseSegueIdentifier sender:kHomeView];
+         }
      }
      else if (indexPath.row == 2) {
          [self performSegueWithIdentifier:keventSegueIdentifier sender:kHomeView];

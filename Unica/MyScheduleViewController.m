@@ -136,7 +136,25 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self getParticipantDetails:myScheduleArray[indexPath.row]];
+   
+}
+-(void)getParticipantDetails:(NSMutableDictionary *)dict {
     
+    NSString *participant = [NSString stringWithFormat:@"%@",dict[@"participantId"]];
+    
+    participant = [participant stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+     participant = [participant stringByReplacingOccurrencesOfString:@"<nil>" withString:@""];
+    
+    if (![participant isEqualToString:@""]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"agent" bundle:nil];
+        ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
+        detailView.strParticipantId = dict[@"participantId"];
+        detailView.participantDict = dict;
+        
+        [self.navigationController pushViewController:detailView animated:true];
+
+    }
 }
 
 // Button Action

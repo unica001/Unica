@@ -123,7 +123,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = false;
+        cell.chatButton.hidden = true;
     }
     return  cell;
 }

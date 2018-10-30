@@ -17,6 +17,8 @@
     NSString *typeIDsString;
     NSTimer *_timer;
     UIRefreshControl *refreshControl;
+    NSMutableArray *selectedArray;
+
 }
 
 @end
@@ -26,6 +28,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    selectedArray = [[NSMutableArray alloc]init];
+
     appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITextField *searchfield = [searchBar valueForKey:@"_searchField"];
     searchfield.textColor = [UIColor whiteColor];
@@ -140,29 +145,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *cellIdentifier  =@"MeetingReportParticipantCell";
-    
-    MeetingReportParticipantCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MeetingReportParticipantCell" owner:self options:nil];
+    static NSString *cellIdentifier  =@"ParticipantsCell";
+    ParticipantsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"ParticipantsCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.backgroundColor = kDefaultBlueColor;
-    cell.btnRecordExp.tag = indexPath.row;
-    cell.chatButton.tag = indexPath.row;
+    [cell setParticipantsData:arrParticipant[indexPath.row] viewType:@"ALL" selectedArray:selectedArray title:self.title];
     
-    [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [cell setParticipant:arrParticipant[indexPath.row] isFromRecordExpression:YES];
-    [cell.btnRecordExp addTarget:self action:@selector(sendRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    cell.checkMarkButton.tag  = indexPath.row;
+    cell.sendRequestbutton.tag = indexPath.row;
+   
+    
+    [cell.checkMarkButton addTarget:self action:@selector(checMarkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.sendRequestbutton addTarget:self action:@selector(sendRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.acceptButton addTarget:self action:@selector(acceptRequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.rejectButton addTarget:self action:@selector(rejectequestButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.chatButton addTarget:self action:@selector(chatButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *qbid = [Utility replaceNULL:arrParticipant[indexPath.row][kQbId] value:@""];
     if ([[Utility replaceNULL:qbid value:@""] isEqualToString:@""]) {
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = false;
+        cell.chatButton.hidden = true;
     }
-    
     return  cell;
 }
 
@@ -235,8 +241,62 @@
     }
 }
 
+-(void)reloadTbleViewCell:(NSDictionary *)dictionary{
+    
+    if (selectedArray.count> 0) {
+        [selectedArray removeAllObjects];
+    }
+    
+    NSArray *array = dictionary[@"participant"];
+    
+    for (int index = 0; index < array.count; index++) {
+        
+        NSString *participantID = [NSString stringWithFormat:@"%@",array[index][@"participantId"]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"participantId = %@",participantID];
+        NSArray *filterArray = [arrParticipant filteredArrayUsingPredicate:predicate];
+        
+        if (filterArray.count > 0) {
+            NSInteger objectIndex = [arrParticipant indexOfObject:filterArray[0]];
+            [arrParticipant removeObjectAtIndex:objectIndex];
+//            [arrParticipant insertObject:array[index] atIndex:objectIndex];
+        }
+    }
+    [tableView reloadData];
+}
 
 #pragma Button Action
+
+// MARK Button Action
+
+-(void)checMarkButtonAction:(UIButton *)sender{
+    NSDictionary *dict = [arrParticipant objectAtIndex:sender.tag];
+    if ([selectedArray containsObject:dict]) {
+        [selectedArray removeObject:dict];
+    }
+    else {
+        [selectedArray addObject:dict];
+    }
+    
+    if ([selectedArray count] > 0 ){
+        [bottomView setHidden:false];
+        if (kIs_IphoneX) {
+            bottomViewHeight.constant = 100;
+        }
+        else {
+            bottomViewHeight.constant = 50;
+        }
+        countLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)selectedArray.count];
+    }
+    else {
+        countLabel.text = [NSString stringWithFormat:@"0"];
+        [bottomView setHidden:true];
+        bottomViewHeight.constant = 0;
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    //    [tableView reloadData];
+}
 
 - (IBAction)filterButtonAction:(id)sender {
     
@@ -253,18 +313,51 @@
     [self.navigationController popViewControllerAnimated:true];
 }
 
--(void)sendRequestButtonAction:(UIButton*)sender{
+-(void)sendParticipantRequest:(NSString*)participantId{
     
-    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
-        
+    NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
+    
+    NSString *userId = [loginDictionary valueForKey:@"id"];
+    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:userId forKey:@"user_id"];
+    [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
+    [dic setValue:participantId forKey:@"participantId"];
+    [dic setValue:appDelegate.userEventId forKey:kevent_id];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-send-request.php"];
+    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
+        if (!error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
+                    
+                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
+                        [selectedArray removeAllObjects];
+                        countLabel.text = @"";
+                        bottomView.hidden = true;
+                        bottomViewHeight.constant = 0;
+                        [self reloadTbleViewCell:dictionary[kAPIPayload]];
+                    }];
+                }
+            });
+        }
+    }];
+}
+
+
+-(void)sendRequestButtonAction:(UIButton*)sender{
+
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected member(s)?" block:^(int index){
+
         if (index == 0) {
             NSDictionary *dict = [arrParticipant objectAtIndex:sender.tag];
-            [self sendParticipantRequest:dict[@"participantId"] index:sender.tag];
+            [self sendParticipantRequest:dict[@"participantId"]];
     }
     }];
-  
-    
 }
+
+
 -(void)chatButtonAction:(UIButton*)sender{
     [self openChat:arrParticipant[sender.tag]];
 }
@@ -315,35 +408,6 @@
 
 #pragma mark - APIS
 
-
--(void)sendParticipantRequest:(NSString*)participantId index:(NSInteger)index{
-    
-    NSDictionary*loginDictionary = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
-    
-    NSString *userId = [loginDictionary valueForKey:@"id"];
-    userId = [userId stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:userId forKey:@"user_id"];
-    [dic setValue:[loginDictionary valueForKey:@"user_type"] forKey:@"user_type"];
-    [dic setValue:participantId forKey:@"participantId"];
-    [dic setValue:appDelegate.userEventId forKey:kevent_id];
-    
-    NSString *url = [NSString stringWithFormat:@"%@%@",kAPIBaseURL,@"org-send-request.php"];
-    [[ConnectionManager sharedInstance] sendPOSTRequestForURL:url message:@"" params:dic  timeoutInterval:kAPIResponseTimeout showHUD:YES showSystemError:YES completion:^(NSDictionary *dictionary, NSError *error) {
-        if (!error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
-                   
-                    [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                        [arrParticipant removeObjectAtIndex:index];
-                        [tableView reloadData];
-                    }];
-                }
-            });
-        }
-    }];
-}
 -(void)participantsList:(BOOL)showHude searchText:(NSString*)searchText{
     
     NSMutableDictionary *dictLogin = [Utility unarchiveData:[kUserDefault valueForKey:kLoginInfo]];
@@ -458,4 +522,16 @@
 }
 
 
+- (IBAction)selectAllButtonAction:(UIButton *)sender {
+    
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected member(s)?" block:^(int index){
+        
+        if (index == 0) {
+            NSArray *participantIds = [selectedArray valueForKey:@"participantId"];
+            NSString *ids = [participantIds componentsJoinedByString:@","];
+            [self sendParticipantRequest:ids];
+        }
+    }];
+
+}
 @end

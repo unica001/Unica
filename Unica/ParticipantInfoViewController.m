@@ -14,6 +14,7 @@
     NSString *designation;
     NSString *emailStrign;
     NSString *mobileNoString;
+    NSString *phoneNumberString;
     NSString *websiteString;
     NSString *countryString;
 }
@@ -25,11 +26,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    infoArray = [[NSMutableArray alloc]initWithObjects:@"Designation",@"Email ID",@"Phone Number",@"Website",@"Country",@"Certification", nil];
+    infoArray = [[NSMutableArray alloc]initWithObjects:@"Designation",@"Email ID",@"Phone Number",@"Mobile Number",@"Website",@"Country",@"Certification", nil];
     
     designation = [Utility replaceNULL:self.infoDictionary[@"designation"] value:@""];
     emailStrign = [Utility replaceNULL:self.infoDictionary[@"email"] value:@""];
+    phoneNumberString = [Utility replaceNULL:self.infoDictionary[@"phoneNo"] value:@""];
     mobileNoString = [Utility replaceNULL:self.infoDictionary[@"mobileNo"] value:@""];
+
     websiteString = [Utility replaceNULL:self.infoDictionary[@"website"] value:@""];
     countryString = [Utility replaceNULL:self.infoDictionary[@"country"] value:@""];
 
@@ -71,7 +74,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if ((indexPath.row == 0 && [designation isEqualToString:@""]) || (indexPath.row == 4 && [countryString isEqualToString:@""])|| (indexPath.row == 3 && [websiteString isEqualToString:@""])|| (indexPath.row == 2 && [mobileNoString isEqualToString:@""])|| (indexPath.row == 1 && [emailStrign isEqualToString:@""])) {
+    if ((indexPath.row == 0 && [designation isEqualToString:@""]) || (indexPath.row == 5 && [countryString isEqualToString:@""])|| (indexPath.row == 4 && [websiteString isEqualToString:@""])|| (indexPath.row == 2 && [phoneNumberString isEqualToString:@""])|| (indexPath.row == 1 && [emailStrign isEqualToString:@""]) || (indexPath.row == 3 && [mobileNoString isEqualToString:@""])) {
         return 0;
     }
     return 60;
@@ -107,14 +110,22 @@
         }
     }
     else if (indexPath.row == 2){
+        if ([phoneNumberString isEqualToString:@""]) {
+            cell.hidden = true;
+        }
+        else {
+        cell._descriptionLabel.text = phoneNumberString;
+        }
+    }
+    else if (indexPath.row == 3){
         if ([mobileNoString isEqualToString:@""]) {
             cell.hidden = true;
         }
         else {
-        cell._descriptionLabel.text = mobileNoString;
+            cell._descriptionLabel.text = mobileNoString;
         }
     }
-    else if (indexPath.row == 3){
+    else if (indexPath.row == 4){
         if ([websiteString isEqualToString:@""]) {
             cell.hidden = true;
         }
@@ -122,7 +133,7 @@
         cell._descriptionLabel.text = websiteString;
         }
     }
-    else if (indexPath.row == 4){
+    else if (indexPath.row == 5){
         
         if ([countryString isEqualToString:@""]) {
             cell.hidden = true;
@@ -130,7 +141,7 @@
         cell._descriptionLabel.text = countryString;
         }
         
-    } else if (indexPath.row == 5){
+    } else if (indexPath.row == 6){
         NSString *strCertificate = [Utility replaceNULL:self.infoDictionary[@"certification"] value:@""];
         cell.btnLink.hidden = NO;
         [cell.btnLink addTarget:self action:@selector(tapLink:) forControlEvents:UIControlEventTouchUpInside];
@@ -162,7 +173,17 @@
                 [[UIApplication sharedApplication] openURL:phoneUrl];
             }
         }    }
-    else if (indexPath.row == 3){
+    
+    if (indexPath.row == 3){
+        if (![[Utility replaceNULL:self.infoDictionary[@"phoneNo"] value:@""] isEqualToString:@""]) {
+            
+            NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",self.infoDictionary[@"phoneNo"] ]];
+            
+            if ([[UIApplication sharedApplication] canOpenURL:phoneUrl]) {
+                [[UIApplication sharedApplication] openURL:phoneUrl];
+            }
+        }    }
+    else if (indexPath.row == 4){
         if (![[Utility replaceNULL:self.infoDictionary[@"website"] value:@""] isEqualToString:@""]) {
             
             UIApplication *application = [UIApplication sharedApplication];

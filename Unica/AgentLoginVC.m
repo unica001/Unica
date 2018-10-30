@@ -173,17 +173,17 @@ typedef enum
 - (BOOL)validatePassword{
     
     if(![Utility validateField:_emailText.text]){
-        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter your email" block:^(int index) {
+        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter your Login ID" block:^(int index) {
             [_emailText becomeFirstResponder];
         }];
         return false;
     }
-    else if(![Utility validateEmail:_emailText.text]){
-        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter valid email" block:^(int index) {
-            [_emailText becomeFirstResponder];
-        }];
-        return false;
-    }
+//    else if(![Utility validateEmail:_emailText.text]){
+//        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter valid email" block:^(int index) {
+//            [_emailText becomeFirstResponder];
+//        }];
+//        return false;
+//    }
     //    else  if(![Utility validateEmail:_emailText.text] ){
     //        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Please enter valid email Id" block:^(int index) {
     //

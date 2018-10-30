@@ -68,6 +68,10 @@
         {
             [selectedParticipant addObject:filtredArray[0]];
         }
+        else {
+            [selectedParticipant addObject:participantArray[0]];
+
+        }
     }
     orgNameLabel.text = [dict valueForKey:@"organizationName"];
     remarkTextView = [Utility replaceNULL:[dict valueForKey:@"remark"] value:@""];

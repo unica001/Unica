@@ -139,7 +139,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = false;
+        cell.chatButton.hidden = true;
     }
     return  cell;
 }
@@ -153,6 +153,8 @@
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
     detailView.strParticipantId = dict[@"participantId"];
     detailView.participantDict = dict;
+    detailView.fromViewController = @"MeetingReport";
+
     [self.navigationController pushViewController:detailView animated:true];
 }
 

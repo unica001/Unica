@@ -271,7 +271,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = false;
+        cell.chatButton.hidden = true;
     }
     
     NSString *colorcode = [Utility replaceNULL:arrRecord[indexPath.row][@"color_code"] value:@""] ;
@@ -294,6 +294,7 @@
     ParticipantDetailViewController * detailView = [storyboard instantiateViewControllerWithIdentifier:@"ParticipantDetailViewController"];
     detailView.strParticipantId = dict[@"participantId"];
     detailView.participantDict = dict;
+    detailView.fromViewController = @"AllParticipant";
     [self.navigationController pushViewController:detailView animated:true];
 }
 
@@ -518,6 +519,9 @@
                     [self addEventOverlay];
                 }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [Utility showAlertViewControllerIn:self title:@"" message:dictionary[kAPIMessage] block:^(int index) {
+                        }];
                         
                     });
                 }

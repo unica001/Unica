@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *rejectButton;
 @property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
 @property (weak, nonatomic) IBOutlet UIView *viewReceived;
+@property (nonatomic,retain) NSString *fromViewController;
 
 - (IBAction)profileImageButtonAction:(id)sender;
 - (IBAction)rejectButtonAction:(id)sender;

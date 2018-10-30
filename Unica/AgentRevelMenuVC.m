@@ -44,7 +44,7 @@ typedef enum
     
     menuImagesArray=[NSMutableArray arrayWithObjects:@"Home",@"Business",@"Student-1",@"event_menu",@"Tutorials",@"login-1",@"About",@"Logout-1", nil];
     
-    menuLabelArray=[NSMutableArray arrayWithObjects:@"Home",@"View Business Cards", @"View Interested Students", @"Events",@"Tutorials", @"Login to UNICA Web Account", @"About UNICA",@"Logout", nil];
+    menuLabelArray=[NSMutableArray arrayWithObjects:@"Home",@"View Business Cards", @"View Interested Students", @"Events",@"App Tutorials", @"Login to UNICA Web Account", @"About UNICA",@"Logout", nil];
     
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     

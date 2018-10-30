@@ -27,8 +27,10 @@
     
     NSString *qbid = [NSString stringWithFormat:@"%@",[Utility replaceNULL:[self.participantDict valueForKey:kQbId] value:@""]];
     if ([qbid isEqualToString:@""]) {
-        _chatButton.hidden = true;
+     //   _chatButton.hidden = true;
     }
+    _chatButton.hidden = true;
+
 }
 
 -(void)setHeaderDetails:(NSDictionary*)detailsDict{
@@ -37,7 +39,6 @@
         _universityName.text = [detailsDict valueForKey:korganisationName];
         _typeLabel.text = [detailsDict valueForKey:kType];
         _countryLabel.text = [detailsDict valueForKey:kCountry];
-    
     
     headerHeightConstrant.constant  = [Utility getTextHeight:[detailsDict valueForKey:korganisationName] size:CGSizeMake(kiPhoneWidth-120, CGFLOAT_MAX) font:kDefaultFontForApp]+170;
 
@@ -55,13 +56,11 @@
 
             if ([buttons[0][@"status"] integerValue] ==1) {
                 [_sendRequestbutton setTitle:buttons[0][@"name"] forState:UIControlStateNormal];
-                
             }
             else{
                 [_sendRequestbutton setTitle:buttons[0][@"name"] forState:UIControlStateNormal];
                 _sendRequestbutton.enabled = false;
                 _sendRequestbutton.alpha = 0.4;
-                
             }
         }
         else if (buttons.count > 1){
@@ -85,12 +84,21 @@
             }
         }
     
+    if ([self.fromViewController isEqualToString:@"MeetingReport"] || [self.fromViewController isEqualToString:@"AllParticipant"]) {
+        
+        _rejectButton.hidden = true;
+        _acceptButton.hidden = true;
+        _viewReceived.hidden = true;
+        _sendRequestbutton.hidden = true;
+        
+          headerHeightConstrant.constant  = [Utility getTextHeight:[detailsDict valueForKey:korganisationName] size:CGSizeMake(kiPhoneWidth-120, CGFLOAT_MAX) font:kDefaultFontForApp]+130;
+        
+    }
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
 
 #pragma mark - APIS
 
@@ -253,7 +261,7 @@
 
 - (IBAction)sendRequestButtonAction:(id)sender {
     
-    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected member(s)?" block:^(int index){
         
         if (index == 0) {
             [self sendParticipantRequest:_strParticipantId];

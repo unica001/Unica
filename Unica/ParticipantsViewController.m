@@ -113,7 +113,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = false;
+        cell.chatButton.hidden = true;
     }
     return  cell;
 }
@@ -181,7 +181,7 @@
 }
 
 -(void)sendRequestButtonAction:(UIButton*)sender{
-    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
+    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected member(s)?" block:^(int index){
         
         if (index == 0) {
             selectedRowID = sender.tag;
@@ -214,19 +214,22 @@
 
 -(void)rejectequestButtonAction:(UIButton*)sender{
     
-    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Are you sure to cancel this request?" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"Please write a reason";
         reasonTextField = textField;
     }];
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//        NSLog(@"Current password %@", [[alertController textFields][0] text]);
         
+        if ([reasonTextField.text isEqualToString:@""]) {
+            [Utility showAlertViewControllerIn:self title:@"" message:@"Please provide reason for cancel" block:^(int index){
+            }];
+        }
+        else{
         selectedRowID = sender.tag;
         NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
         [self participantRejectRequest:dict[@"participantId"] request_type:@"2" message:[[alertController textFields][0] text]];
-
+        }
         
     }];
     [alertController addAction:confirmAction];
@@ -236,21 +239,10 @@
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
     
-//    [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to cancel request to schedule a meeting for selected members?" block:^(int index){
-//
-//        if (index == 0) {
-//            selectedRowID = sender.tag;
-//            NSDictionary *dict = [participantArray objectAtIndex:sender.tag];
-//            [self participantRejectRequest:dict[@"participantId"] request_type:@"2"];
-//
-//        }
-//    }];
-
-    
+ 
 }
 
 - (IBAction)selectAllButtonAction:(id)sender {
-    
     [Utility showAlertViewControllerIn:self withAction:@"Yes" actionTwo:@"No" title:@"" message:@"Are you sure to send request to schedule a meeting for selected members?" block:^(int index){
         
         if (index == 0) {
@@ -259,7 +251,6 @@
             [self sendParticipantRequest:ids];
         }
     }];
-
 }
 
 
@@ -451,7 +442,6 @@
                     if ([[dictionary valueForKey:kAPICode] integerValue]== 200) {
                         
                         [Utility showAlertViewControllerIn:self title:@"" message:[dictionary valueForKey:kAPIMessage] block:^(int index) {
-                            
                             [selectedArray removeAllObjects];
                              countLabel.text = @"";
                             bottomView.hidden = true;

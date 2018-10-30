@@ -22,14 +22,12 @@
 
 #define kIs_IphoneX ([[UIScreen mainScreen] bounds].size.height == 812)
 
-
 //#define kAPIBaseURL @"https://www.uniagents.com/apk/rest/android/"
 //#define kAPIBaseURL @"http://api.uniagents.com/api/"
 //#define kAPIBaseURL @"https://unica.sirez.com/api/"
 #define kAPIBaseURL @"https://www.uniagents.com/apknew/rest/android/"
 
 #define kAppDelegate  (AppDelegate*)[[UIApplication sharedApplication] delegate]
-
 #define kAPIResponseTimeout 90
 
 //FONTS
@@ -738,6 +736,8 @@ static NSString *const kPushNotificationDialogMessageKey = @"message";
 
 #define kselectEventMeeting @"selectEventMeeting"
 #define kselectEventRecord @"selectEventRecord"
+
+
 
 #define kScheduleFilter @"scheduleFilter"
 #define kMeetingFilter @"meetingFilter"

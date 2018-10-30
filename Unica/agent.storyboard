@@ -2851,7 +2851,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-Fu-0yw" customClass="TPKeyboardAvoidingTableView">
-                                <rect key="frame" x="0.0" y="120" width="320" height="438"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="378"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Gog-Uz-kiS" id="IGA-8o-1sl"/>
@@ -2868,6 +2868,54 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpF-7x-jnh">
+                                <rect key="frame" x="0.0" y="508" width="320" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcL-PV-3C7">
+                                        <rect key="frame" x="70" y="7" width="180" height="36"/>
+                                        <color key="backgroundColor" red="0.2666666667" green="0.50588235290000005" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="180" id="erJ-qo-qCG"/>
+                                            <constraint firstAttribute="height" constant="36" id="fXQ-JQ-h8e"/>
+                                        </constraints>
+                                        <state key="normal" title="Send All">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectAllButtonAction:" destination="Gog-Uz-kiS" eventType="touchUpInside" id="LQZ-7A-8to"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbu-P4-guP">
+                                        <rect key="frame" x="260" y="7" width="36" height="36"/>
+                                        <color key="backgroundColor" red="0.2666666667" green="0.50588235290000005" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="3bg-Dj-Y2E"/>
+                                            <constraint firstAttribute="width" constant="36" id="V2l-zd-h4L"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="18"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.16862745100000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="QcL-PV-3C7" firstAttribute="centerX" secondItem="cpF-7x-jnh" secondAttribute="centerX" id="JyO-t9-bNB"/>
+                                    <constraint firstItem="Hbu-P4-guP" firstAttribute="top" secondItem="cpF-7x-jnh" secondAttribute="top" constant="7" id="fDv-zF-NJh"/>
+                                    <constraint firstItem="QcL-PV-3C7" firstAttribute="top" secondItem="cpF-7x-jnh" secondAttribute="top" constant="7" id="msR-uv-pX4"/>
+                                    <constraint firstAttribute="height" constant="50" id="upB-X0-zTl"/>
+                                    <constraint firstItem="Hbu-P4-guP" firstAttribute="leading" secondItem="QcL-PV-3C7" secondAttribute="trailing" constant="10" id="vbL-ht-6bk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.94509803920000002" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2876,10 +2924,13 @@
                             <constraint firstAttribute="trailing" secondItem="BmG-Fu-0yw" secondAttribute="trailing" id="M05-Dk-6oo"/>
                             <constraint firstItem="AdK-Hl-9xr" firstAttribute="centerX" secondItem="4ht-YQ-tdY" secondAttribute="centerX" id="Qrx-aZ-GLq"/>
                             <constraint firstItem="BmG-Fu-0yw" firstAttribute="leading" secondItem="4ht-YQ-tdY" secondAttribute="leading" id="Sez-EA-pD0"/>
+                            <constraint firstItem="cpF-7x-jnh" firstAttribute="leading" secondItem="4ht-YQ-tdY" secondAttribute="leading" id="T79-7Z-0SI"/>
                             <constraint firstItem="BmG-Fu-0yw" firstAttribute="top" secondItem="3Nv-ko-dot" secondAttribute="bottom" id="XL1-8p-FNW"/>
-                            <constraint firstItem="zXC-Ud-Jrv" firstAttribute="top" secondItem="BmG-Fu-0yw" secondAttribute="bottom" constant="10" id="mCq-9a-6nm"/>
+                            <constraint firstAttribute="trailing" secondItem="cpF-7x-jnh" secondAttribute="trailing" id="m6F-Zj-fea"/>
                             <constraint firstItem="3Nv-ko-dot" firstAttribute="top" secondItem="lFv-rA-jXJ" secondAttribute="bottom" id="tcz-a4-pwJ"/>
+                            <constraint firstItem="cpF-7x-jnh" firstAttribute="top" secondItem="BmG-Fu-0yw" secondAttribute="bottom" constant="10" id="wxw-y9-8lI"/>
                             <constraint firstAttribute="trailing" secondItem="3Nv-ko-dot" secondAttribute="trailing" id="xOy-Bg-3OZ"/>
+                            <constraint firstItem="zXC-Ud-Jrv" firstAttribute="top" secondItem="cpF-7x-jnh" secondAttribute="bottom" constant="10" id="y0Y-7o-ZoJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Participants" id="JVE-6z-KjY">
@@ -2892,8 +2943,12 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="bottomView" destination="cpF-7x-jnh" id="OaV-Pf-V19"/>
+                        <outlet property="bottomViewHeight" destination="upB-X0-zTl" id="k7L-LZ-4AR"/>
+                        <outlet property="countLabel" destination="Hbu-P4-guP" id="e9y-3f-HNd"/>
                         <outlet property="messageLabel" destination="AdK-Hl-9xr" id="cE5-xT-Asx"/>
                         <outlet property="searchBar" destination="vDS-Cq-srz" id="rPO-hT-GH2"/>
+                        <outlet property="selectAllButton" destination="QcL-PV-3C7" id="YsF-Mc-7S8"/>
                         <outlet property="tableView" destination="BmG-Fu-0yw" id="XNr-ef-ycX"/>
                     </connections>
                 </viewController>

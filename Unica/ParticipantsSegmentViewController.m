@@ -11,7 +11,6 @@
     NSString *typeIDsString;
     NSTimer *_timer;
     NSInteger currentIndex;
-
 }
 
 @end
@@ -127,8 +126,7 @@
     
     [_timer invalidate];
     _timer = nil;
-    
-    
+   
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     spinner.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
@@ -136,10 +134,8 @@
     [self reloadSegment];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    
     [searchBar resignFirstResponder];
     [self reloadSegment];
-
 }
 
 #pragma mark -- YSLContainerViewControllerDelegate
@@ -148,7 +144,6 @@
     currentIndex = index;
     [self reloadSegment];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
