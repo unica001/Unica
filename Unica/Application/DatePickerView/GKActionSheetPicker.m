@@ -128,7 +128,6 @@ typedef NS_ENUM(NSUInteger, GKActionSheetPickerType) {
                 [parsedItems addObject:item];
             }
         }
-        
         [parsedComponents addObject:parsedItems];
     }
     

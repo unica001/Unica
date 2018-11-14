@@ -2959,8 +2959,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica.onesignal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd476ac0-8272-40d5-b071-87a877d0baa3";
-				PROVISIONING_PROFILE_SPECIFIER = unica_oneSignal_Distribution;
+				PROVISIONING_PROFILE = "8607478e-fae9-4f44-9105-13292c08461e";
+				PROVISIONING_PROFILE_SPECIFIER = unica_onesignalappstore;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -3155,8 +3155,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b4d4a349-a94a-44fd-beda-d1a849f4d673";
-				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
+				PROVISIONING_PROFILE = "242462b1-3227-4c3f-a0f6-a27efd2a4111";
+				PROVISIONING_PROFILE_SPECIFIER = unica_appStore_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
