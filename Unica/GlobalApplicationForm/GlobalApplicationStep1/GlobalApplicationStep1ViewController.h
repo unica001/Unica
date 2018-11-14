@@ -28,6 +28,8 @@
 @property (weak, nonatomic)  UITextField *textFieldLastName;
 @property (weak, nonatomic)  UITextField *textFieldCountryofCitizenship;
 @property (weak, nonatomic)  UITextField *textFieldDateofBirth;
+//Gender Change
+@property (weak, nonatomic)  UITextField *textFieldGender;
 @property (weak, nonatomic)  UITextField *textFieldPhoneNumber;
 @property (weak, nonatomic)  UITextField *textFieldSkypeID;
 @property (weak, nonatomic)  UITextField *textFieldNativeLanguage;

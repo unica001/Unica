@@ -50,7 +50,8 @@
     
     [self getGlobelData];
     arrayRequiredFields = [[NSArray alloc]init];
-    arrayRequiredFields = @[@"First Name",@"Middle Name",@"Last Name",@"Date of Birth", @"Phone Number", @"Skype Id", @"Native Language",@"Country of Citizenship"];
+    //Gender Change
+    arrayRequiredFields = @[@"First Name",@"Middle Name",@"Last Name",@"Date of Birth", @"Gender", @"Phone Number", @"Skype Id", @"Native Language",@"Country of Citizenship"];
     // Do any additional setup after loading the view.
     self.dictionaryPersonalInformationStep1 = [[NSMutableDictionary alloc]init];
     
@@ -112,6 +113,12 @@
         // DOB
         if (![[GAPStep1Dictionary valueForKey:kStep1DOB] isKindOfClass:[NSNull class]]) {
             self.textFieldDateofBirth.text = [GAPStep1Dictionary valueForKey:kStep1DOB];
+        }
+        
+        //Gender Change
+        // Gender
+        if (![[GAPStep1Dictionary valueForKey:kStep1Gender] isKindOfClass:[NSNull class]]) {
+            self.textFieldGender.text = [GAPStep1Dictionary valueForKey:kStep1Gender];
         }
         
         // number
@@ -212,6 +219,12 @@
         if (![[_loginInfo valueForKey:@"dob"] isKindOfClass:[NSNull class]]) {
             self.textFieldDateofBirth.text = [_loginInfo valueForKey:@"dob"];
              [dictionary setValue:[_loginInfo valueForKey:kdob] forKey:kStep1DOB];
+        }
+        
+        //Gender Change
+        if (![[_loginInfo valueForKey:kGender] isKindOfClass:[NSNull class]]) {
+            self.textFieldGender.text = [_loginInfo valueForKey:kGender];
+            [dictionary setValue:[_loginInfo valueForKey:kGender] forKey:kStep1Gender];
         }
         
         // number
@@ -377,23 +390,33 @@
         self.textFieldDateofBirth = cell.textInputData;
         
     }
+    //Gender Change
     else if (indexPath.row == 4) {
+        cell.textInputData.userInteractionEnabled = NO;
+        cell.btnCalender.hidden = true;
+        cell.btnCalender.userInteractionEnabled = NO;
+        
+        self.textFieldGender = cell.textInputData;
+        
+    }
+    
+    else if (indexPath.row == 5) {
         
         [cell.textInputData setKeyboardType:UIKeyboardTypeNumberPad];
         self.textFieldPhoneNumber = cell.textInputData;
         self.textFieldPhoneNumber.inputAccessoryView = [self addToolBarOnKeyboard];
     }
-    else if(indexPath.row == 5) {
+    else if(indexPath.row == 6) {
         
         cell.labelSubTitle.text = @"(if available)";
         self.textFieldSkypeID = cell.textInputData;
         self.textFieldSkypeID.returnKeyType = UIReturnKeyDone;
     }
-    else if(indexPath.row == 6) {
+    else if(indexPath.row == 7) {
         cell.textInputData.userInteractionEnabled=NO;
         self.textFieldNativeLanguage = cell.textInputData;
     }
-    else if (indexPath.row ==7){
+    else if (indexPath.row ==8){
         static NSString *cellIdentifierStep1  =@"cell";
         
         CountrySelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierStep1];
@@ -420,7 +443,7 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row ==7) {
+    if (indexPath.row ==8) {
         return  65;
     }
 
@@ -447,7 +470,24 @@
         
       
     }
-    else if(indexPath.row==7)
+    //Gender Change
+    else if (indexPath.row == 4) {
+        NSArray *items = @[@"Male", @"Female"];
+        
+        self.picker = [GKActionSheetPicker stringPickerWithItems:items selectCallback:^(id selected) {
+            
+            self.basicCellSelectedString = (NSString *)selected;
+            
+            self.textFieldGender.text = [NSString stringWithFormat:@"%@", selected];
+            
+        } cancelCallback:nil];
+        
+        [self.picker presentPickerOnView:self.view];
+        self.picker.title = @"Select Gender";
+        [self.picker selectValue:self.basicCellSelectedString];
+    }
+    
+    else if(indexPath.row==8)
     {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         UNKPredictiveSearchViewController *_predictiveSearch = [storyBoard instantiateViewControllerWithIdentifier:@"PredictiveSearchStoryBoardID"];
@@ -553,6 +593,9 @@
         [self.dictionaryPersonalInformationStep1 setValue:self.textFieldLastName.text forKey:kStep1LastName];
 //        [self.dictionaryPersonalInformationStep1 setValue:countruId forKey:kStep1CitizenCountry];
         [self.dictionaryPersonalInformationStep1 setValue:self.textFieldDateofBirth.text forKey:kStep1DOB];
+        //Gender Change
+        [self.dictionaryPersonalInformationStep1 setValue:self.textFieldGender.text forKey:kStep1Gender];
+        
         [self.dictionaryPersonalInformationStep1 setValue:self.textFieldPhoneNumber.text forKey:kStep1MobileNumber];
         [self.dictionaryPersonalInformationStep1 setValue:self.textFieldSkypeID.text forKey:kStep1SkypeID];
         [self.dictionaryPersonalInformationStep1 setValue:self.textFieldNativeLanguage.text forKey:kStep1NativeLanguage];
@@ -747,6 +790,12 @@
         textField = self.textFieldDateofBirth;
         trimmedString = [self.textFieldDateofBirth.text stringByTrimmingCharactersInSet:charSet];
         failedMessage = @"Enter date of birth";
+    }
+    //Gender Change
+    else if(![Utility validateField:self.textFieldGender.text]){
+        textField = self.textFieldGender;
+        trimmedString = [self.textFieldGender.text stringByTrimmingCharactersInSet:charSet];
+        failedMessage = @"Select Gender";
     }
     else if(![Utility validateField:self.textFieldPhoneNumber.text]){
         textField = self.textFieldPhoneNumber;
@@ -1005,6 +1054,7 @@
     [dictionary setValue:[dic valueForKey:kStep1LastName] forKey:kStep1LastName];
     [dictionary setValue:[dic valueForKey:kStep1CitizenCountry] forKey:kStep1CitizenCountry];
     [dictionary setValue:[dic valueForKey:kStep1DOB] forKey:kStep1DOB];
+    [dictionary setValue:[dic valueForKey:kStep1Gender] forKey:kStep1Gender];
     [dictionary setValue:[dic valueForKey:kStep1MobileNumber] forKey:kStep1MobileNumber];
     [dictionary setValue:[dic valueForKey:kStep1SkypeID] forKey:kStep1SkypeID];
     [dictionary setValue:[dic valueForKey:kStep1NativeLanguage] forKey:kStep1NativeLanguage];
@@ -1031,6 +1081,16 @@
         else
         {
             [dictionary setValue:[loginDictionary valueForKey:kdate_of_birth] forKey:kStep1DOB];
+        }
+        
+        //Gender Change
+        if([loginDictionary valueForKey:kGender])
+        {
+            [dictionary setValue:[loginDictionary valueForKey:kGender] forKey:kStep1Gender];
+        }
+        else
+        {
+            [dictionary setValue:[loginDictionary valueForKey:kGender] forKey:kStep1Gender];
         }
         
         [dictionary setValue:[loginDictionary valueForKey:kMobileNumber] forKey:kStep1MobileNumber];
@@ -1070,6 +1130,8 @@
             [dictionary setValue:[Step1Data valueForKey:kStep1LastName] forKey:kStep1LastName];
             [dictionary setValue:[Step1Data valueForKey:kStep1CitizenCountry] forKey:kStep1CitizenCountry];
             [dictionary setValue:[Step1Data valueForKey:kStep1DOB] forKey:kStep1DOB];
+            //Gender Change
+            [dictionary setValue:[Step1Data valueForKey:kStep1Gender] forKey:kStep1Gender];
             [dictionary setValue:[Step1Data valueForKey:kStep1MobileNumber] forKey:kStep1MobileNumber];
             [dictionary setValue:[Step1Data valueForKey:kStep1SkypeID] forKey:kStep1SkypeID];
             [dictionary setValue:[Step1Data valueForKey:kStep1NativeLanguage] forKey:kStep1NativeLanguage];
@@ -1130,6 +1192,13 @@
                 [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[NSString stringWithFormat:kContent,kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[dictionary valueForKey:kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                //Gender Change
+                // Gender
+                [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:kContent,kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[dictionary valueForKey:kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
                 
                 // Mobile Number
@@ -1572,6 +1641,13 @@
             [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:kContent,kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[dictionary valueForKey:kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            //Gender Change
+            // Gender
+            [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:kContent,kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[dictionary valueForKey:kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
             
             // Mobile Number

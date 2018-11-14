@@ -990,13 +990,14 @@ typedef enum _UNKProfileFieldType {
         }];
         return false;
     }
-    else if([_genderTextField.text isEqualToString:@""]){
-        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter your gender" block:^(int index) {
-            CGPoint buttonPosition = [_genderTextField convertPoint:CGPointZero toView:_registerTable];
-            [Utility scrolloTableView:_registerTable point:buttonPosition indexPath:nil];
-        }];
-        return false;
-    }
+    //Gender Change
+//    else if([_genderTextField.text isEqualToString:@""]){
+//        [Utility showAlertViewControllerIn:self title:kUNKError message:@"Enter your gender" block:^(int index) {
+//            CGPoint buttonPosition = [_genderTextField convertPoint:CGPointZero toView:_registerTable];
+//            [Utility scrolloTableView:_registerTable point:buttonPosition indexPath:nil];
+//        }];
+//        return false;
+//    }
     
     else if([self.DOBTextField.text isEqualToString:@""]){
         [Utility showAlertViewControllerIn:self title:kUNKError message:@"Select your DOB" block:^(int index) {

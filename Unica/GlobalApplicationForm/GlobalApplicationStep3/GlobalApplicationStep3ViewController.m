@@ -1292,6 +1292,13 @@
        [body appendData:[[NSString stringWithFormat:kContent,kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
        [body appendData:[[dictionary valueForKey:kStep1DOB] dataUsingEncoding:NSUTF8StringEncoding]];
        [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
+           
+           //Gender Change
+           // Gender
+           [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+           [body appendData:[[NSString stringWithFormat:kContent,kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
+           [body appendData:[[dictionary valueForKey:kStep1Gender] dataUsingEncoding:NSUTF8StringEncoding]];
+           [body appendData:[[NSString stringWithFormat:kEndTag] dataUsingEncoding:NSUTF8StringEncoding]];
        
        // Mobile Number
        [body appendData:[[NSString stringWithFormat:kStartTag, kBoundary] dataUsingEncoding:NSUTF8StringEncoding]];

@@ -480,6 +480,7 @@ static NSString * const kTestUsersDefaultPassword = @"user@123";
 #define kStep1CitizenCountry @"citizenship_country_id"
 #define kStep1DOB @"dob"
 #define kStep1MobileNumber @"mobileNumber"
+#define kStep1Gender @"gender"
 #define kStep1SkypeID @"skype_id"
 #define kStep1NativeLanguage @"native_language"
 #define kStep1MartialStatus @"marital_status"
