@@ -494,7 +494,7 @@
         _predictiveSearch.delegate = self;
         [self.navigationController pushViewController:_predictiveSearch animated:YES];
     }
-    else if(indexPath.row==6)
+    else if(indexPath.row==7)
     {
         
 //        self.picker = [GKActionSheetPicker stringPickerWithItems:[languageArray valueForKey:@"language_name"] selectCallback:^(id selected) {

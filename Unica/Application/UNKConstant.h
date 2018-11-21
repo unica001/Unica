@@ -24,8 +24,8 @@
 
 //#define kAPIBaseURL @"https://www.uniagents.com/apk/rest/android/"
 //#define kAPIBaseURL @"http://api.uniagents.com/api/"
-//#define kAPIBaseURL @"https://unica.sirez.com/api/"
-#define kAPIBaseURL @"https://www.uniagents.com/apknew/rest/android/"
+#define kAPIBaseURL @"https://www.uniagents.com/apktest/rest/android/"
+//#define kAPIBaseURL @"https://www.uniagents.com/apknew/rest/android/"
 
 #define kAppDelegate  (AppDelegate*)[[UIApplication sharedApplication] delegate]
 #define kAPIResponseTimeout 90

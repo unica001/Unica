@@ -271,7 +271,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = true;
+        cell.chatButton.hidden = false;
     }
     
     NSString *colorcode = [Utility replaceNULL:arrRecord[indexPath.row][@"color_code"] value:@""] ;

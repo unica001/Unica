@@ -766,7 +766,9 @@
             else
             {
                 NSMutableDictionary *dict =[[NSMutableDictionary alloc] init];
-                [dict setValue:textViewDetails.text forKey:kanswer];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [dict setValue:textViewDetails.text forKey:kanswer];
+                });
                 [dict setValue:ID forKey:kquestion_id];
                 [[selecteOptionDictionary valueForKey:kQuestionaier] addObject:dict];
                 
@@ -774,10 +776,12 @@
             }
             
             [selecteOptionDictionary setValue:textFieldPassportNumber.text forKey:kStep3PassportNumber];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *countryName = _textFieldCntry.text;
+                countryName = [countryName stringByReplacingOccurrencesOfString:@"   " withString:@""];
+                [selecteOptionDictionary setValue:countryName forKey:kStep3PassportIssueCountryName];
+            });
             
-            NSString *countryName = _textFieldCntry.text;
-            countryName = [countryName stringByReplacingOccurrencesOfString:@"   " withString:@""];
-            [selecteOptionDictionary setValue:countryName forKey:kStep3PassportIssueCountryName];
             
             [selecteOptionDictionary setValue:selectedCountryID forKey:kStep3PassportIssueCountry];
             [selecteOptionDictionary setValue:textViewDetails.text forKey:kStep3MoreDetails];

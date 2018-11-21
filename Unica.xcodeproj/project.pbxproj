@@ -2930,8 +2930,8 @@
 			baseConfigurationReference = 7F067C7629581576A6E5C975 /* Pods-OneSignalNotification.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ramesh Kharbanda (84255C4TCQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramesh Kharbanda (84255C4TCQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Unica Solutions Private Limited (82BU3BBWT8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Unica Solutions Private Limited (82BU3BBWT8)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 82BU3BBWT8;
 				INFOPLIST_FILE = OneSignalNotification/Info.plist;
@@ -2939,8 +2939,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica.onesignal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1a7d74cf-43c4-4a25-ad40-73263453415d";
-				PROVISIONING_PROFILE_SPECIFIER = Unica_OneSignal_Developemt;
+				PROVISIONING_PROFILE = "89bec34a-e723-415c-a61a-e6b04260036f";
+				PROVISIONING_PROFILE_SPECIFIER = unica_oneSignal_Distribution;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -2959,8 +2959,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica.onesignal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8607478e-fae9-4f44-9105-13292c08461e";
-				PROVISIONING_PROFILE_SPECIFIER = unica_onesignalappstore;
+				PROVISIONING_PROFILE = "89bec34a-e723-415c-a61a-e6b04260036f";
+				PROVISIONING_PROFILE_SPECIFIER = unica_oneSignal_Distribution;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -3066,8 +3066,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Unica/Unica.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ramesh Kharbanda (84255C4TCQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramesh Kharbanda (84255C4TCQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Unica Solutions Private Limited (82BU3BBWT8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Unica Solutions Private Limited (82BU3BBWT8)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 82BU3BBWT8;
 				ENABLE_BITCODE = NO;
@@ -3104,8 +3104,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2e48c49a-af92-4114-b881-61faadc0c720";
-				PROVISIONING_PROFILE_SPECIFIER = Unica_Development;
+				PROVISIONING_PROFILE = "bcf05f95-f4e4-41a4-8c4c-8dbc8ec37646";
+				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -3155,8 +3155,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniagents.unica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "242462b1-3227-4c3f-a0f6-a27efd2a4111";
-				PROVISIONING_PROFILE_SPECIFIER = unica_appStore_provisioning;
+				PROVISIONING_PROFILE = "bcf05f95-f4e4-41a4-8c4c-8dbc8ec37646";
+				PROVISIONING_PROFILE_SPECIFIER = unica_adhoc_distribution_provisioning;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

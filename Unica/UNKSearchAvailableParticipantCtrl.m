@@ -167,7 +167,7 @@
         cell.chatButton.hidden = true;
     }
     else{
-        cell.chatButton.hidden = true;
+        cell.chatButton.hidden = false;
     }
     return  cell;
 }
